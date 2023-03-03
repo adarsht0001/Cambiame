@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 import Button from '@mui/material/Button';
 
-const Buton = ({value}) => {
+function Buton() {
   return (
-    <Button variant="outlined" { value ?alert():alert('j')} disableElevation>
+    <Button variant="outlined" disableElevation>
       Disable elevation
     </Button>
   );
 }
 
-export default Buton
+export default Buton;
