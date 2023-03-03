@@ -5,7 +5,6 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "plugin:prettier/recommended",
         "airbnb"
     ],
     "overrides": [
@@ -18,7 +17,15 @@
         "react"
     ],
     "rules": {
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "prettier/prettier": ["error", { "singleQuote": true }]
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            }
+        ],
+        "linebreak-style": 0
     }
 }
