@@ -1,15 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Buton from './Components/button/Buton';
+import Login from './Pages/Login/Login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <div>
-    {/* <FullWidthTextField />
-     */}
-     
-     <h1>daskl</h1>"hello"
-    <Buton value="true" />
+    <Login />
   </div>,
 );

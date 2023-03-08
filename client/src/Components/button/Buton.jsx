@@ -1,11 +1,15 @@
 import React from 'react';
 import Button from '@mui/material/Button';
+import { Container } from '@mui/material';
 
 function Buton() {
   return (
-    <Button variant="outlined" disableElevation>
-      Disable elevation
-    </Button>
+    <Container>
+      <Button />
+      <Button variant="outlined" disableElevation>
+        Disable elevation
+      </Button>
+    </Container>
   );
 }
 

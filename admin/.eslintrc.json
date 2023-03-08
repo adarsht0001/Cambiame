@@ -7,8 +7,7 @@
         "plugin:react/recommended",
         "airbnb"
     ],
-    "overrides": [
-    ],
+    "overrides": [],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -28,8 +27,10 @@
         ],
         "linebreak-style": 0,
         "import/no-unresolved": [
-            2, 
-            { "caseSensitive": false }
-         ]
+            2,
+            {
+                "caseSensitive": false
+            }
+        ]
     }
 }
