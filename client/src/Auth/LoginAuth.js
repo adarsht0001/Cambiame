@@ -2,9 +2,9 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
 function IsLogged() {
-  const heelo = true;
+  const user = localStorage.getItem('user');
   return (
-    heelo ? <Navigate to="/login" /> : <Outlet />
+    user ? <Navigate to="/login" /> : <Outlet />
   );
 }
 function loggedIn() {

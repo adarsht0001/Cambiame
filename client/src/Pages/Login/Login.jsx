@@ -1,13 +1,27 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import {
-  Box, Grid, Stack,
+  Box, Grid, Stack, Typography,
 } from '@mui/material';
+import { signInWithPopup } from 'firebase/auth';
 import React from 'react';
+import { FcGoogle } from 'react-icons/fc';
+import { useNavigate } from 'react-router-dom';
 import cambie from '../../Assets/svg/CAMBIAME.svg';
 // import imgs from '../../Assets/Images/shubham-dhage-4MDR5izP5sY-unsplash.jpg';
 import './Login.css';
 import Form from './Form';
+import Buttons from '../../Components/button/Button';
+import { auth, provider } from '../../firebase/config';
 
 function Login() {
+  const navigate = useNavigate();
+  const googleSignIn = () => {
+    signInWithPopup(auth, provider).then((data) => {
+      console.log(data.user.email);
+      console.log(data.user.displayName);
+      localStorage.setItem('user', data.user.email);
+    });
+  };
   return (
     <Grid
       minHeight="100vh"
@@ -34,8 +48,23 @@ function Login() {
       >
         <Box>
           <img src={cambie} alt="" />
-          {/* <Typography variant="body1">Lorem, ipsum doljashfj</Typography> */}
-          {/* <Typography color="white" variant="h6">Dont Have A Acooount?</Typography> */}
+          <Box component="span" p={2} sx={{ alignItems: 'center', textAlign: 'center' }}>
+            <Typography variant="body1" p={3} onClick={() => navigate('/signup')}>Create an account here</Typography>
+            <Box onClick={googleSignIn}>
+              <Buttons
+                size="sm"
+                variant="contained"
+                color="secondary"
+                Text={(
+                  <>
+                    <FcGoogle style={{ padding: '5px' }} />
+                    Continue With Google
+                  </>
+              )}
+              />
+
+            </Box>
+          </Box>
         </Box>
         <Box textAlign="center">
           <Form />

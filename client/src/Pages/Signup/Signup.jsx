@@ -1,6 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import {
-  Box, Grid, Stack,
+  Box, Grid, Stack, Typography,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import cambie from '../../Assets/svg/CAMBIAME.svg';
 import imgs from '../../Assets/Images/and-machines-8gqqtZstztc-unsplash.jpg';
@@ -8,6 +10,7 @@ import './Signup.css';
 import Form from './Form';
 
 function Signup() {
+  const navigate = useNavigate();
   return (
     <Grid
       minHeight="100vh"
@@ -34,8 +37,10 @@ function Signup() {
       >
         <Box>
           <img src={cambie} alt="" />
-          {/* <Typography variant="body1">Lorem, ipsum doljashfj</Typography> */}
-          {/* <Typography color="white" variant="h6">Dont Have A Acooount?</Typography> */}
+          <Box component="span" sx={{ alignItems: 'center', textAlign: 'center' }}>
+            <Typography variant="subtitle1" onClick={() => navigate('/login')}>Already have Account?</Typography>
+            <Typography variant="subtitle1" onClick={() => navigate('/login')}>Login here</Typography>
+          </Box>
         </Box>
         <Box textAlign="center">
           <Form />
