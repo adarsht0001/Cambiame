@@ -3,7 +3,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import cambie from '../../Assets/svg/CAMBIAME.svg';
-import imgs from '../../Assets/Images/shubham-dhage-4MDR5izP5sY-unsplash.jpg';
+import imgs from '../../Assets/Images/and-machines-8gqqtZstztc-unsplash.jpg';
 import './Signup.css';
 import Form from './Form';
 

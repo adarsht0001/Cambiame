@@ -19,6 +19,7 @@ mongoose.connect('mongodb://localhost:27017/Social',{
 
 app.use("/",login)
 
+
 app.listen(5000,()=>{
-    console.log("startes");
+    console.log("server started");
 })
