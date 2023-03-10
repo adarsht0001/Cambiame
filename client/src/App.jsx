@@ -1,9 +1,12 @@
 import React from 'react';
-import Login from './Pages/Login/Login';
+// import Login from './Pages/Login/Login';
+import Router from './Routes/Routes';
+// import Signup from './Pages/Signup/Signup';
 
 function App() {
   return (
-    <Login />
+    // <Signup />
+    <Router />
   );
 }
 

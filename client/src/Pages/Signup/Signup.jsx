@@ -3,11 +3,11 @@ import {
 } from '@mui/material';
 import React from 'react';
 import cambie from '../../Assets/svg/CAMBIAME.svg';
-// import imgs from '../../Assets/Images/shubham-dhage-4MDR5izP5sY-unsplash.jpg';
-import './Login.css';
+import imgs from '../../Assets/Images/shubham-dhage-4MDR5izP5sY-unsplash.jpg';
+import './Signup.css';
 import Form from './Form';
 
-function Login() {
+function Signup() {
   return (
     <Grid
       minHeight="100vh"
@@ -18,8 +18,8 @@ function Login() {
         justifyContent: 'center',
         alignItems: 'center',
         direction: 'column',
-        backgroundImage: 'linear-gradient(to right, #f57c00 0%,#ace0f9 100%)',
-        // backgroundImage: `url(${imgs})`,
+        // backgroundImage: 'linear-gradient(to right, #f57c00 0%,#ace0f9 100%)',
+        backgroundImage: `url(${imgs})`,
         backgroundPosition: 'right',
       }}
     >
@@ -45,4 +45,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;
