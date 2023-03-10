@@ -1,16 +1,13 @@
+import { ThemeProvider } from '@mui/material';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Buton from './Components/button/Buton';
-
-import FullWidthTextField from './Components/input/FullWidthTextField';
-import Login from './Pages/Login/Login';
+import App from './App';
+import theme from './Theme/theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <div>
-    <FullWidthTextField />
-    <Buton />
-    <Login />
-  </div>,
+  <ThemeProvider theme={theme}>
+    <App />
+  </ThemeProvider>,
 );
