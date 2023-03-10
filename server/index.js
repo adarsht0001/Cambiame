@@ -1,15 +1,23 @@
 const express=require('express')
-const bodyParser = require('body-parser');
 const app=express()
+const mongoose = require("mongoose");
+
+const bodyParser = require('body-parser');
 const cors= require('cors')
+
+const login=require('./routes/userlogin')
 
 app.use(bodyParser.json());
 
 app.use(cors())
 
-app.post('/signup',(req,res)=>{
-    console.log(req.body);
-})
+mongoose.connect('mongodb://localhost:27017/Social',{
+    useNewUrlParser: true
+  }).then(()=>console.log('Db conneted')).catch((err)=>{
+    console.log(err);
+  })
+
+app.use("/",login)
 
 app.listen(5000,()=>{
     console.log("startes");
