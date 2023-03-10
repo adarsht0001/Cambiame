@@ -1,3 +1,4 @@
+let users = require('../model/userSchema');
 const admin={email:'Admin',pass:'123'}
 
 module.exports={
@@ -14,5 +15,9 @@ module.exports={
                 return res.status(401).json({ msg: 'Invalid password',  password:true,status: false })
             }
         }
+    },
+    users:async(req,res,next)=>{
+        const data=await users.find({})
+        res.status(200).json(data)
     }
 }
