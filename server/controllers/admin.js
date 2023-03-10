@@ -18,6 +18,7 @@ module.exports={
     },
     users:async(req,res,next)=>{
         const data=await users.find({})
+        console.log(data);
         res.status(200).json(data)
     }
 }

@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack } from '@mui/material';
-import BasicTable from '../../Components/table/Table';
+import AccessibleTable from '../../Components/table/Table';
 import axios from '../../Axios/Axios';
 
 function User() {
+  const [values, setValues] = useState([]);
   useEffect(() => {
-    axios.get('/users').then((data) => {
-      console.log(data);
-    });
+    axios.get('/users').then((res) => {
+      setValues(res.data);
+    }).catch((err) => console.log(err));
   }, []);
 
   return (
@@ -20,8 +21,7 @@ function User() {
       justifyContent="center"
       alignItems="center"
     >
-      <BasicTable />
-
+      {values.length > 0 ? <AccessibleTable data={values} /> : 'loading' }
     </Stack>
   );
 }

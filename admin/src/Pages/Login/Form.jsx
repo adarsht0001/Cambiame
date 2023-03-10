@@ -18,7 +18,8 @@ function Form() {
     };
     axios.post('/login', data)
       .then(() => {
-        navigate('/home');
+        localStorage.setItem('admin', true);
+        navigate('/user');
       })
       .catch((err) => {
         setErr(err.response.data);
