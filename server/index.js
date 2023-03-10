@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cors= require('cors')
 
 const login=require('./routes/userlogin')
+const admin=require('./routes/admin')
 
 app.use(bodyParser.json());
 
@@ -18,6 +19,7 @@ mongoose.connect('mongodb://localhost:27017/Social',{
   })
 
 app.use("/",login)
+app.use("/admin",admin)
 
 
 app.listen(5000,()=>{

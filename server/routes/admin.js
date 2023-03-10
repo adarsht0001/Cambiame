@@ -1,7 +1,7 @@
+const { adminLogin } = require('../controllers/admin');
+
 const router = require('express').Router()
 
-router.get('/',(req,res)=>{
-    console.log('test');
-})
+router.post('/login',adminLogin)
 
 module.exports = router;

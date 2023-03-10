@@ -1,20 +1,22 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Buttons from '../Components/button/Button';
 import Login from '../Pages/Login/Login';
 import Signup from '../Pages/Signup/Signup';
-import { IsLogged } from '../Auth/LoginAuth';
+import { IsLogged, LoggedIn } from '../Auth/LoginAuth';
+import Home from '../Pages/Home/Home';
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<IsLogged />}>
-          <Route element={<Buttons />} exact path="/" />
+          <Route element={<Home />} exact path="/" />
         </Route>
-        <Route element={<Signup />} exact path="/signup" />
-        <Route element={<Login />} exact path="/login" />
+        <Route element={<LoggedIn />}>
+          <Route element={<Signup />} exact path="/signup" />
+          <Route element={<Login />} exact path="/login" />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

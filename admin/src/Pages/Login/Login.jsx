@@ -1,9 +1,8 @@
 import React from 'react';
 import Paper from '@mui/material/Paper';
-import {
-  Button, Grid, TextField, Typography,
-} from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import cambie from '../../Assets/svg/CAMBIAME.svg';
+import Form from './Form';
 
 function Login() {
   return (
@@ -40,13 +39,3 @@ function Login() {
 }
 
 export default Login;
-
-function Form() {
-  return (
-    <Grid container direction="column" alignItems="center" justify="center" paddingTop={2}>
-      <TextField variant="outlined" label="username" fullWidth style={{ marginBlock: '1rem' }} />
-      <TextField variant="outlined" label="Password" fullWidth type="password" style={{ marginBlock: '1rem' }} />
-      <Button size="large" variant="contained" color="primary">Login</Button>
-    </Grid>
-  );
-}

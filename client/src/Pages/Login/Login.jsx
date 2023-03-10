@@ -12,14 +12,19 @@ import './Login.css';
 import Form from './Form';
 import Buttons from '../../Components/button/Button';
 import { auth, provider } from '../../firebase/config';
+import axios from '../../Axios/axios';
 
 function Login() {
   const navigate = useNavigate();
   const googleSignIn = () => {
     signInWithPopup(auth, provider).then((data) => {
-      console.log(data.user.email);
-      console.log(data.user.displayName);
+      const value = {
+        usernam: data.user.displayName,
+        email: data.user.email,
+      };
       localStorage.setItem('user', data.user.email);
+      navigate('/');
+      axios.post('/test', value).then(() => console.log('gete'));
     });
   };
   return (

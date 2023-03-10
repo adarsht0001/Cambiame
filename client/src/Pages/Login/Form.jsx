@@ -18,6 +18,7 @@ function Form() {
       password,
     };
     axios.post('/login', data).then((res) => {
+      localStorage.setItem('user', res.data.user.email);
       localStorage.setItem('access_token', res.data.user.accesToken);
       navigate('/');
     }).catch((err) => {

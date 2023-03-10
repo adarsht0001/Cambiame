@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Login from './Pages/Login/Login';
+import App from './App';
+// import Router from './Routes/Router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-root.render(
-  <div>
-    <Login />
-  </div>,
-);
+root.render(<App />);

@@ -4,14 +4,14 @@ import { Navigate, Outlet } from 'react-router-dom';
 function IsLogged() {
   const user = localStorage.getItem('user');
   return (
-    user ? <Navigate to="/login" /> : <Outlet />
+    user ? <Outlet /> : <Navigate to="/login" />
   );
 }
-function loggedIn() {
-  const heelo = false;
+function LoggedIn() {
+  const user = localStorage.getItem('user');
   return (
-    heelo.name ? <Navigate to="/login" /> : <Outlet />
+    user ? <Navigate to="/" /> : <Outlet />
   );
 }
 
-export { IsLogged, loggedIn };
+export { IsLogged, LoggedIn };
