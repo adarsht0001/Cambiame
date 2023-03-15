@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 import React, { useEffect, useState } from 'react';
 import { Stack } from '@mui/material';
 import AccessibleTable from '../../Components/table/Table';
@@ -7,7 +8,8 @@ function User() {
   const [values, setValues] = useState([]);
   useEffect(() => {
     axios.get('/users').then((res) => {
-      setValues(res.data);
+      console.log(res);
+      setValues(res.data.data);
     }).catch((err) => console.log(err));
   }, []);
 

@@ -6,13 +6,13 @@ module.exports = {
   signup: async (req, res, next) => {
     try {
       const { name, email, password } = req.body;
-      const userNameCheck = await users.findOne({ name });
+      const userNameCheck = await users.findOne({ username:name });
       if (userNameCheck) {
-        return res.status(401).json({ msg: 'username already exists', status: false });
+        return res.status(401).json({ msg: 'username already exists',name:true, status: false });
       }
       const emailCheck = await users.findOne({ email });
       if (emailCheck) {
-        return res.status(401).json({ msg: 'email already exists', status: false });
+        return res.status(401).json({ msg: 'email already exists',email:true, status: false });
       }
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await users.create({
@@ -27,6 +27,7 @@ module.exports = {
     }
   },
   login: async (req, res, next) => {
+    
     try {
       const { email, password } = req.body;
       const userCheck = await users.findOne({ email });

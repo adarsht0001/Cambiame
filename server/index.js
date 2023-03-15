@@ -1,27 +1,31 @@
-const express=require('express')
-const app=express()
-const mongoose = require("mongoose");
+const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
 
 const bodyParser = require('body-parser');
-const cors= require('cors')
+const cors = require('cors');
+app.use(cors());
+app.options('*', cors());
 
-const login=require('./routes/userlogin')
-const admin=require('./routes/admin')
+const login = require('./routes/userlogin');
+const admin = require('./routes/admin');
 
 app.use(bodyParser.json());
 
-app.use(cors())
+app.use(express.json())
 
-mongoose.connect('mongodb://localhost:27017/Social',{
-    useNewUrlParser: true
-  }).then(()=>console.log('Db conneted')).catch((err)=>{
-    console.log(err);
+mongoose
+  .connect('mongodb://localhost:27017/Social', {
+    useNewUrlParser: true,
   })
+  .then(() => console.log('Db conneted'))
+  .catch((err) => {
+    console.log(err);
+  });
 
-app.use("/",login)
-app.use("/admin",admin)
+app.use('/', login);
+app.use('/admin', admin);
 
-
-app.listen(5000,()=>{
-    console.log("server started");
-})
+app.listen(5000, () => {
+  console.log('server started');
+});

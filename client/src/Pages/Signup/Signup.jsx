@@ -5,7 +5,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import cambie from '../../Assets/svg/CAMBIAME.svg';
-import imgs from '../../Assets/Images/and-machines-8gqqtZstztc-unsplash.jpg';
+// import imgs from '../../Assets/Images/and-machines-8gqqtZstztc-unsplash.jpg';
 import './Signup.css';
 import Form from './Form';
 
@@ -21,8 +21,8 @@ function Signup() {
         justifyContent: 'center',
         alignItems: 'center',
         direction: 'column',
-        // backgroundImage: 'linear-gradient(to right, #f57c00 0%,#ace0f9 100%)',
-        backgroundImage: `url(${imgs})`,
+        backgroundImage: 'linear-gradient(to right, #f57c00 0%,#ace0f9 100%)',
+        // backgroundImage: `url(${imgs})`,
         backgroundPosition: 'right',
       }}
     >
