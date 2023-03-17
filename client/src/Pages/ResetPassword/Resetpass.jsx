@@ -21,9 +21,9 @@ function Resetpass() {
         justifyContent: 'center',
         alignItems: 'center',
         direction: 'column',
-        backgroundImage: 'linear-gradient(to right, #f57c00 0%,#ace0f9 100%)',
+        // backgroundImage: 'linear-gradient(to right, #f57c00 0%,#ace0f9 100%)',
         // backgroundImage: `url(${imgs})`,
-        backgroundPosition: 'right',
+        // backgroundPosition: 'right',
       }}
     >
       <Stack

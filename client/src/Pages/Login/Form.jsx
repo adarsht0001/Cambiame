@@ -1,12 +1,16 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { Typography, Grid } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Inputfield from '../../Components/input/Inputfield';
 import Buttons from '../../Components/button/Button';
 import axios from '../../Axios/axios';
+import { Login } from '../../Redux';
 
 function Form() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setErr] = useState({});
@@ -17,6 +21,7 @@ function Form() {
       password,
     };
     axios.post('/login', data).then((res) => {
+      dispatch(Login(res.data.user));
       localStorage.setItem('user', res.data.user.email);
       localStorage.setItem('access_token', res.data.user.accesToken);
       navigate('/');

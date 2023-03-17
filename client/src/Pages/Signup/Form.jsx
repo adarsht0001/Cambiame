@@ -23,6 +23,16 @@ function Form() {
     }
     return true;
   };
+
+  const validateEmail = () => {
+    if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
+      setErr({ msg: 'Invalid Email', email: true });
+      return false;
+    }
+    setErr({});
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
@@ -30,9 +40,8 @@ function Form() {
       email,
       password,
     };
-    if (validatePass()) {
-      axios.post('/signup', data).then((res) => {
-        console.log(res.data.user);
+    if (validatePass() && validateEmail()) {
+      axios.post('/signup', data).then(() => {
         navigate('/login');
       }).catch((err) => {
         setErr(err.response.data);

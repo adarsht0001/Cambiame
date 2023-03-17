@@ -39,7 +39,7 @@ function Form(props) {
       >
         <Inputfield variant="outlined" label="Password" type="text" value={pass} callback={(e) => setPass(e.target.value)} />
         <Inputfield variant="outlined" label="Re-Password" type="password" value={rePass} callback={(e) => setrePass(e.target.value)} err={err} helper={err ? 'Re-pass Doesnt Match Password' : ''} />
-        <Buttons size="large" variant="contained" color="primary" type="submit" Text="Login" />
+        <Buttons size="large" variant="contained" color="primary" type="submit" Text="RESET PASSWORD" />
       </Grid>
     </form>
   );

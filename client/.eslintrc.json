@@ -33,6 +33,7 @@
                 ]
             }
         ],
+        "default-param-last": 0,
         "linebreak-style": 0,
         "import/no-unresolved": [
             2, 
