@@ -11,14 +11,14 @@ function Form(props) {
   const [pass, setPass] = useState('');
   const [rePass, setrePass] = useState('');
   const [err, setErr] = useState(false);
+  const [exp, setExp] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (pass === rePass) {
-      axios.post(`/reset-password/${id}/${token}`, { pass }).then((res) => {
-        console.log(res);
+      axios.post(`/reset-password/${id}/${token}`, { pass }).then(() => {
         navigate('/login');
       }).catch((error) => {
-        console.log(error);
+        setExp(error.response.data.msg);
       });
     } else {
       setErr(true);
@@ -26,6 +26,7 @@ function Form(props) {
   };
   return (
     <form onSubmit={handleSubmit}>
+      {exp && <h4>{exp}</h4>}
       <Typography variant="h5" color="initial">
         Change Password
       </Typography>

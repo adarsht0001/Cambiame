@@ -36,8 +36,8 @@ module.exports = (repository) => {
     const { email } = req.body;
     forgot
       .execute(email)
-      .then((res) => {
-        console.log(res);
+      .then((response) => {
+        return res.status(201).json({ status: true ,msg:"Check Email... Link Has been Sent"})
       })
       .catch((err) => {
         return res.status(401).json({ ...err, status: false });
@@ -47,10 +47,16 @@ module.exports = (repository) => {
   const resetPass = (req, res) => {
     const resetpasscase = resetPassword(repository);
     const { id, token } = req.params;
-    const {pass} = req.body
-    resetpasscase.execute(id,token,pass).then((res)=>{
-        return res.status(201).json({ status: true,...res })
-    }).catch((err)=>console.log(err))
+    const { pass } = req.body;
+    resetpasscase
+      .execute(id, token, pass)
+      .then((response) => {
+        console.log(response);
+        return res.status(201).json({ status: true, ...response });
+      })
+      .catch((err) => {
+        return res.status(401).json({ status: false, ...err });
+      });
   };
   return {
     login,

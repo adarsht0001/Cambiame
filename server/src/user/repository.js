@@ -28,14 +28,13 @@ module.exports = class UserRepository {
     return new Promise(async(resolve, reject) => {
         let user = await this.database.findById(id)
         resolve(user)
-        console.log(user);
     })
   }
 
   update(filter,update){
     return new Promise(async(resolve, reject) => {
         let user = await this.database.updateOne(filter,update)
-        console.log(user);
+        resolve(user)
     })
   }
 

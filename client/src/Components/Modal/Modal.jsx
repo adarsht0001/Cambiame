@@ -24,10 +24,11 @@ function Modals() {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [error, setErr] = useState({});
+  const [msg, setMsg] = useState(null);
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('/forgot-password', { email }).then((res) => {
-      console.log(res);
+      setMsg(res.data.msg);
     }).catch((err) => {
       setErr(err.response.data);
     });
@@ -59,6 +60,7 @@ function Modals() {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Forgotten Password
             </Typography>
+            {msg && <h4>{msg}</h4>}
             <Inputfield variant="outlined" label="email" type="email" value={email} callback={(e) => setEmail(e.target.value)} err={!!error.email} helper={error.email ? error.msg : null} />
             <Buttons size="large" variant="contained" color="primary" type="submit" Text="Login" />
           </Grid>

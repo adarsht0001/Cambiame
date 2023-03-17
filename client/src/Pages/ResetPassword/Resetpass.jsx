@@ -2,19 +2,20 @@ import {
   Box, Grid, Stack, Typography,
 } from '@mui/material';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import cambie from '../../Assets/svg/CAMBIAME.svg';
 import Form from './Form';
 // import imgs from '../../Assets/Images/shubham-dhage-4MDR5izP5sY-unsplash.jpg';
 // import Buttons from '../../Components/button/Button';
 
 function Resetpass() {
+  const navigate = useNavigate();
   const { id, token } = useParams();
   return (
     <Grid
       minHeight="100vh"
       direction={{ xs: 'column', md: 'row' }}
-    //   rowSpacing={2}
+      rowSpacing={2}
       sx={{
         display: 'flex',
         justifyContent: 'center',
@@ -34,17 +35,14 @@ function Resetpass() {
         p={5}
         className="centerDiv"
       >
-        <Box>
+        <Box onClick={() => navigate('/')}>
           <img src={cambie} alt="" />
           <Box
             component="span"
             p={2}
             sx={{ alignItems: 'center', textAlign: 'center' }}
           >
-            <Typography
-              variant="body1"
-              p={3}
-            >
+            <Typography variant="body1" p={3}>
               Reset Password
             </Typography>
           </Box>

@@ -15,7 +15,6 @@ module.exports = (repository) => {
           };
           const token = forgot(payload, secret);
           const link = `http://localhost:3000/resetpassword/${res._id}/${token}`;
-          console.log(token);
           const mailOpt = {
             from: 'Cambiame <Cambiame@gmail.com>',
             to: 'adarsht00001@gmail.com',
@@ -25,7 +24,6 @@ module.exports = (repository) => {
           };
           
           let result = await transport(mailOpt);
-          console.log(result);
           resolve()
         } else {
           reject({
