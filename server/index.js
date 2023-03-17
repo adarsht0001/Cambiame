@@ -11,7 +11,6 @@ const Routes = require('./src/routes');
 app.use(cors());
 app.options('*', cors());
 
-
 app.use(bodyParser.json());
 
 app.use(express.json());
@@ -19,9 +18,11 @@ app.use(express.json());
 app.use('/', Routes());
 
 new Database(process.env.DATABASE_CONNECTION)
-  .then(() => app.listen(5000, () => {
-    console.log('server started on http://localhost:5000/');
-  }))
+  .then(() =>
+    app.listen(5000, () => {
+      console.log('server started on http://localhost:5000/');
+    })
+  )
   .catch((err) => {
     console.log('error mon');
     console.log(err);

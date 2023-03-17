@@ -19,8 +19,24 @@ module.exports = class UserRepository {
 
   adduser(user){
     return new Promise(async(resolve, reject) => {
-        let data = await this.database(user).save()
+        this.database(user).save()
         resolve(user)
     })
   }
+
+  getById(id){
+    return new Promise(async(resolve, reject) => {
+        let user = await this.database.findById(id)
+        resolve(user)
+        console.log(user);
+    })
+  }
+
+  update(filter,update){
+    return new Promise(async(resolve, reject) => {
+        let user = await this.database.updateOne(filter,update)
+        console.log(user);
+    })
+  }
+
 };

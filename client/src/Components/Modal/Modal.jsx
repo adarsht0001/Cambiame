@@ -1,8 +1,11 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import React, { useState } from 'react';
+// import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { Grid } from '@mui/material';
+import Buttons from '../button/Button';
+import Inputfield from '../input/Inputfield';
+import axios from '../../Axios/axios';
 
 const style = {
   position: 'absolute',
@@ -13,35 +16,56 @@ const style = {
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
+  textAlign: 'center',
   p: 4,
 };
 
-export default function BasicModal(props) {
-  const { test, callback } = props;
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => callback();
-  console.log(open);
-  console.log(callback);
-
+function Modals() {
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [error, setErr] = useState({});
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('/forgot-password', { email }).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      setErr(err.response.data);
+    });
+  };
   return (
-    <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+    <>
+      <Buttons
+        size="sm"
+        variant="contained"
+        color="secondary"
+        callback={() => setOpen(true)}
+        Text={<>Forgotten Password</>}
+      />
       <Modal
-        open={test}
-        onClose={handleClose}
+        open={open}
+        onClose={() => setOpen(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
+        <form onSubmit={handleSubmit}>
+          <Grid
+            sx={style}
+            container
+            direction="column"
+            alignItems="center"
+            justify="center"
+            paddingTop={2}
+          >
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Forgotten Password
+            </Typography>
+            <Inputfield variant="outlined" label="email" type="email" value={email} callback={(e) => setEmail(e.target.value)} err={!!error.email} helper={error.email ? error.msg : null} />
+            <Buttons size="large" variant="contained" color="primary" type="submit" Text="Login" />
+          </Grid>
+        </form>
       </Modal>
-    </div>
+    </>
   );
 }
+
+export default Modals;

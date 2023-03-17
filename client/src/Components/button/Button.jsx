@@ -2,13 +2,14 @@ import Button from '@mui/material/Button';
 
 function Buttons(props) {
   const {
-    variant, type, Text, size,
+    variant, type, Text, size, callback,
   } = props;
   return (
     <Button
       size={size}
       variant={variant}
       type={type}
+      onClick={callback}
       sx={{
         bgcolor: 'primary.main',
         // borderRadius: '28px',

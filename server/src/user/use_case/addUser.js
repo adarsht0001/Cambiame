@@ -16,7 +16,6 @@ module.exports = (repository) => {
               const hashedPassword = await bcrypt.hash(password, 10);
               const user = new userEntity(username, email, hashedPassword);
               repository.adduser(user);
-              console.log(user);
               resolve(user);
             }
           });

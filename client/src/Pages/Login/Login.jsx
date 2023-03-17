@@ -1,8 +1,9 @@
+/* eslint-disable import/no-named-as-default-member */
 import {
   Box, Grid, Stack, Typography,
 } from '@mui/material';
 import { signInWithPopup } from 'firebase/auth';
-import React, { useState } from 'react';
+import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import cambie from '../../Assets/svg/CAMBIAME.svg';
@@ -12,10 +13,9 @@ import Form from './Form';
 import Buttons from '../../Components/button/Button';
 import { auth, provider } from '../../firebase/config';
 import axios from '../../Axios/axios';
-import BasicModal from '../../Components/Modal/Modal';
+import Modals from '../../Components/Modal/Modal';
 
 function Login() {
-  const [Modal, setModal] = useState(false);
   const navigate = useNavigate();
   const googleSignIn = () => {
     signInWithPopup(auth, provider).then((data) => {
@@ -25,7 +25,7 @@ function Login() {
       };
       localStorage.setItem('user', data.user.email);
       navigate('/');
-      axios.post('/test', value).then(() => console.log(Modal));
+      axios.post('/test', value).then(() => console.log());
     });
   };
 
@@ -55,8 +55,18 @@ function Login() {
       >
         <Box>
           <img src={cambie} alt="" />
-          <Box component="span" p={2} sx={{ alignItems: 'center', textAlign: 'center' }}>
-            <Typography variant="body1" p={3} onClick={() => navigate('/signup')}>Create an account here</Typography>
+          <Box
+            component="span"
+            p={2}
+            sx={{ alignItems: 'center', textAlign: 'center' }}
+          >
+            <Typography
+              variant="body1"
+              p={3}
+              onClick={() => navigate('/signup')}
+            >
+              Create an account here
+            </Typography>
             <Box onClick={googleSignIn}>
               <Buttons
                 size="sm"
@@ -67,33 +77,11 @@ function Login() {
                     <FcGoogle style={{ padding: '5px' }} />
                     Continue With Google
                   </>
-              )}
+                )}
               />
             </Box>
-            <Box
-              onClick={() => {
-                setModal(true);
-              }}
-              pt={3}
-            >
-              <Buttons
-                size="sm"
-                variant="contained"
-                color="secondary"
-                Text={(
-                  <>
-                    <FcGoogle style={{ padding: '5px' }} />
-                    Forgotten Password
-                  </>
-              )}
-              />
-              <BasicModal
-                test={Modal}
-                callback={() => {
-                  console.log('hjdf');
-                  setModal(false);
-                }}
-              />
+            <Box pt={3}>
+              <Modals />
             </Box>
           </Box>
         </Box>
