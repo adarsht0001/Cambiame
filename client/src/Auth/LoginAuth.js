@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Navigate, Outlet } from 'react-router-dom';
 
 function IsLogged() {

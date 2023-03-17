@@ -17,7 +17,11 @@
         "react"
     ],
     "rules": {
-        "import/no-extraneous-dependencies": ["error", {"includeInternal": true, "includeTypes": true}],
+        "import/no-extraneous-dependencies": ["error",  {
+            "devDependencies": false,
+            "optionalDependencies": false,
+            "peerDependencies": false
+          }],
         "react/react-in-jsx-scope": "off",
         "react/prop-types":"off",
         "react/jsx-filename-extension": [

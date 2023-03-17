@@ -1,4 +1,5 @@
-let users = require('../model/userSchema');
+const users = require('../model/userSchema');
+
 const admin = { email: 'Admin', pass: '123' };
 
 module.exports = {
@@ -12,20 +13,19 @@ module.exports = {
         return res
           .status(401)
           .json({ msg: 'Invalid name', name: true, status: false });
-      } else {
-        return res
-          .status(401)
-          .json({ msg: 'Invalid password', password: true, status: false });
       }
+      return res
+        .status(401)
+        .json({ msg: 'Invalid password', password: true, status: false });
     }
   },
   users: async (req, res, next) => {
     const data = await users.find({});
-    res.status(200).json({ data: data });
+    res.status(200).json({ data });
   },
   block: async (req, res, next) => {
-    const email = req.body.data.email;
-    await users.updateOne({ email: email }, { $set: { status: false } });
-    res.status(200)
+    const { email } = req.body.data;
+    await users.updateOne({ email }, { $set: { status: false } });
+    res.status(200);
   },
 };
