@@ -1,45 +1,56 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-underscore-dangle */
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { BiBlock } from 'react-icons/bi';
 import Paper from '@mui/material/Paper';
 import Switch from '@mui/material/Switch';
 import axios from '../../Axios/Axios';
 
-export default function AccessibleTable(props) {
-  const { data } = props;
-  const head = Object.keys(data[0]);
-  const block = (email) => {
-    axios.put('/block', { data: { email } });
+export default function BasicTable() {
+  const [user, setUsers] = useState([]);
+  useEffect(() => {
+    axios.get('/users').then((res) => {
+      setUsers(res.data);
+    });
+  }, []);
+
+  const blockUser = (email) => {
+    axios.put('/block-user', { email }).then((data) => {
+      console.log(data);
+    }).catch((err) => {
+      console.log(err);
+    });
   };
   return (
-    <TableContainer component={Paper} sx={{ marginLeft: '20%' }}>
-      <Table sx={{ minWidth: 650 }} aria-label="caption table">
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>No</TableCell>
-            {head.map((elem) => (
-              <TableCell align="right">{elem}</TableCell>
-            ))}
-            <TableCell align="right"><BiBlock /></TableCell>
+            <TableCell align="right">id</TableCell>
+            <TableCell align="right">Name</TableCell>
+            <TableCell align="right">Email</TableCell>
+            <TableCell align="right">Blocked</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((element, i) => (
-            <TableRow key={element.name}>
+          {user.map((row, i) => (
+            <TableRow
+              key={row.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
               <TableCell component="th" scope="row">
                 {i + 1}
               </TableCell>
-              <TableCell align="right">{element._id}</TableCell>
-              <TableCell align="right">{element.username}</TableCell>
-              <TableCell align="right">{element.email}</TableCell>
-              <Switch onClick={block(element.email)} />
+              <TableCell align="right">{row.id}</TableCell>
+              <TableCell align="right">{row.name}</TableCell>
+              <TableCell align="right">{row.email}</TableCell>
+              <TableCell align="right">
+                <Switch defaultChecked={row.status} onChange={() => blockUser(row.email)} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

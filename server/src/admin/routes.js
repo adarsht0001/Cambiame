@@ -10,7 +10,8 @@ const AdminRoute = () => {
   const controller = adminController(userRepository);
 
   router.route('/login').post(controller.login);
-//   router.route('/signup').post(controller.Signup);
+  router.route('/users').get(controller.users);
+  router.route('/block-user').put(controller.block)
 
   return router;
 };

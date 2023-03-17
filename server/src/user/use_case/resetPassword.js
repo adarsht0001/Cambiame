@@ -7,16 +7,13 @@ module.exports = (repository) => {
     return repository.getById(id).then((res) => {
       return new Promise(async(resolve, reject) => {
         if (res) {
-          console.log(res);
           console.log("shakldhj");
             const secret = process.env.JWT_SECRECT + res.password;
             const payload=verify(token,secret)
-            console.log(payload);
             if(payload.expired){
                 reject(payload)
             }else{
-                const hashedPassword = "hid"
-                // await bcrypt.hash(password, 10)
+                const hashedPassword = await bcrypt.hash(password, 10)
                 await repository.update({email:payload.email},{password:hashedPassword})
                 resolve({msg:"password changed"})
             }
