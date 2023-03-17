@@ -31,11 +31,11 @@ function Form() {
       password,
     };
     if (validatePass()) {
-      axios.post('/signup', data).then(() => {
+      axios.post('/signup', data).then((res) => {
+        console.log(res.data.user);
         navigate('/login');
       }).catch((err) => {
         setErr(err.response.data);
-        alert(err.response.data.msg);
       });
     }
   };

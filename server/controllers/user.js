@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-shadow */
-const bcrypt = require('bcrypt');
+
 const users = require('../model/userSchema');
 const { createToken } = require('../helper/jwt');
 

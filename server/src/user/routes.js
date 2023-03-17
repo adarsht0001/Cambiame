@@ -1,6 +1,6 @@
 const express = require('express');
 const userController = require('./controller');
-const Database = require('./data_access/database');
+const Database = require('../data_access/user/database');
 const UserRepository = require('./repository');
 
 const UserRoute = () => {
@@ -9,7 +9,8 @@ const UserRoute = () => {
   const router = express.Router();
   const controller = userController(repository);
 
-  router.route('/').get(controller.login);
+  router.route('/login').post(controller.login);
+  router.route('/signup').post(controller.Signup);
 
   return router;
 };
