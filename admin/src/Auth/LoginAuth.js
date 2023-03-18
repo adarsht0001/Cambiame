@@ -4,12 +4,15 @@ import { useSelector } from 'react-redux';
 
 function IsLogged() {
   const user = useSelector((state) => state.user);
+  console.log(user);
   return (
     user.state ? <Outlet /> : <Navigate to="/login" />
   );
 }
 function LoggedIn() {
   const user = useSelector((state) => state.user);
+  console.log(user);
+
   return (
     user.email ? <Navigate to="/admin" /> : <Outlet />
   );

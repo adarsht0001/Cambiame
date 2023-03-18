@@ -18,8 +18,7 @@ export default function BasicTable() {
   }, []);
 
   const blockUser = (email) => {
-    axios.put('/block-user', { email }).then((data) => {
-      console.log(data);
+    axios.put('/block-user', { email }).then(() => {
     }).catch((err) => {
       console.log(err);
     });

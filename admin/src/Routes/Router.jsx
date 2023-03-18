@@ -10,6 +10,7 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route element={<IsLogged />}>
+          <Route element={<Dashboard />} path="/" />
           <Route element={<Dashboard />} path="/admin" />
           <Route element={<Dashboard />} exact path="/user" />
         </Route>
