@@ -19,7 +19,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 // import InboxIcon from '@mui/icons-material/MoveToInbox';
 // import MailIcon from '@mui/icons-material/Mail';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { FiUsers, FiLogOut } from 'react-icons/fi';
+import { Logout } from '../../Redux';
 import AccessibleTable from '../../Components/table/Table';
 
 const drawerWidth = 240;
@@ -89,7 +92,9 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer() {
+export default function Dashboard() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -181,7 +186,10 @@ export default function MiniDrawer() {
         </List>
         <Divider />
         <List>
-          <ListItem disablePadding sx={{ display: 'block' }}>
+          <ListItem
+            disablePadding
+            sx={{ display: 'block' }}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -196,7 +204,11 @@ export default function MiniDrawer() {
                   justifyContent: 'center',
                 }}
               >
-                <FiLogOut />
+                <FiLogOut onClick={() => {
+                  dispatch(Logout());
+                  navigate('/login');
+                }}
+                />
                 {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
               </ListItemIcon>
               <ListItemText primary="Logout" sx={{ opacity: open ? 1 : 0 }} />

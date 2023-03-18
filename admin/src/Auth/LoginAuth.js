@@ -1,17 +1,17 @@
-/* eslint-disable react/react-in-jsx-scope */
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
 import { Navigate, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function IsLogged() {
-  const user = localStorage.getItem('admin');
+  const user = useSelector((state) => state.user);
   return (
-    user ? <Outlet /> : <Navigate to="/login" />
+    user.email ? <Outlet /> : <Navigate to="/login" />
   );
 }
 function LoggedIn() {
-  const user = localStorage.getItem('user');
+  const user = useSelector((state) => state.user);
   return (
-    user ? <Navigate to="/" /> : <Outlet />
+    user.email ? <Navigate to="/admin" /> : <Outlet />
   );
 }
 

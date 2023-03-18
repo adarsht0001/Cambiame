@@ -1,11 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react';
 import { Button, TextField, Grid } from '@mui/material';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../Axios/Axios';
+import { Login } from '../../Redux';
 
 function Form() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setErr] = useState({});
@@ -17,9 +20,10 @@ function Form() {
       password,
     };
     axios.post('/login', data)
-      .then(() => {
+      .then((res) => {
+        dispatch(Login(res.data.user));
         localStorage.setItem('admin', true);
-        navigate('/user');
+        navigate('/admin');
       })
       .catch((err) => {
         setErr(err.response.data);

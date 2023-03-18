@@ -8,6 +8,7 @@ module.exports = (repository) => {
     const { email, password } = req.body;
     Login.execute(email, password)
       .then((user) => {
+        console.log(user);
         return res.status(201).json({ status: true, user });
       })
       .catch((err) => {
