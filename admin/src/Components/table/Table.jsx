@@ -14,6 +14,8 @@ export default function BasicTable() {
   useEffect(() => {
     axios.get('/users').then((res) => {
       setUsers(res.data);
+    }).catch((err) => {
+      alert(err.msg);
     });
   }, []);
 
