@@ -2,6 +2,7 @@ const loginUser = require('./use_case/loginUser');
 const signup = require('./use_case/addUser');
 const forgottenPass = require('./use_case/forgotpassword');
 const resetPassword = require('./use_case/resetPassword');
+const verifyEMail = require('./use_case/verifyUSer');
 
 module.exports = (repository) => {
   const login = (req, res) => {
@@ -58,10 +59,23 @@ module.exports = (repository) => {
         return res.status(401).json({ status: false, ...err });
       });
   };
+
+  const verifyMail = (req,res)=>{
+    const MailCase = verifyEMail(repository) 
+    const { id, token } = req.params;
+    MailCase.execute(id,token).then((response) => {
+      console.log(response);
+      return res.status(201).json({ status: true, ...response });
+    }).catch((err) => {
+      return res.status(401).json({ status: false, ...err });
+    });
+  };
+
   return {
     login,
     Signup,
     forgotPass,
     resetPass,
+    verifyMail
   };
 };

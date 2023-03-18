@@ -1,5 +1,9 @@
 const bcrypt = require('bcrypt');
 const userEntity = require('../entity');
+const { transport } = require('../../helper/sendMail');
+const { onetime } = require('../../helper/jwt');
+
+require('dotenv').config();
 
 module.exports = (repository) => {
   async function execute(username, email, password) {
@@ -15,7 +19,22 @@ module.exports = (repository) => {
             } else {
               const hashedPassword = await bcrypt.hash(password, 10);
               const user = new userEntity(username, email, hashedPassword);
-              repository.adduser(user);
+              let data = await repository.adduser(user);
+              const secret = process.env.JWT_SECRECT + hashedPassword;
+              const payload = {
+                email: data.email,
+                _id: data._id,
+              };
+              const token = onetime(payload, secret);
+              const link = `http://localhost:3000/verifyemail/${data._id}/${token}`
+              const mailOpt = {
+                from: 'Cambiame <Cambiame@gmail.com>',
+                to: 'adarsht00001@gmail.com',
+                subject: 'Verificaton Link',
+                text: `Your Verificaton Link is:${link}`,
+                html: `<hi>Your Verificaton Link Link is:${link}</h1>`,
+              };
+              let result = await transport(mailOpt);
               resolve(user);
             }
           });

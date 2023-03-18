@@ -13,6 +13,7 @@ const UserRoute = () => {
   router.route('/signup').post(controller.Signup);
   router.route('/forgot-password').post(controller.forgotPass)
   router.route('/reset-password/:id/:token').post(controller.resetPass)
+  router.route('/verify-email/:id/:token').post(controller.verifyMail)
 
   return router;
 };

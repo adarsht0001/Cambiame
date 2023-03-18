@@ -7,7 +7,6 @@ module.exports = (repository) => {
     return repository.getById(id).then((res) => {
       return new Promise(async(resolve, reject) => {
         if (res) {
-          console.log("shakldhj");
             const secret = process.env.JWT_SECRECT + res.password;
             const payload=verify(token,secret)
             if(payload.expired){

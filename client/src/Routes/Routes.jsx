@@ -5,6 +5,7 @@ import Signup from '../Pages/Signup/Signup';
 import { IsLogged, LoggedIn } from '../Auth/LoginAuth';
 import Home from '../Pages/Home/Home';
 import Resetpass from '../Pages/ResetPassword/Resetpass';
+import VerifyEmail from '../Pages/verifyMail/verifyEmail';
 
 function Router() {
   return (
@@ -15,6 +16,7 @@ function Router() {
         </Route>
         <Route element={<LoggedIn />}>
           <Route element={<Resetpass />} path="/resetpassword/:id/:token" />
+          <Route element={<VerifyEmail />} path="/verifyemail/:id/:token" />
           <Route element={<Signup />} exact path="/signup" />
           <Route element={<Login />} exact path="/login" />
         </Route>

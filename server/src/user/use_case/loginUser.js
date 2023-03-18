@@ -12,6 +12,12 @@ module.exports = (repository) => {
               msg:"email Has been blocked"
             })
           }
+          if(!res.verified){
+            reject({
+              email: true,
+              msg:"Verify your Email"
+            })
+          }
           const isPasswordValid = await bcrypt.compare(userpass, res.password);
           if (!isPasswordValid) {
             reject({

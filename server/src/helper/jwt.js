@@ -8,6 +8,9 @@ module.exports = {
   forgot: (payload, secret) => {
     return jwt.sign(payload, secret, { expiresIn: '15m' });
   },
+  onetime:(payload,secret)=>{
+    return jwt.sign(payload, secret)
+  },
   verify: (token, secret) => {
     try {
       return jwt.verify(token, secret);

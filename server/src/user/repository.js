@@ -6,36 +6,35 @@ module.exports = class UserRepository {
   getByName(name) {
     return new Promise(async (resolve, reject) => {
       const user = await this.database.findOne({ username: name });
-      resolve(user)
+      resolve(user);
     });
   }
 
   getByEmail(email) {
     return new Promise(async (resolve, reject) => {
       const user = await this.database.findOne({ email: email });
-      resolve(user)
+      resolve(user);
     });
   }
 
-  adduser(user){
-    return new Promise(async(resolve, reject) => {
-        this.database(user).save()
-        resolve(user)
-    })
+  adduser(user) {
+    return new Promise(async (resolve, reject) => {
+      let insert = await this.database(user).save();
+      resolve(insert);
+    });
   }
 
-  getById(id){
-    return new Promise(async(resolve, reject) => {
-        let user = await this.database.findById(id)
-        resolve(user)
-    })
+  getById(id) {
+    return new Promise(async (resolve, reject) => {
+      let user = await this.database.findById(id);
+      resolve(user);
+    });
   }
 
-  update(filter,update){
-    return new Promise(async(resolve, reject) => {
-        let user = await this.database.updateOne(filter,update)
-        resolve(user)
-    })
+  update(filter, update) {
+    return new Promise(async (resolve, reject) => {
+      let user = await this.database.updateOne(filter, update);
+      resolve(user);
+    });
   }
-
 };
