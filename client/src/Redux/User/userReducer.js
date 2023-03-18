@@ -10,7 +10,9 @@ const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case USER_LOGIN:
       return {
-        state: payload,
+        name: payload.username,
+        email: payload.email,
+        access_Token: payload.accesToken,
       };
 
     case USER_LOGOUT:
