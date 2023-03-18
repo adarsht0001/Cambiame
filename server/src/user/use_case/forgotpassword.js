@@ -1,5 +1,5 @@
 const { forgot } = require('../../helper/jwt');
-const { transport } = require('../../helper/forgottenpass');
+const { transport } = require('../../helper/sendMail');
 
 require('dotenv').config();
 

@@ -14,7 +14,7 @@ const reducer = (state = initialState, { type, payload }) => {
       };
 
     case USER_LOGOUT:
-      return { ...state };
+      return { initialState };
 
     default:
       return state;
