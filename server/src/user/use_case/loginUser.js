@@ -6,6 +6,12 @@ module.exports = (repository) => {
     return repository.getByEmail(email).then((res) => {
       return new Promise(async (resolve, reject) => {
         if (res) {
+          if(res.blocked){
+            reject({
+              email: true,
+              msg:"email Has been blocked"
+            })
+          }
           const isPasswordValid = await bcrypt.compare(userpass, res.password);
           if (!isPasswordValid) {
             reject({
