@@ -31,10 +31,10 @@ export default function BasicTable() {
         <TableHead>
           <TableRow>
             <TableCell>No</TableCell>
-            <TableCell align="right">id</TableCell>
-            <TableCell align="right">Name</TableCell>
-            <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Blocked</TableCell>
+            <TableCell align="left">id</TableCell>
+            <TableCell align="left">Name</TableCell>
+            <TableCell align="left">Email</TableCell>
+            <TableCell align="left">Blocked</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -46,10 +46,10 @@ export default function BasicTable() {
               <TableCell component="th" scope="row">
                 {i + 1}
               </TableCell>
-              <TableCell align="right">{row.id}</TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right">
+              <TableCell align="left">{row.id}</TableCell>
+              <TableCell align="left">{row.name}</TableCell>
+              <TableCell align="left">{row.email}</TableCell>
+              <TableCell align="left">
                 <Switch defaultChecked={row.status} onChange={() => blockUser(row.email)} />
               </TableCell>
             </TableRow>

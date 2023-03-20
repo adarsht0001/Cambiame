@@ -41,7 +41,6 @@ function Home() {
         >
           LogOut
         </button>
-
       </Stack>
     </Grid>
   );

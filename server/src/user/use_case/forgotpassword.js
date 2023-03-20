@@ -18,7 +18,7 @@ module.exports = (repository) => {
           const mailOpt = {
             from: 'Cambiame <Cambiame@gmail.com>',
             to: 'adarsht00001@gmail.com',
-            subject: 'RESST PASSWORD',
+            subject: 'RESET PASSWORD',
             text: `Your Reset Password Link is:${link}`,
             html: `<hi>Your Reset Password Link is:${link}</h1>`,
           };
