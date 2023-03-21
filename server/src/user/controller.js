@@ -37,7 +37,7 @@ module.exports = (repository) => {
     const { email } = req.body;
     forgot
       .execute(email)
-      .then((response) => {
+      .then(() => {
         return res.status(201).json({ status: true ,msg:"Check Email... Link Has been Sent"})
       })
       .catch((err) => {
