@@ -1,4 +1,3 @@
-/* eslint-disable no-constructor-return */
 const mongoose = require('mongoose');
 
 module.exports = class Database {

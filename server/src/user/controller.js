@@ -64,7 +64,6 @@ module.exports = (repository) => {
     const MailCase = verifyEMail(repository) 
     const { id, token } = req.params;
     MailCase.execute(id,token).then((response) => {
-      console.log(response);
       return res.status(201).json({ status: true, ...response });
     }).catch((err) => {
       return res.status(401).json({ status: false, ...err });
