@@ -14,19 +14,17 @@ export default function SimpleBackdrop() {
         navigate('/login');
       }, 5000);
     }).catch((error) => {
-      console.log(error);
+      alert(error);
     });
   }, []);
 
   return (
-    <div>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open
-      >
-        <CircularProgress color="inherit" />
-        Verifying Email
-      </Backdrop>
-    </div>
+    <Backdrop
+      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      open
+    >
+      <CircularProgress color="inherit" />
+      Verifying Email
+    </Backdrop>
   );
 }

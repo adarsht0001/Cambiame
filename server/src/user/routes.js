@@ -5,9 +5,9 @@ const UserRepository = require('./repository');
 
 const UserRoute = () => {
   const database = new Database();
-  const repository = new UserRepository(database);
+  const userRepository = new UserRepository(database);
   const router = express.Router();
-  const controller = userController(repository);
+  const controller = userController(userRepository);
 
   router.route('/login').post(controller.login);
   router.route('/signup').post(controller.Signup);
