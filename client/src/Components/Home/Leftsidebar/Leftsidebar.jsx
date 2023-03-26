@@ -10,13 +10,6 @@ import Sidebarlink from './Sidebarlink';
 function Leftsidebar() {
   return (
     <Stack
-      sx={{
-        flexDirection: {
-          xs: 'row',
-          sm: 'row',
-          md: 'column',
-        },
-      }}
       justifyContent="space-between"
       alignItems="stretch"
       // spacing={2}
@@ -37,6 +30,14 @@ function Leftsidebar() {
         letterSpacing={2}
         width="250px"
         minWidth="250px"
+        sx={{
+          display: 'flex',
+          flexDirection: {
+            xs: 'row',
+            sm: 'row',
+            md: 'column',
+          },
+        }}
       >
         <Sidebarlink text="Home" Icon={AiOutlineHome} />
         <Sidebarlink text="Messges" Icon={AiOutlineMessage} />

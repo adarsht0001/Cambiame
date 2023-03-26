@@ -3,10 +3,11 @@ const signup = require('./use_case/addUser');
 const forgottenPass = require('./use_case/forgotpassword');
 const resetPassword = require('./use_case/resetPassword');
 const verifyEMail = require('./use_case/verifyUSer');
+const createPost = require('./use_case/post');
 
-module.exports = (repository) => {
+module.exports = (userRepo,postRepo) => {
   const login = (req, res) => {
-    const loginUsercase = loginUser(repository);
+    const loginUsercase = loginUser(userRepo);
     const { email, password } = req.body;
     loginUsercase
       .execute(email, password)
@@ -19,7 +20,7 @@ module.exports = (repository) => {
   };
 
   const Signup = (req, res) => {
-    const Signupcase = signup(repository);
+    const Signupcase = signup(userRepo);
     const { email, name, password } = req.body;
     Signupcase.execute(name, email, password)
       .then((user) => {
@@ -33,7 +34,7 @@ module.exports = (repository) => {
   };
 
   const forgotPass = (req, res) => {
-    const forgot = forgottenPass(repository);
+    const forgot = forgottenPass(userRepo);
     const { email } = req.body;
     forgot
       .execute(email)
@@ -46,7 +47,7 @@ module.exports = (repository) => {
   };
 
   const resetPass = (req, res) => {
-    const resetpasscase = resetPassword(repository);
+    const resetpasscase = resetPassword(userRepo);
     const { id, token } = req.params;
     const { pass } = req.body;
     resetpasscase
@@ -61,7 +62,7 @@ module.exports = (repository) => {
   };
 
   const verifyMail = (req,res)=>{
-    const MailCase = verifyEMail(repository) 
+    const MailCase = verifyEMail(userRepo) 
     const { id, token } = req.params;
     MailCase.execute(id,token).then((response) => {
       return res.status(201).json({ status: true, ...response });
@@ -70,11 +71,25 @@ module.exports = (repository) => {
     });
   };
 
+  const post=(req,res,next)=>{
+    const addPost=createPost(postRepo)
+    const {email,text}=req.body
+    addPost.execute(email,text,req.file).then((response)=>{
+      console.log(response);
+      return res.status(201).json({status:true,...response})
+    }).catch((err)=>{
+      return res.status(401).json({status:false,...err})
+      console.log(err);
+    })
+    
+  }
+
   return {
     login,
     Signup,
     forgotPass,
     resetPass,
-    verifyMail
+    verifyMail,
+    post
   };
 };

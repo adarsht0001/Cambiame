@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Leftsidebar from '../../Components/Home/Leftsidebar/Leftsidebar';
+import Main from '../../Components/Home/main/main';
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
       padding={10}
     >
       <Leftsidebar />
-      <h1>Item 2</h1>
+      <Main />
       <h1>Item 3</h1>
     </Stack>
   );
