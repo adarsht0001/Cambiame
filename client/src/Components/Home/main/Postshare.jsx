@@ -30,7 +30,7 @@ function Postshare() {
     }).then((res) => {
       alert(res.data.msg);
     }).catch((err) => {
-      alert(err);
+      alert(err.response.data.msg);
     });
   };
   return (

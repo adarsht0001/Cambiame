@@ -8,7 +8,6 @@ module.exports = {
     if (token == null) return res.status(401).json({ msg: 'Invalid Token' });
     jwt.verify(token, process.env.ACESS_TOKEN_SCERET, (err, user) => {
       if (err) return res.status(401).json({ msg: 'Invalid Token' });
-      console.log(user);
       next();
     });
   },

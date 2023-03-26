@@ -12,8 +12,15 @@ module.exports = class UserRepository {
 
     getPost(){
       return new Promise(async(resolve, reject) => {
-        let post = await this.database.find({})
-      resolve(post)
+        let post = await this.database.find({}).sort({date: -1})
+        resolve(post)
       })
+    }
+
+    getById(id) {
+      return new Promise(async (resolve, reject) => {
+        let post = await this.database.findById(id);
+        resolve(post);
+      });
     }
 }  

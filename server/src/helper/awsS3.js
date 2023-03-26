@@ -23,14 +23,15 @@ module.exports={
         const storage = multer.memoryStorage()
         return multer({ storage: storage })
     },
-    uploadtoS3:(fileData,name)=>{
+    uploadtoS3:(fileData,name,mimetype)=>{
         return new Promise((resolve, reject) => {
             const imageName = generateFileName()
-            const path=`${name}/${imageName}.jpg`
+            const path=`${name}/${imageName}`
             const params={
                 Bucket:process.env.S3_BUCKET,
                 Key:path,
-                Body:fileData
+                Body:fileData,
+                'ContentType': mimetype
             }
             const command = new PutObjectCommand(params);
             s3.send(command).then(()=>{
@@ -50,8 +51,16 @@ module.exports={
         const command = new GetObjectCommand(params);
         const seconds = 600000
         const url = await getSignedUrl(s3, command, { expiresIn: seconds });
-        // console.log(url,"hdjksahk");
       
         return url
+    },
+    deleteFile:(fileName) =>{
+        const deleteParams = {
+          Bucket: bucketName,
+          Key: fileName,
+        }
+      
+        return s3.send(new DeleteObjectCommand(deleteParams));
       }
+
 }

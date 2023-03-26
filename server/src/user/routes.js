@@ -4,7 +4,7 @@ const userDatabase = require('../data_access/user/database');
 const postDatabase = require('../data_access/Post/database')
 const UserRepository = require('./repository');
 const postRepository = require('../repository/postRepository')
-const {upload, getObjectSignedUrl} =require('../helper/awsS3')
+const {upload} =require('../helper/awsS3')
 const {authenticateToken} = require('../middlewares/jwtverify')
 const multer=upload()
 
@@ -22,16 +22,12 @@ const UserRoute = () => {
   router.route('/reset-password/:id/:token').post(controller.resetPass)
   router.route('/verify-email/:id/:token').post(controller.verifyMail)
   router.route('/post').post(authenticateToken,multer.single('file'),controller.post)
-  router.route('/test').get((req,res)=>{
-    postRepo.getPost().then(async(posts)=>{
-      for (let post of posts) {
-        post.imageUrl = await getObjectSignedUrl(post.image)
-      }
-      // console.log(posts[0].image);
-      // let url= await getObjectSignedUrl(posts[0].image)
-      res.send(posts)
+  router.route('/get-post').get(controller.getPost)
+  router.route('/delete-post/:id').delete((req,res)=>{
+    postRepo.getById(req.params.id).then((post)=>{
+      
     })
-  })
+  })  
   
   return router;
 };

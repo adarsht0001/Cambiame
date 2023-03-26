@@ -4,6 +4,7 @@ const forgottenPass = require('./use_case/forgotpassword');
 const resetPassword = require('./use_case/resetPassword');
 const verifyEMail = require('./use_case/verifyUSer');
 const createPost = require('./use_case/post');
+const getPosts = require('./use_case/getPosts');
 
 module.exports = (userRepo,postRepo) => {
   const login = (req, res) => {
@@ -85,8 +86,13 @@ module.exports = (userRepo,postRepo) => {
   }
 
   const getPost=(req,res,next)=>{
-    
+    const getpostExec=getPosts(postRepo)
+    getpostExec.execute().then((data)=>{
+      console.log(data);
+      return res.status(200).json(data)
+    })
   }
+
   return {
     login,
     Signup,

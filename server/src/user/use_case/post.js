@@ -6,7 +6,7 @@ module.exports = (repository) => {
     return new Promise(async(resolve, reject) => {
         const date = new Date()
         if(file){
-            uploadtoS3(file.buffer,name).then(async(path)=>{
+            uploadtoS3(file.buffer,name,file.mimetype).then(async(path)=>{
                     let post = new postEntity(name,caption,path,date)
                     await repository.addPost(post)
                     resolve({

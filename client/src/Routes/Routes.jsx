@@ -12,8 +12,8 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route element={<IsLogged />}>
-          <Route element={<Home />} path="/" />
           {/* <Route element={<Homes />} exact path="/" /> */}
+          <Route element={<Home />} path="/" />
         </Route>
         <Route element={<LoggedIn />}>
           <Route element={<Resetpass />} path="/resetpassword/:id/:token" />
