@@ -23,4 +23,12 @@ module.exports = class UserRepository {
         resolve(post);
       });
     }
+
+    delete(id){
+      return new Promise(async(resolve, reject) => {
+        const deletedPost = await this.database.findByIdAndDelete(id);
+        console.log(deletedPost);
+        resolve(deletedPost)
+      })
+    }
 }  

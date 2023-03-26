@@ -1,12 +1,13 @@
-const loginUser = require('./use_case/loginUser');
-const signup = require('./use_case/addUser');
-const forgottenPass = require('./use_case/forgotpassword');
-const resetPassword = require('./use_case/resetPassword');
-const verifyEMail = require('./use_case/verifyUSer');
-const createPost = require('./use_case/post');
-const getPosts = require('./use_case/getPosts');
+const loginUser = require("./use_case/loginUser");
+const signup = require("./use_case/addUser");
+const forgottenPass = require("./use_case/forgotpassword");
+const resetPassword = require("./use_case/resetPassword");
+const verifyEMail = require("./use_case/verifyUSer");
+const createPost = require("./use_case/post");
+const getPosts = require("./use_case/getPosts");
+const removePost = require("./use_case/deletePost");
 
-module.exports = (userRepo,postRepo) => {
+module.exports = (userRepo, postRepo) => {
   const login = (req, res) => {
     const loginUsercase = loginUser(userRepo);
     const { email, password } = req.body;
@@ -40,7 +41,9 @@ module.exports = (userRepo,postRepo) => {
     forgot
       .execute(email)
       .then(() => {
-        return res.status(201).json({ status: true ,msg:"Check Email... Link Has been Sent"})
+        return res
+          .status(201)
+          .json({ status: true, msg: "Check Email... Link Has been Sent" });
       })
       .catch((err) => {
         return res.status(401).json({ ...err, status: false });
@@ -62,36 +65,47 @@ module.exports = (userRepo,postRepo) => {
       });
   };
 
-  const verifyMail = (req,res)=>{
-    const MailCase = verifyEMail(userRepo) 
+  const verifyMail = (req, res) => {
+    const MailCase = verifyEMail(userRepo);
     const { id, token } = req.params;
-    MailCase.execute(id,token).then((response) => {
-      return res.status(201).json({ status: true, ...response });
-    }).catch((err) => {
-      return res.status(401).json({ status: false, ...err });
+    MailCase.execute(id, token)
+      .then((response) => {
+        return res.status(201).json({ status: true, ...response });
+      })
+      .catch((err) => {
+        return res.status(401).json({ status: false, ...err });
+      });
+  };
+
+  const post = (req, res, next) => {
+    const addPost = createPost(postRepo);
+    const { name, text } = req.body;
+    addPost
+      .execute(name, text, req.file)
+      .then((response) => {
+        console.log(response);
+        return res.status(201).json({ status: true, ...response });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(401).json({ status: false, ...err });
+      });
+  };
+
+  const getPost = (req, res, next) => {
+    const getpostExec = getPosts(postRepo);
+    getpostExec.execute().then((data) => {
+      return res.status(200).json(data);
     });
   };
 
-  const post=(req,res,next)=>{
-    const addPost=createPost(postRepo)
-    const {name,text}=req.body
-    addPost.execute(name,text,req.file).then((response)=>{
-      console.log(response);
-      return res.status(201).json({status:true,...response})
-    }).catch((err)=>{
-      console.log(err);
-      return res.status(401).json({status:false,...err})
-    })
-    
-  }
-
-  const getPost=(req,res,next)=>{
-    const getpostExec=getPosts(postRepo)
-    getpostExec.execute().then((data)=>{
-      console.log(data);
-      return res.status(200).json(data)
-    })
-  }
+  const deletePost = (req, res, next) => {
+    const removePostexe = removePost(postRepo);
+    const { id } = req.params;
+    removePostexe.execute(id).then((response) => {
+      res.status(200).json({ status: true, ...response });
+    });
+  };
 
   return {
     login,
@@ -100,6 +114,7 @@ module.exports = (userRepo,postRepo) => {
     resetPass,
     verifyMail,
     post,
-    getPost
+    getPost,
+    deletePost,
   };
 };

@@ -56,7 +56,7 @@ module.exports={
     },
     deleteFile:(fileName) =>{
         const deleteParams = {
-          Bucket: bucketName,
+          Bucket: BUCKET,
           Key: fileName,
         }
       

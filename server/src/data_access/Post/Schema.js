@@ -1,20 +1,23 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 module.exports = new mongoose.Schema({
   user: {
     type: String,
     required: true,
   },
-  caption:{
-    type:String,
-    required:true,
+  caption: {
+    type: String,
+    required: true,
   },
-  image:{
-    type:String
+  image: {
+    type: String,
   },
   like: {
     type: Number,
-    default:0
+    default: 0,
+  },
+  likedby: {
+    type: Array,
   },
   comment: {
     type: Object,
@@ -22,11 +25,11 @@ module.exports = new mongoose.Schema({
   report: {
     type: Object,
   },
-  hidden:{
-    type:Boolean,
-    default:false,
+  hidden: {
+    type: Boolean,
+    default: false,
   },
-  date:{
-    type:Date
-  }
+  date: {
+    type: Date,
+  },
 });

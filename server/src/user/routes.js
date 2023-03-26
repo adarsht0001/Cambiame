@@ -1,34 +1,38 @@
-const express = require('express');
-const userController = require('./controller');
-const userDatabase = require('../data_access/user/database');
-const postDatabase = require('../data_access/Post/database')
-const UserRepository = require('./repository');
-const postRepository = require('../repository/postRepository')
-const {upload} =require('../helper/awsS3')
-const {authenticateToken} = require('../middlewares/jwtverify')
-const multer=upload()
+const express = require("express");
+const userController = require("./controller");
+const userDatabase = require("../data_access/user/database");
+const postDatabase = require("../data_access/Post/database");
+const UserRepository = require("./repository");
+const postRepository = require("../repository/postRepository");
+const { upload, deleteFile } = require("../helper/awsS3");
+const { authenticateToken } = require("../middlewares/jwtverify");
+const multer = upload();
 
 const UserRoute = () => {
   const userDb = new userDatabase();
   const postDb = new postDatabase();
   const userRepo = new UserRepository(userDb);
-  const postRepo = new postRepository(postDb)
+  const postRepo = new postRepository(postDb);
   const router = express.Router();
-  const controller = userController(userRepo,postRepo);
+  const controller = userController(userRepo, postRepo);
 
-  router.route('/login').post(controller.login);
-  router.route('/signup').post(controller.Signup);
-  router.route('/forgot-password').post(controller.forgotPass)
-  router.route('/reset-password/:id/:token').post(controller.resetPass)
-  router.route('/verify-email/:id/:token').post(controller.verifyMail)
-  router.route('/post').post(authenticateToken,multer.single('file'),controller.post)
-  router.route('/get-post').get(controller.getPost)
-  router.route('/delete-post/:id').delete((req,res)=>{
-    postRepo.getById(req.params.id).then((post)=>{
-      
-    })
-  })  
-  
+  router.route("/login").post(controller.login);
+  router.route("/signup").post(controller.Signup);
+  router.route("/forgot-password").post(controller.forgotPass);
+  router.route("/reset-password/:id/:token").post(controller.resetPass);
+  router.route("/verify-email/:id/:token").post(controller.verifyMail);
+  router
+    .route("/post")
+    .post(authenticateToken, multer.single("file"), controller.post);
+  router.route("/get-post").get(controller.getPost);
+  router.route("/delete-post/:id").delete(controller.deletePost);
+  // .delete((req,res)=>{
+  //   postRepo.getById(req.params.id).then(async(post)=>{
+  //     await deleteFile(post.image)
+  //     postRepo.delete(req.params.id)
+  //   })
+  // })
+
   return router;
 };
 
