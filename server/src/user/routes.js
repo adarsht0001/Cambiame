@@ -4,7 +4,8 @@ const userDatabase = require('../data_access/user/database');
 const postDatabase = require('../data_access/Post/database')
 const UserRepository = require('./repository');
 const postRepository = require('../repository/postRepository')
-const {upload} =require('../helper/awsS3')
+const {upload, getObjectSignedUrl} =require('../helper/awsS3')
+const {authenticateToken} = require('../middlewares/jwtverify')
 const multer=upload()
 
 const UserRoute = () => {
@@ -20,18 +21,17 @@ const UserRoute = () => {
   router.route('/forgot-password').post(controller.forgotPass)
   router.route('/reset-password/:id/:token').post(controller.resetPass)
   router.route('/verify-email/:id/:token').post(controller.verifyMail)
-  router.route('/post').post(multer.single('file'),controller.post)
-  // post(multer.single('file'),(req,res)=>{
-  //   const {email,text}=req.body
-  //   if(!req.file){
-  //     console.log('here');
-  //     console.log(req.file);
-  //   }
-  //   uploadtoS3(req.file.buffer,email).then((result)=>{
-  //     console.log(result);
-  //   })
-  // })
-
+  router.route('/post').post(authenticateToken,multer.single('file'),controller.post)
+  router.route('/test').get((req,res)=>{
+    postRepo.getPost().then(async(posts)=>{
+      for (let post of posts) {
+        post.imageUrl = await getObjectSignedUrl(post.image)
+      }
+      // console.log(posts[0].image);
+      // let url= await getObjectSignedUrl(posts[0].image)
+      res.send(posts)
+    })
+  })
   
   return router;
 };

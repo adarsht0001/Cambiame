@@ -21,15 +21,16 @@ function Postshare() {
     const data = new FormData();
     data.append('text', text);
     data.append('file', img);
-    data.append('email', user.email ?? 'email');
+    data.append('name', user.name);
     axios.post('/post', data, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${user.access_Token}`,
       },
     }).then((res) => {
       alert(res.data.msg);
     }).catch((err) => {
-      alert(err.data.msg);
+      alert(err);
     });
   };
   return (

@@ -1,13 +1,13 @@
-const aws = require('aws-sdk');
 const multer = require('multer');
 const {S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand }= require("@aws-sdk/client-s3")
 const crypto = require('crypto');
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+
 
 require("dotenv").config()
 
 const BUCKET = process.env.S3_BUCKET
-// const s3 = new aws.S3(awsconfig);
-const s3Client = new S3Client({
+const s3 = new S3Client({
     region:process.env.S3_REGION,
     credentials: {
       accessKeyId:process.env.S3_ACCESS_KEY,
@@ -23,21 +23,35 @@ module.exports={
         const storage = multer.memoryStorage()
         return multer({ storage: storage })
     },
-    uploadtoS3:(fileData,email)=>{
+    uploadtoS3:(fileData,name)=>{
         return new Promise((resolve, reject) => {
             const imageName = generateFileName()
-            const path=`${email}/${imageName}.jpg`
+            const path=`${name}/${imageName}.jpg`
             const params={
                 Bucket:process.env.S3_BUCKET,
                 Key:path,
                 Body:fileData
             }
             const command = new PutObjectCommand(params);
-            s3Client.send(command).then(()=>{
+            s3.send(command).then(()=>{
                 resolve(path)
             }).catch((err)=>{
                 reject(err)
             })
         })
-    }
+    },
+    getObjectSignedUrl:async(key)=> {
+        const params = {
+          Bucket: BUCKET,
+          Key: key
+        }
+      
+        // https://aws.amazon.com/blogs/developer/generate-presigned-url-modular-aws-sdk-javascript/
+        const command = new GetObjectCommand(params);
+        const seconds = 600000
+        const url = await getSignedUrl(s3, command, { expiresIn: seconds });
+        // console.log(url,"hdjksahk");
+      
+        return url
+      }
 }

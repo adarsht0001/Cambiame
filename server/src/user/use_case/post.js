@@ -2,12 +2,12 @@ const { uploadtoS3 } = require('../../helper/awsS3');
 const postEntity = require('../../entity/postEntity')
 
 module.exports = (repository) => {
-  async function execute(email,caption,file) {
+  async function execute(name,caption,file) {
     return new Promise(async(resolve, reject) => {
         const date = new Date()
         if(file){
-            uploadtoS3(file.buffer,email).then(async(path)=>{
-                    let post = new postEntity(email,caption,path,date)
+            uploadtoS3(file.buffer,name).then(async(path)=>{
+                    let post = new postEntity(name,caption,path,date)
                     await repository.addPost(post)
                     resolve({
                         msg:"post added"
@@ -16,7 +16,7 @@ module.exports = (repository) => {
                     reject(err);
                 })
         }else{
-            let post = new postEntity(email,caption,path=null,date)
+            let post = new postEntity(name,caption,path=null,date)
             await repository.addPost(post)
             resolve({
                 msg:"post added"

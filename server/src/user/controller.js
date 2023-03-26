@@ -73,23 +73,27 @@ module.exports = (userRepo,postRepo) => {
 
   const post=(req,res,next)=>{
     const addPost=createPost(postRepo)
-    const {email,text}=req.body
-    addPost.execute(email,text,req.file).then((response)=>{
+    const {name,text}=req.body
+    addPost.execute(name,text,req.file).then((response)=>{
       console.log(response);
       return res.status(201).json({status:true,...response})
     }).catch((err)=>{
-      return res.status(401).json({status:false,...err})
       console.log(err);
+      return res.status(401).json({status:false,...err})
     })
     
   }
 
+  const getPost=(req,res,next)=>{
+    
+  }
   return {
     login,
     Signup,
     forgotPass,
     resetPass,
     verifyMail,
-    post
+    post,
+    getPost
   };
 };
