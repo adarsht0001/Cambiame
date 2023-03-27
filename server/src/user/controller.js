@@ -6,6 +6,7 @@ const verifyEMail = require("./use_case/verifyUSer");
 const createPost = require("./use_case/post");
 const getPosts = require("./use_case/getPosts");
 const removePost = require("./use_case/deletePost");
+const likeaPost = require("./use_case/likePost");
 
 module.exports = (userRepo, postRepo) => {
   const login = (req, res) => {
@@ -107,6 +108,14 @@ module.exports = (userRepo, postRepo) => {
     });
   };
 
+  const likePost = (req, res, next) => {
+    const likeexe = likeaPost(userRepo, postRepo);
+    const { id, post } = req.params;
+    likeexe.execute(id, post).then((response) => {
+      console.log(response);
+      res.json(response);
+    });
+  };
   return {
     login,
     Signup,
@@ -116,5 +125,6 @@ module.exports = (userRepo, postRepo) => {
     post,
     getPost,
     deletePost,
+    likePost,
   };
 };

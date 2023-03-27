@@ -12,12 +12,13 @@ module.exports = new mongoose.Schema({
   image: {
     type: String,
   },
-  like: {
+  likes: {
     type: Number,
     default: 0,
   },
   likedby: {
     type: Array,
+    default: [],
   },
   comment: {
     type: Object,

@@ -4,7 +4,7 @@ const userDatabase = require("../data_access/user/database");
 const postDatabase = require("../data_access/Post/database");
 const UserRepository = require("./repository");
 const postRepository = require("../repository/postRepository");
-const { upload, deleteFile } = require("../helper/awsS3");
+const { upload } = require("../helper/awsS3");
 const { authenticateToken } = require("../middlewares/jwtverify");
 const multer = upload();
 
@@ -25,13 +25,10 @@ const UserRoute = () => {
     .route("/post")
     .post(authenticateToken, multer.single("file"), controller.post);
   router.route("/get-post").get(controller.getPost);
-  router.route("/delete-post/:id").delete(controller.deletePost);
-  // .delete((req,res)=>{
-  //   postRepo.getById(req.params.id).then(async(post)=>{
-  //     await deleteFile(post.image)
-  //     postRepo.delete(req.params.id)
-  //   })
-  // })
+  router
+    .route("/delete-post/:id")
+    .delete(authenticateToken, controller.deletePost);
+  router.route("/like/:id/:post").put(authenticateToken, controller.likePost);
 
   return router;
 };
