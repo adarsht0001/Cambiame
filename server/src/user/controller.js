@@ -8,6 +8,7 @@ const getPosts = require("./use_case/getPosts");
 const removePost = require("./use_case/deletePost");
 const likeaPost = require("./use_case/likePost");
 const reportaPost = require("./use_case/reportPost");
+const userProfile = require("./use_case/getProfile");
 
 module.exports = (userRepo, postRepo) => {
   const login = (req, res) => {
@@ -127,6 +128,14 @@ module.exports = (userRepo, postRepo) => {
     });
   };
 
+  const getProfile = (req, res) => {
+    const profileExe = userProfile(userRepo, postRepo);
+    const { id } = req.params;
+    profileExe.execute(id).then((data) => {
+      res.json(data);
+    });
+  };
+
   return {
     login,
     Signup,
@@ -138,5 +147,6 @@ module.exports = (userRepo, postRepo) => {
     deletePost,
     likePost,
     reportPost,
+    getProfile,
   };
 };

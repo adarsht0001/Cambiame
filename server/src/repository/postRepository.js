@@ -37,4 +37,11 @@ module.exports = class UserRepository {
       resolve(updated);
     });
   }
+
+  getbyUser(name) {
+    return new Promise(async (resolve, reject) => {
+      const posts = await this.database.findOne({ user: name });
+      resolve(posts);
+    });
+  }
 };

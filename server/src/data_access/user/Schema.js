@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 module.exports = new mongoose.Schema({
   username: {
@@ -23,8 +23,16 @@ module.exports = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  verified:{
-    type:Boolean,
-    default:false,
-  }
+  verified: {
+    type: Boolean,
+    default: false,
+  },
+  followers: {
+    type: Array,
+    default: [],
+  },
+  following: {
+    type: Array,
+    default: [],
+  },
 });
