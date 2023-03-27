@@ -29,6 +29,7 @@ const UserRoute = () => {
     .route("/delete-post/:id")
     .delete(authenticateToken, controller.deletePost);
   router.route("/like/:id/:post").put(authenticateToken, controller.likePost);
+  router.route("/report/:id/:post").put(controller.reportPost);
 
   return router;
 };

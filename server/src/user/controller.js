@@ -7,6 +7,7 @@ const createPost = require("./use_case/post");
 const getPosts = require("./use_case/getPosts");
 const removePost = require("./use_case/deletePost");
 const likeaPost = require("./use_case/likePost");
+const reportaPost = require("./use_case/reportPost");
 
 module.exports = (userRepo, postRepo) => {
   const login = (req, res) => {
@@ -116,6 +117,16 @@ module.exports = (userRepo, postRepo) => {
       res.json(response);
     });
   };
+
+  const reportPost = (req, res) => {
+    const reportexe = reportaPost(postRepo);
+    const { id, post } = req.params;
+    reportexe.execute(id, post).then((response) => {
+      console.log(response);
+      res.json(response);
+    });
+  };
+
   return {
     login,
     Signup,
@@ -126,5 +137,6 @@ module.exports = (userRepo, postRepo) => {
     getPost,
     deletePost,
     likePost,
+    reportPost,
   };
 };

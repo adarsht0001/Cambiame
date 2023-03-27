@@ -24,7 +24,12 @@ module.exports = new mongoose.Schema({
     type: Object,
   },
   report: {
-    type: Object,
+    type: Number,
+    default: 0,
+  },
+  reportedby: {
+    type: Array,
+    default: [],
   },
   hidden: {
     type: Boolean,
