@@ -1,48 +1,33 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Grid, Stack } from '@mui/material';
-import { Logout } from '../../Redux';
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+// import Leftsidebar from '../../Components/Home/Leftsidebar/Leftsidebar';
+import Mainside from '../../Components/Home/Leftsidebar/Mainside';
 
-function TeHome() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
+
+export default function Homes() {
   return (
-    <Grid
-      direction={{ xs: 'column', md: 'row' }}
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        // alignItems: 'center',
-        direction: 'column',
-      }}
-    >
-      <Stack
-        direction={{ xs: 'column', sm: 'row' }}
-        sx={{ backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: '10px' }}
-        // justifyContent="center"
-        // alignItems="center"
-        spacing={2}
-        p={5}
-        className="centerDiv"
-      >
-        <div>Home</div>
-        <div>{user.name}</div>
-        <button
-          type="button"
-          onClick={() => {
-            dispatch(Logout());
-            localStorage.removeItem('user');
-            localStorage.removeItem('access_token');
-            navigate('/login');
-          }}
-        >
-          LogOut
-        </button>
-      </Stack>
-    </Grid>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={3}>
+        <Grid item md={12}>
+          <Mainside />
+        </Grid>
+        <Grid item xs={6}>
+          <Item>xs=6</Item>
+        </Grid>
+        <Grid item xs>
+          <Item>xs</Item>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
-
-export default TeHome;
