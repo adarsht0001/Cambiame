@@ -16,6 +16,7 @@ const expressConfig = (app: Application) => {
     app.use(express.urlencoded({ extended: true }));
     // app.use(cookieParser());
     app.use(helmet({xssFilter:true}))
+
     // app.use(mongoSanitize())
 }
 
