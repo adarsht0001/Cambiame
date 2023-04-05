@@ -1,5 +1,5 @@
 const express = require("express");
-const userController = require("./controller");
+const userController = require("../adapters/controllers/controller");
 const userDatabase = require("../data_access/user/database");
 const postDatabase = require("../data_access/Post/database");
 const UserRepository = require("./repository");

@@ -1,14 +1,14 @@
-const loginUser = require("./use_case/loginUser");
-const signup = require("./use_case/addUser");
-const forgottenPass = require("./use_case/forgotpassword");
-const resetPassword = require("./use_case/resetPassword");
-const verifyEMail = require("./use_case/verifyUSer");
-const createPost = require("./use_case/post");
-const getPosts = require("./use_case/getPosts");
-const removePost = require("./use_case/deletePost");
-const likeaPost = require("./use_case/likePost");
-const reportaPost = require("./use_case/reportPost");
-const userProfile = require("./use_case/getProfile");
+const loginUser = require("../../user/use_case/loginUser");
+const signup = require("../../user/use_case/addUser");
+const forgottenPass = require("../../user/use_case/forgotpassword");
+const resetPassword = require("../../user/use_case/resetPassword");
+const verifyEMail = require("../../user/use_case/verifyUSer");
+const createPost = require("../../user/use_case/post");
+const getPosts = require("../../user/use_case/getPosts");
+const removePost = require("../../user/use_case/deletePost");
+const likeaPost = require("../../user/use_case/likePost");
+const reportaPost = require("../../user/use_case/reportPost");
+const userProfile = require("../../user/use_case/getProfile");
 
 module.exports = (userRepo, postRepo) => {
   const login = (req, res) => {
