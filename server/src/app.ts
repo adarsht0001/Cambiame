@@ -1,20 +1,25 @@
-import http from 'http'
-import express,{Application, NextFunction} from 'express';
-import serverConfig from './framework/webserver/server';
-import connectDB from './framework/database/mongoDb/connection';
-import Admin from "./framework/database/mongoDb/models/userModels";
+import http from "http";
+import express, { Application, NextFunction } from "express";
+import serverConfig from "./framework/webserver/server";
+import connectDB from "./framework/database/mongoDb/connection";
+import expressConfig from "./framework/webserver/express";
+import router from "./framework/webserver/routes";
+import errorHandlingMidlleware from "./framework/webserver/middleware/errorHandlingMiddleware";
+import AppError from "./utils/appErrors";
 
+const app: Application = express();
 
-const app:Application = express();
-
-app.get('/',async(req,res)=>{
-    const admin= await Admin.create({email:"dnaj",password:"sdafh"});
-    console.log(admin);
-    
-})
-const server = http.createServer(app)
+expressConfig(app);
+const server = http.createServer(app);
 
 connectDB();
 
+router(app);
+app.use(errorHandlingMidlleware);
 
-serverConfig(server).startServer()
+app.all("*", (req, res, next: NextFunction) => {
+  next(new AppError("Not found", 404));
+});
+// catch 404 and forward to error handler
+
+serverConfig(server).startServer();

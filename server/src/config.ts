@@ -1,18 +1,20 @@
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
-const configKeys={
-    awsBucketName:process.env.S3_BUCKET as string,
-    
-    awsBucketRegion:process.env.S3_REGION as string,
+const configKeys = {
+  awsBucketName: process.env.S3_BUCKET as string,
 
-    awsAccessKey:process.env.S3_ACCESS_KEY as string,
+  awsBucketRegion: process.env.S3_REGION as string,
 
-    awsSecretAccessKey:process.env.S3_SECRECT_ACCESS_KEY as string,
+  awsAccessKey: process.env.S3_ACCESS_KEY as string,
 
-    mongoDbUrl:process.env.DATABASE_CONNECTION as string,
+  awsSecretAccessKey: process.env.S3_SECRECT_ACCESS_KEY as string,
 
-    port:process.env.port || 5000
-}
+  mongoDbUrl: process.env.DATABASE_CONNECTION as string,
 
-export default configKeys
+  port: process.env.port || 5000,
+
+  jwtSecret: process.env.ACESS_TOKEN_SCERET as string,
+};
+
+export default configKeys;

@@ -1,12 +1,13 @@
-// import Admin from "../models/userModels";
+import User from "../models/userModels";
 
-// export const adminRepositoryMongoDB=()=>{
+export const userRepositoryMongoDB = () => {
+  const getByEmail = async (email: string) => {
+    return await User.findOne({ email: email });
+  };
+  return {
+    getByEmail,
+  };
+};
 
-//     const getAdminByEmail=async(email:string)=>{
-//     //  const admin= await Admin({email:"dfanskj",password:"dsakjf"}).save();
-//      return admin
-//     }
-//     return {
-//         getAdminByEmail
-//     }
-// }
+export type UserRepositoryMongoDB = typeof userRepositoryMongoDB;
+export type UserRepositoryDbReturn = ReturnType<UserRepositoryMongoDB>;

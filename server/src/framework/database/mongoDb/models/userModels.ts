@@ -1,16 +1,41 @@
 import {Schema,model} from "mongoose"
 const userShema = new Schema(
     {
-        email:{
-            type:String,
-            required: [true,"please add a email"],
-            unique:true
-        },
-        password:{
-            type:String,
-            required: [true,"please add a password"]
-        },
-    },
+    username: {
+        type: String,
+        required: true,
+        min: 3,
+        max: 20,
+        unique: true,
+      },
+      email: {
+        type: String,
+        required: true,
+        max: 20,
+        unique: true,
+      },
+      password: {
+        type: String,
+        required: true,
+        min: 6,
+      },
+      blocked: {
+        type: Boolean,
+        default: false,
+      },
+      verified: {
+        type: Boolean,
+        default: false,
+      },
+      followers: {
+        type: Array,
+        default: [],
+      },
+      following: {
+        type: Array,
+        default: [],
+      },
+    }
 )
-const Admin = model("Admin",userShema,"admin")
-export default Admin
+const User = model("users",userShema,"users")
+export default User
