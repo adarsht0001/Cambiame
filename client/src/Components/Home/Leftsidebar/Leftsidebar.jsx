@@ -22,6 +22,7 @@ function Leftsidebar() {
   };
   return (
     <Stack
+      position="fixed"
       justifyContent="space-between"
       alignItems="stretch"
       // spacing={2}

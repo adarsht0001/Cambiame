@@ -6,6 +6,7 @@ import { IsLogged, LoggedIn } from '../Auth/LoginAuth';
 import Resetpass from '../Pages/ResetPassword/Resetpass';
 import VerifyEmail from '../Pages/verifyMail/verifyEmail';
 import Home from '../Pages/Home/Home';
+import Posts from '../Components/Home/main/Posts';
 
 function Router() {
   return (
@@ -13,8 +14,11 @@ function Router() {
       <Routes>
         <Route element={<IsLogged />}>
           {/* <Route element={<Homes />} exact path="/" /> */}
-          <Route element={<Home />} path="/" />
+
         </Route>
+        <Route element={<Home />} path="/" />
+
+        <Route element={<Posts />} path="/test" />
         <Route element={<LoggedIn />}>
           <Route element={<Resetpass />} path="/resetpassword/:id/:token" />
           <Route element={<VerifyEmail />} path="/verifyemail/:id/:token" />

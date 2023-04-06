@@ -1,20 +1,18 @@
 import React from 'react';
 // import Stack from '@mui/material/Stack';
+import { Grid } from '@mui/material';
 import Postshare from './Postshare';
+import Posts from './Posts';
 
 function Main() {
   return (
-  // <Stack
-  //   direction="column"
-  //   justifyContent="space-between"
-  //   alignItems="stretch"
-  //   spacing={1}
-  // >
-    <Postshare />
-  //   <Postshare />
-  //   <Postshare />
+    <Grid container alignItems="center" direction="column">
+      <Postshare />
+      <Posts />
+      {/* // <Postshare />
+// <Postshare /> */}
 
-  // </Stack>
+    </Grid>
   );
 }
 
