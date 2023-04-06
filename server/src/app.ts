@@ -17,9 +17,9 @@ connectDB();
 router(app);
 app.use(errorHandlingMidlleware);
 
+// catch 404 and forward to error handler
 app.all("*", (req, res, next: NextFunction) => {
   next(new AppError("Not found", 404));
 });
-// catch 404 and forward to error handler
 
 serverConfig(server).startServer();

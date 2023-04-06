@@ -7,7 +7,7 @@ import helmet from "helmet";
 const expressConfig = (app: Application) => {
   // Development logging
   // if (configKeys.nodeEnv == 'development') {
-  app.use(morgan("dev"));
+  // app.use(morgan("dev"));
   // }
 
   app.use(cors({ origin: "http://localhost:3000" }));

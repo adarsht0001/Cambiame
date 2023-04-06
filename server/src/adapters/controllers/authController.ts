@@ -3,7 +3,7 @@ import { UserRepositoryInterFace } from "../../application/repositories/userRepo
 import { AuthService } from "../../framework/services/authServices";
 import { AuthServiceInterface } from "../../application/services/authServiceInterface";
 import expressAsyncHandler from "express-async-handler";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { userLogin } from "../../application/use_cases/auth/userAuth";
 import { HttpStatus } from "../../types/httpStatus";
 import AppError from "../../utils/appErrors";
@@ -18,20 +18,17 @@ const authController = (
   const authservice = authService(authServiceImpl());
 
   const login = expressAsyncHandler(async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { email, password }: { email: string; password: string } = req.body;
     userLogin(email, password, dbRepositortUser, authservice)
       .then((user) => {
-        console.log(user);
+        return res.status(201).json({ status: true, user });
       })
       .catch((err) => {
-        console.log(err);
+        return res.status(404).json({ ...err, status: false });
       });
-    // throw new AppError("invalid credentials", HttpStatus.UNAUTHORIZED);
-    // console.log(user);
-
-    console.log(req.body);
   });
 
+  const signup = expressAsyncHandler(async (req: Request, res: Response) => {});
   return {
     login,
   };

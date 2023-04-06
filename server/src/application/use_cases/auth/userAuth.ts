@@ -1,7 +1,5 @@
 import { UserRepositoryInterFace } from "../../repositories/userRepositoryInterface";
 import { AuthServiceInterface } from "../../services/authServiceInterface";
-import AppError from "../../../utils/appErrors";
-import { HttpStatus } from "../../../types/httpStatus";
 import { User } from "../../../types/loginResponse";
 
 export const userLogin = async (
@@ -42,6 +40,11 @@ export const userLogin = async (
       const token = authService.createToken(user);
       payload.token = token;
       resolve(payload);
+    } else {
+      reject({
+        msg: "Invalid User",
+        email: true,
+      });
     }
   });
 };

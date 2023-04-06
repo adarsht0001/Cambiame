@@ -9,6 +9,7 @@ import { authServiceInterface } from "../../../application/services/authServiceI
 
 const UserRoute = () => {
   const router = express.Router();
+  console.log("ahfsh");
 
   const controller = authController(
     userRepositoryMongoDB,
