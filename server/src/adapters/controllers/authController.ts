@@ -3,10 +3,8 @@ import { UserRepositoryInterFace } from "../../application/repositories/userRepo
 import { AuthService } from "../../framework/services/authServices";
 import { AuthServiceInterface } from "../../application/services/authServiceInterface";
 import expressAsyncHandler from "express-async-handler";
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { userLogin } from "../../application/use_cases/auth/userAuth";
-import { HttpStatus } from "../../types/httpStatus";
-import AppError from "../../utils/appErrors";
 
 const authController = (
   useRepositoryImpl: UserRepositoryMongoDB,
@@ -28,7 +26,13 @@ const authController = (
       });
   });
 
-  const signup = expressAsyncHandler(async (req: Request, res: Response) => {});
+  const signup = expressAsyncHandler(async (req: Request, res: Response) => {
+    const {
+      email,
+      name,
+      password,
+    }: { email: string; name: string; password: string } = req.body;
+  });
   return {
     login,
   };
