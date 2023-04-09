@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import {
   Grid, Box, Typography, Paper,
 } from '@mui/material';
@@ -24,7 +25,7 @@ function UserProfile() {
   }, []);
   return (
     <Grid container alignItems="center" direction="column">
-      <Grid sx={{ width: '60%', backgroundColor: 'red', padding: '30px' }}>
+      <Grid sx={{ width: '60%', padding: '30px' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             {/* <PictureAvatar image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT50hnwfx3suGC7Nhg1mTRdd1iPkFXI4eJBN8IrkAtu-w&s" width="150px" height="150px" /> */}
@@ -37,9 +38,13 @@ function UserProfile() {
         </Box>
         <Paper sx={{ display: 'flex', padding: '2rem', marginTop: '2rem' }}>
           <Box sx={{ width: '50%' }}>
+            {profile.followers?.length}
+            {' '}
             followers
           </Box>
           <Box sx={{ width: '50%' }}>
+            {profile.following?.length}
+            {' '}
             Following
           </Box>
         </Paper>
@@ -50,7 +55,7 @@ function UserProfile() {
         </Box>
       </Box>
       {posts.map((post) => (
-        <Posts data={post} />
+        <Posts data={post} key={post._id} />
       ))}
     </Grid>
   );

@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable no-undef */
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './main.css';
 import {
   Box, Typography, Stack, Paper,
@@ -13,32 +12,36 @@ import BackgroundLetterAvatars from '../../avatar/StringAvatar';
 import axios from '../../../Axios/axios';
 
 function Posts({ data }) {
-  // eslint-disable-next-line no-unused-vars
   const [post, setPosts] = useState(data);
+  const [liked, setLiked] = useState(false);
   const user = useSelector((state) => state.user);
 
-  const checkLiked = (likeedby) => {
-    const islikedby = likeedby.some((obj) => obj && obj.id === user.id);
+  useEffect(() => {
+    const islikedby = post.likedby.some((obj) => obj.id === user.id);
     if (islikedby) {
-      return true;
-    }
-    return false;
-  };
-
-  const Likesdiv = useRef();
-  const like = (values) => {
-    if (checkLiked(values.likedby)) {
-      values.likes -= 1;
+      setLiked(true);
     } else {
-      values.likes += 1;
+      setLiked(false);
     }
+  }, []);
+
+  const like = (values) => {
     axios.put(`/like/${user.id}/${values._id}`, {}, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${user.access_Token}`,
       },
-    }).then(() => {
-      setPosts({ ...post, likedby: [...post.likedby, user.id] });
+    }).then((res) => {
+      if (res.data) {
+        if (res.data.msg === 'liked the post') {
+          setPosts({ ...post, likedby: [...post.likedby, user.id], likes: post.likes + 1 });
+          setLiked(true);
+        } else {
+          const newlikedby = post.likedby.filter((e) => e !== user.id);
+          setPosts({ ...post, likedby: newlikedby, likes: post.likes - 1 });
+          setLiked(false);
+        }
+      }
     }).catch((err) => console.log(err));
   };
   return (
@@ -77,7 +80,7 @@ function Posts({ data }) {
               )
           }
       </Box>
-      <Box sx={{ display: 'flex', width: '100%' }} ref={Likesdiv}>
+      <Box sx={{ display: 'flex', width: '100%' }}>
         <Stack
           direction="row"
           sx={{
@@ -89,7 +92,7 @@ function Posts({ data }) {
           }}
           onClick={() => like(post)}
         >
-          {checkLiked(post.likedby)
+          {liked
             ? <AiFillHeart style={{ color: 'orange' }} size={20} />
             : <AiOutlineHeart size={20} />}
           {post.likes}

@@ -20,6 +20,9 @@ function Leftsidebar() {
     localStorage.removeItem('access_token');
     navigate('/login');
   };
+  const redirect = (route) => {
+    navigate(route);
+  };
   return (
     <Stack
       position="fixed"
@@ -52,10 +55,10 @@ function Leftsidebar() {
           },
         }}
       >
-        <Sidebarlink text="Home" Icon={AiOutlineHome} />
+        <Sidebarlink text="Home" Icon={AiOutlineHome} callback={() => redirect('/')} />
         <Sidebarlink text="Messges" Icon={AiOutlineMessage} />
         <Sidebarlink text="Search" Icon={AiOutlineSearch} />
-        <Sidebarlink text="Profile" Icon={AiOutlineUser} />
+        <Sidebarlink text="Profile" Icon={AiOutlineUser} callback={() => redirect('/test')} />
         <Sidebarlink text="Settings" Icon={AiOutlineSetting} />
         <Sidebarlink text="LogOut" Icon={AiOutlineLogout} callback={handleLogout} />
       </Box>
