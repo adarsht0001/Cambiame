@@ -111,12 +111,17 @@ module.exports = (userRepo, postRepo) => {
   };
 
   const likePost = (req, res, next) => {
+    console.log('dsjka');
     const likeexe = likeaPost(userRepo, postRepo);
     const { id, post } = req.params;
-    likeexe.execute(id, post).then((response) => {
-      console.log(response);
-      res.json(response);
-    });
+    try {
+      likeexe.execute(id, post).then((response) => {
+        res.json(response);
+      });
+      
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const reportPost = (req, res) => {

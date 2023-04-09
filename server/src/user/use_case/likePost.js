@@ -2,7 +2,8 @@ module.exports = (userRepo, postRepo) => {
   async function execute(userId, postId) {
     return new Promise((resolve, reject) => {
       postRepo.getById(postId).then(async (post) => {
-        const exist = post.likedby.some((obj) => obj.id === userId);
+        const liked = post.get("likedby");
+        const exist = liked.some((obj) => obj.id === userId);
         const filter = post._id;
         if (exist) {
           const update = {

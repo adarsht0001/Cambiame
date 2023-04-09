@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import Postshare from './Postshare';
@@ -19,7 +20,9 @@ function Main() {
         setRefresh(!refresh);
       }}
       />
-      <Posts posts={posts} />
+      {posts.map((post) => (
+        <Posts data={post} key={post._id} />
+      ))}
       {/* // <Postshare />
 // <Postshare /> */}
 

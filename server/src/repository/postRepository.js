@@ -19,8 +19,13 @@ module.exports = class UserRepository {
 
   getById(id) {
     return new Promise(async (resolve, reject) => {
-      let post = await this.database.findById(id);
-      resolve(post);
+      try {
+        let post = await this.database.findById(id)
+        resolve(post);
+        
+      } catch (error) {
+        console.log(error)
+      }
     });
   }
 
@@ -32,8 +37,8 @@ module.exports = class UserRepository {
   }
 
   updateone(filter, update) {
-    return new Promise((resolve, reject) => {
-      const updated = this.database.findByIdAndUpdate(filter, update);
+    return new Promise(async(resolve, reject) => {
+      const updated =await this.database.findByIdAndUpdate(filter, update);
       resolve(updated);
     });
   }

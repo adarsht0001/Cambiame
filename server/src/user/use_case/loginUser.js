@@ -28,6 +28,7 @@ module.exports = (repository) => {
           const { username, email } = res;
           const accesToken = createToken(username);
           const user = {
+            id:res._id,
             email,
             username,
             accesToken,

@@ -5,21 +5,19 @@ module.exports = class UserRepository {
 
   getByName(name) {
     return new Promise(async (resolve, reject) => {
-      const user = await this.database.findOne({ username: name });
-      if(user){
+      try {
+        const user = await this.database.findOne({ username: name });
         resolve(user);
+      } catch (error) {
+        reject(error);
       }
-      reject({msg: 'User Not found'});
     });
   }
 
   getByEmail(email) {
     return new Promise(async (resolve, reject) => {
       const user = await this.database.findOne({ email: email });
-      if(user){
-        resolve(user);
-      }
-      reject({msg: 'User Not found'});
+      resolve(user);
     });
   }
 
@@ -33,10 +31,7 @@ module.exports = class UserRepository {
   getById(id) {
     return new Promise(async (resolve, reject) => {
       let user = await this.database.findById(id);
-      if(user){
-        resolve(user);
-      }
-      reject({msg: 'User Not found'});
+      resolve(user);
     });
   }
 

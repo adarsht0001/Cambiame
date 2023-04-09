@@ -16,8 +16,8 @@ function Router() {
           {/* <Route element={<Homes />} exact path="/" /> */}
 
         </Route>
-        <Route element={<Home />} path="/" />
-        <Route element={<Profile />} path="/test" />
+        <Route element={<Home />} exact path="/" />
+        <Route element={<Profile />} exact path="/test" />
 
         <Route element={<LoggedIn />}>
           <Route element={<Resetpass />} path="/resetpassword/:id/:token" />

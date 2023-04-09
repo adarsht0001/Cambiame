@@ -4,7 +4,6 @@ module.exports = (repository) => {
   async function execute() {
     return new Promise(async (resolve, reject) => {
       repository.getPost().then(async (posts) => {
-        console.log(posts);
         for (let post of posts) {
           console.log(Object.isSealed(post));
           if (post.image) {
