@@ -1,8 +1,9 @@
 import React from 'react';
+import Inputfield from '../../input/Inputfield';
 
 function RightsideBar() {
   return (
-    <div>RightsideBar</div>
+    <Inputfield variant="outlined" label="Search" />
   );
 }
 

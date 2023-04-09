@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import axios from '../../../Axios/axios';
 import Inputfield from '../../input/Inputfield';
 
-function Postshare() {
+function Postshare({ callback }) {
   const [text, setText] = useState('');
   const [img, setImg] = useState();
 
@@ -28,6 +28,9 @@ function Postshare() {
         Authorization: `Bearer ${user.access_Token}`,
       },
     }).then((res) => {
+      callback();
+      setImg();
+      setText('');
       alert(res.data.msg);
     }).catch((err) => {
       alert(err.response.data.msg);

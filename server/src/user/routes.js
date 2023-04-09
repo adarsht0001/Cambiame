@@ -30,7 +30,7 @@ const UserRoute = () => {
     .delete(authenticateToken, controller.deletePost);
   router.route("/like/:id/:post").put(authenticateToken, controller.likePost);
   router.route("/report/:id/:post").put(controller.reportPost);
-  router.route("/profile/:id").get(controller.getProfile);
+  router.route("/profile/:name").get(controller.getProfile);
 
   return router;
 };

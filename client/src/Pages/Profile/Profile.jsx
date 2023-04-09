@@ -1,10 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import Stack from '@mui/material/Stack';
 import Leftsidebar from '../../Components/Home/Leftsidebar/Leftsidebar';
-import Main from '../../Components/Home/main/main';
-// import RightsideBar from '../../Components/Home/rightSideBar/RightsideBar';
+import UserProfile from '../../Components/profile/profile';
 
-export default function Home() {
+function Profile() {
   return (
     <Stack
       direction="row"
@@ -14,8 +13,9 @@ export default function Home() {
       padding={10}
     >
       <Leftsidebar />
-      <Main />
-      {/* <RightsideBar /> */}
+      <UserProfile />
     </Stack>
   );
 }
+
+export default Profile;

@@ -40,7 +40,7 @@ module.exports = class UserRepository {
 
   getbyUser(name) {
     return new Promise(async (resolve, reject) => {
-      const posts = await this.database.findOne({ user: name });
+      const posts = await this.database.find({ user: name });
       resolve(posts);
     });
   }

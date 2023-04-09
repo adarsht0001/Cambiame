@@ -130,10 +130,12 @@ module.exports = (userRepo, postRepo) => {
 
   const getProfile = (req, res) => {
     const profileExe = userProfile(userRepo, postRepo);
-    const { id } = req.params;
-    profileExe.execute(id).then((data) => {
+    const { name } = req.params;
+    profileExe.execute(name).then((data) => {
       res.json(data);
-    });
+    }).catch((err)=>{
+      return res.status(401).json({ status: false, ...err });
+    })
   };
 
   return {

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Stack, Box } from '@mui/material';
 import {
-  AiOutlineHome, AiOutlineMessage, AiOutlineLogout, AiOutlineUser, AiOutlineSetting,
+  AiOutlineHome,
+  AiOutlineMessage, AiOutlineLogout, AiOutlineUser, AiOutlineSetting, AiOutlineSearch,
 } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
 import cambie from '../../../Assets/svg/CAMBIAME.svg';
 import './leftsidebar.css';
@@ -54,6 +54,7 @@ function Leftsidebar() {
       >
         <Sidebarlink text="Home" Icon={AiOutlineHome} />
         <Sidebarlink text="Messges" Icon={AiOutlineMessage} />
+        <Sidebarlink text="Search" Icon={AiOutlineSearch} />
         <Sidebarlink text="Profile" Icon={AiOutlineUser} />
         <Sidebarlink text="Settings" Icon={AiOutlineSetting} />
         <Sidebarlink text="LogOut" Icon={AiOutlineLogout} callback={handleLogout} />

@@ -1,7 +1,7 @@
 module.exports = (userRepo, postRepo) => {
-  async function execute(id) {
+  async function execute(name) {
     return new Promise((resolve, reject) => {
-      userRepo.getById(id).then((user) => {
+      userRepo.getByName(name).then((user) => {
         postRepo.getbyUser(user.username).then((posts) => {
           const profile = {
             user,
@@ -9,7 +9,9 @@ module.exports = (userRepo, postRepo) => {
           };
           resolve(profile);
         });
-      });
+      }).catch((err)=>{
+      reject(err);
+      })
     });
   }
   return { execute };

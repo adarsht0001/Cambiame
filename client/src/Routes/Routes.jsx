@@ -6,7 +6,7 @@ import { IsLogged, LoggedIn } from '../Auth/LoginAuth';
 import Resetpass from '../Pages/ResetPassword/Resetpass';
 import VerifyEmail from '../Pages/verifyMail/verifyEmail';
 import Home from '../Pages/Home/Home';
-import Posts from '../Components/Home/main/Posts';
+import Profile from '../Pages/Profile/Profile';
 
 function Router() {
   return (
@@ -17,8 +17,8 @@ function Router() {
 
         </Route>
         <Route element={<Home />} path="/" />
+        <Route element={<Profile />} path="/test" />
 
-        <Route element={<Posts />} path="/test" />
         <Route element={<LoggedIn />}>
           <Route element={<Resetpass />} path="/resetpassword/:id/:token" />
           <Route element={<VerifyEmail />} path="/verifyemail/:id/:token" />
