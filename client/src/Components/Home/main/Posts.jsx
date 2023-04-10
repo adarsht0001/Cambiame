@@ -93,7 +93,7 @@ function Posts({ data }) {
           onClick={() => like(post)}
         >
           {liked
-            ? <AiFillHeart style={{ color: 'orange' }} size={20} />
+            ? <AiFillHeart style={{ color: 'red' }} size={20} />
             : <AiOutlineHeart size={20} />}
           {post.likes}
           Likes
