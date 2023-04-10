@@ -14,10 +14,10 @@ function Router() {
       <Routes>
         <Route element={<IsLogged />}>
           {/* <Route element={<Homes />} exact path="/" /> */}
+          <Route element={<Home />} exact path="/" />
+          <Route element={<Profile />} exact path="/profile" />
 
         </Route>
-        <Route element={<Home />} exact path="/" />
-        <Route element={<Profile />} exact path="/test" />
 
         <Route element={<LoggedIn />}>
           <Route element={<Resetpass />} path="/resetpassword/:id/:token" />

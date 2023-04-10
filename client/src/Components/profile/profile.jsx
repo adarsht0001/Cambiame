@@ -15,7 +15,12 @@ function UserProfile() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    axios.get(`/profile/${user.name}`).then((response) => {
+    axios.get(`/profile/${user.name}`, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((response) => {
       console.log(response.data);
       setProfile(response.data.user);
       setPosts(response.data.posts);

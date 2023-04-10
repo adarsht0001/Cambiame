@@ -28,6 +28,7 @@ function Leftsidebar() {
       position="fixed"
       justifyContent="space-between"
       alignItems="stretch"
+      className="test"
       // spacing={2}
     >
       <Box sx={{
@@ -58,7 +59,7 @@ function Leftsidebar() {
         <Sidebarlink text="Home" Icon={AiOutlineHome} callback={() => redirect('/')} />
         <Sidebarlink text="Messges" Icon={AiOutlineMessage} />
         <Sidebarlink text="Search" Icon={AiOutlineSearch} />
-        <Sidebarlink text="Profile" Icon={AiOutlineUser} callback={() => redirect('/test')} />
+        <Sidebarlink text="Profile" Icon={AiOutlineUser} callback={() => redirect('/profile')} />
         <Sidebarlink text="Settings" Icon={AiOutlineSetting} />
         <Sidebarlink text="LogOut" Icon={AiOutlineLogout} callback={handleLogout} />
       </Box>
