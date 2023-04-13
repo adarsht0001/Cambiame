@@ -6,13 +6,17 @@ import { IsLogged, LoggedIn } from '../Auth/LoginAuth';
 import Resetpass from '../Pages/ResetPassword/Resetpass';
 import VerifyEmail from '../Pages/verifyMail/verifyEmail';
 import Home from '../Pages/Home/Home';
+// import Sidebar from '../Components/sidebar/Sidebar';
+import Layout from '../Pages/layout/Layout';
 import Homes from '../Pages/Home/TeHome';
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Home />} path="/" />
+        <Route element={<Layout />}>
+          <Route element={<Home />} path="/" />
+        </Route>
         <Route element={<Homes />} exact path="/test" />
         <Route element={<IsLogged />} />
         <Route element={<LoggedIn />}>
