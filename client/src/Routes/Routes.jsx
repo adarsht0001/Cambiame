@@ -7,15 +7,19 @@ import Resetpass from '../Pages/ResetPassword/Resetpass';
 import VerifyEmail from '../Pages/verifyMail/verifyEmail';
 import Home from '../Pages/Home/Home';
 import Profile from '../Pages/Profile/Profile';
+import Layout from '../Pages/Layout/Layout';
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<IsLogged />}>
-          {/* <Route element={<Homes />} exact path="/" /> */}
-          <Route element={<Home />} exact path="/" />
-          <Route element={<Profile />} exact path="/profile" />
+          <Route element={<Layout />}>
+
+            {/* <Route element={<Homes />} exact path="/" /> */}
+            <Route element={<Home />} exact path="/" />
+            <Route element={<Profile />} exact path="/profile" />
+          </Route>
 
         </Route>
 
