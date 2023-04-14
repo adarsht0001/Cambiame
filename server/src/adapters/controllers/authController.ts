@@ -35,6 +35,7 @@ const authController = (
   });
   return {
     login,
+    signup,
   };
 };
 
