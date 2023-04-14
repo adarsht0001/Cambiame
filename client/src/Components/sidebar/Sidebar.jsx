@@ -86,7 +86,7 @@ function Sidebar() {
         <SidebarLinks text="Search" Icon={AiOutlineSearch} />
         <SidebarLinks text="Profile" Icon={AiOutlineUser} callback={() => redirect('/profile')} />
         <SidebarLinks text="Settings" Icon={AiOutlineSetting} />
-        <SidebarLinks text="LogOut" Icon={AiOutlineLogout} callback={handleLogout} />
+        <SidebarLinks text="Logout" Icon={AiOutlineLogout} callback={handleLogout} />
       </Grid>
 
     </Paper>

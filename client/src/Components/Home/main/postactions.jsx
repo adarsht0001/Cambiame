@@ -3,15 +3,33 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useSelector } from 'react-redux';
+import { CircularProgress } from '@mui/material';
+import axios from '../../../Axios/axios';
 
-export default function LongMenu() {
+export default function LongMenu({ postid }) {
   const [anchorEl, setAnchorEl] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const open = Boolean(anchorEl);
+  const user = useSelector((state) => state.user);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    setAnchorEl(null);
+    setLoading(true);
+    axios.put(`/report/${user.id}/${postid}`, {}, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((response) => {
+      alert(response.data.msg);
+      setLoading(false);
+      setAnchorEl(null);
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   return (
@@ -38,7 +56,15 @@ export default function LongMenu() {
         }}
       >
         <MenuItem onClick={handleClose}>
-          Report
+
+          {loading ? (
+            <CircularProgress
+              color="secondary"
+              size={20}
+              thickness={4}
+              value={100}
+            />
+          ) : 'Report'}
         </MenuItem>
       </Menu>
     </>

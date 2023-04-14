@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import './main.css';
 import {
-  Box, Typography, Stack, Paper,
+  Box, Typography, Stack, Paper, Accordion, AccordionSummary, AccordionDetails,
 } from '@mui/material';
 import { AiFillHeart, AiOutlineHeart, AiOutlineComment } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
@@ -56,7 +56,7 @@ function Posts({ data }) {
           <Typography variant="body2" sx={{ marginLeft: '8px' }}>{post.user}</Typography>
         </Box>
         <Box>
-          <LongMenu />
+          <LongMenu postid={post._id} />
         </Box>
       </Box>
       <Box sx={{
@@ -99,8 +99,22 @@ function Posts({ data }) {
           Likes
         </Stack>
         <Stack direction="row" sx={{ width: '50%', justifyContent: 'center' }}>
-          <AiOutlineComment size={20} />
-          Comments
+          <Accordion>
+            <AccordionSummary
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <AiOutlineComment size={20} />
+              Comments
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                malesuada lacus ex, sit amet blandit leo lobortis eget.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+
         </Stack>
       </Box>
     </Paper>

@@ -124,6 +124,7 @@ module.exports = (userRepo, postRepo) => {
 
   const reportPost = (req, res) => {
     const reportexe = reportaPost(postRepo);
+    console.log('here');
     const { id, post } = req.params;
     reportexe.execute(id, post).then((response) => {
       console.log(response);
