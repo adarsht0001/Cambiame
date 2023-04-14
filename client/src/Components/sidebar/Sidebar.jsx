@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, Grid, Paper } from '@mui/material';
 import {
-  AiOutlineHome, AiOutlineMessage, AiOutlineLogout, AiOutlineUser, AiOutlineSetting,
+  AiOutlineHome, AiOutlineMessage, AiOutlineLogout,
+  AiOutlineUser, AiOutlineSetting, AiOutlineSearch,
 } from 'react-icons/ai';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +21,9 @@ function Sidebar() {
     localStorage.removeItem('access_token');
     navigate('/login');
   };
+  const redirect = (route) => {
+    navigate(route);
+  };
   return (
     <Paper
       sx={{
@@ -31,8 +35,9 @@ function Sidebar() {
           md: '17%',
           xs: '80%',
         },
+        zIndex: 3,
+        position: 'fixed',
         [theme.breakpoints.down('md')]: {
-          position: 'absolute',
           bottom: '0',
           marginBottom: '15px',
           alignSelf: 'center',
@@ -76,10 +81,10 @@ function Sidebar() {
         >
           <img src={cambie} alt="Logo" />
         </Box>
-        {/* <Sidebarlink text="LogOut" Icon={AiOutlineLogout} callback={handleLogout} /> */}
-        <SidebarLinks text="Home" Icon={AiOutlineHome} />
+        <SidebarLinks text="Home" Icon={AiOutlineHome} callback={() => redirect('/')} />
         <SidebarLinks text="Messges" Icon={AiOutlineMessage} />
-        <SidebarLinks text="Profile" Icon={AiOutlineUser} />
+        <SidebarLinks text="Search" Icon={AiOutlineSearch} />
+        <SidebarLinks text="Profile" Icon={AiOutlineUser} callback={() => redirect('/profile')} />
         <SidebarLinks text="Settings" Icon={AiOutlineSetting} />
         <SidebarLinks text="LogOut" Icon={AiOutlineLogout} callback={handleLogout} />
       </Grid>

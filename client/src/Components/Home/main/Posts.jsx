@@ -5,11 +5,11 @@ import './main.css';
 import {
   Box, Typography, Stack, Paper,
 } from '@mui/material';
-import { CiMenuKebab } from 'react-icons/ci';
 import { AiFillHeart, AiOutlineHeart, AiOutlineComment } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import BackgroundLetterAvatars from '../../avatar/StringAvatar';
 import axios from '../../../Axios/axios';
+import LongMenu from './postactions';
 
 function Posts({ data }) {
   const [post, setPosts] = useState(data);
@@ -56,7 +56,7 @@ function Posts({ data }) {
           <Typography variant="body2" sx={{ marginLeft: '8px' }}>{post.user}</Typography>
         </Box>
         <Box>
-          <CiMenuKebab />
+          <LongMenu />
         </Box>
       </Box>
       <Box sx={{
