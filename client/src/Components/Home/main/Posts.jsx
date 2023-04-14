@@ -98,8 +98,8 @@ function Posts({ data }) {
           {post.likes}
           Likes
         </Stack>
-        <Stack direction="row" sx={{ width: '50%', justifyContent: 'center' }}>
-          <Accordion>
+        <Stack sx={{ width: '50%', justifyContent: 'center' }}>
+          <Accordion sx={{ boxShadow: 'none' }}>
             <AccordionSummary
               aria-controls="panel1a-content"
               id="panel1a-header"
@@ -108,10 +108,18 @@ function Posts({ data }) {
               Comments
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget.
-              </Typography>
+              <Box
+                sx={{ overflowY: 'scroll', height: '30%' }}
+              >
+                <Typography>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                  malesuada lacus ex, sit amet blandit leo lobortis eget.
+                </Typography>
+                <Typography>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                  malesuada lacus ex, sit amet blandit leo lobortis eget.
+                </Typography>
+              </Box>
             </AccordionDetails>
           </Accordion>
 

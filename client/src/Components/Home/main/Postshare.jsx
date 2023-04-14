@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable no-return-assign */
 import InputAdornment from '@mui/material/InputAdornment';
 import React, { useState } from 'react';
@@ -91,6 +90,7 @@ function Postshare({ callback }) {
 
 export default Postshare;
 
-// <Button sx={{ marginLeft: '8px' }} onClick={handleSubmit} variant="contained" endIcon={<SendIcon />}>
+// <Button sx={{ marginLeft: '8px' }}
+//  onClick={handleSubmit} variant="contained" endIcon={<SendIcon />}>
 //   Upload
 // </Button>

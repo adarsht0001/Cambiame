@@ -8,7 +8,7 @@ import VerifyEmail from '../Pages/verifyMail/verifyEmail';
 import Home from '../Pages/Home/Home';
 import Profile from '../Pages/Profile/Profile';
 import Layout from '../Pages/Layout/Layout';
-import SimpleAccordion from '../Components/Home/main/comments';
+import Comments from '../Components/Home/main/comments';
 
 function Router() {
   return (
@@ -20,7 +20,7 @@ function Router() {
             <Route element={<Profile />} exact path="/profile" />
           </Route>
         </Route>
-        <Route element={<SimpleAccordion />} path="/tesing" />
+        <Route element={<Comments />} path="/tesing" />
         <Route element={<LoggedIn />}>
           <Route element={<Resetpass />} path="/resetpassword/:id/:token" />
           <Route element={<VerifyEmail />} path="/verifyemail/:id/:token" />
