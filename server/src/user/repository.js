@@ -41,4 +41,18 @@ module.exports = class UserRepository {
       resolve(user);
     });
   }
+
+  findByRegex(chars){
+    return new Promise(async(resolve, reject) => {
+      let regex = new RegExp('^' + chars, 'i');
+      let users = await this.database.find({username:{$regex:regex}})
+      resolve(users)
+    })
+  }
+  find(){
+    return new Promise(async(resolve, reject) => {
+      let users = await this.database.find({})
+      resolve(users)
+    })
+  }
 };

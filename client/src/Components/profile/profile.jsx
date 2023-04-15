@@ -15,7 +15,6 @@ import Inputfield from '../input/Inputfield';
 
 function UserProfile() {
   const user = useSelector((state) => state.user);
-  console.log(user);
   const [profile, setProfile] = useState({});
   const [edited, setedited] = useState(false);
   // const [posts, setPosts] = useState([]);

@@ -9,6 +9,7 @@ import Home from '../Pages/Home/Home';
 import Profile from '../Pages/Profile/Profile';
 import Layout from '../Pages/Layout/Layout';
 import Comments from '../Components/Home/main/comments';
+import Search from '../Pages/Search/Search';
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
           <Route element={<Layout />}>
             <Route element={<Home />} exact path="/" />
             <Route element={<Profile />} exact path="/profile" />
+            <Route element={<Search />} exact path="/search" />
           </Route>
         </Route>
         <Route element={<Comments />} path="/tesing" />

@@ -31,6 +31,23 @@ const UserRoute = () => {
   router.route("/like/:id/:post").put(authenticateToken, controller.likePost);
   router.route("/report/:id/:post").put(authenticateToken,controller.reportPost);
   router.route("/profile/:name").get(authenticateToken,controller.getProfile);
+  router.get('/search',(req,res)=>{
+    const {name}= req.query
+    if(!name) res.json(["Search For User"])
+    else{
+      userRepo.findByRegex(name).then(response=>{
+        const usernames = response.map(user => user.username);
+        res.json(usernames)
+      })
+    }
+  })
+  router.get('/testing',(req,res)=>{
+    userRepo.find({}).then(response=>{
+      const usernames = response.map(user => user.username);
+      console.log(usernames);
+      res.json(usernames)
+    })
+  })
 
   return router;
 };

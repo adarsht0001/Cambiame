@@ -83,7 +83,7 @@ function Sidebar() {
         </Box>
         <SidebarLinks text="Home" Icon={AiOutlineHome} callback={() => redirect('/')} />
         <SidebarLinks text="Messges" Icon={AiOutlineMessage} />
-        <SidebarLinks text="Search" Icon={AiOutlineSearch} />
+        <SidebarLinks text="Search" Icon={AiOutlineSearch} callback={() => redirect('/search')} />
         <SidebarLinks text="Profile" Icon={AiOutlineUser} callback={() => redirect('/profile')} />
         <SidebarLinks text="Settings" Icon={AiOutlineSetting} />
         <SidebarLinks text="Logout" Icon={AiOutlineLogout} callback={handleLogout} />
