@@ -1,5 +1,5 @@
-/* eslint-disable no-return-assign */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable no-return-assign */
 import React, { useEffect, useState } from 'react';
 import './main.css';
 import {
@@ -104,7 +104,10 @@ function Posts({ data, callback }) {
               )
           }
       </Box>
-      <Box sx={{ display: 'flex', width: '100%' }}>
+      <Box sx={{
+        display: 'flex', width: '100%', alignItems: 'center',
+      }}
+      >
         <Stack
           direction="row"
           sx={{
@@ -123,7 +126,7 @@ function Posts({ data, callback }) {
           Likes
         </Stack>
         <Stack sx={{ width: '50%', justifyContent: 'center' }}>
-          <Accordion sx={{ boxShadow: 'none' }}>
+          <Accordion sx={{ boxShadow: 'none', width: '100%' }}>
             <AccordionSummary
               aria-controls="panel1a-content"
               id="panel1a-header"
@@ -133,7 +136,7 @@ function Posts({ data, callback }) {
             </AccordionSummary>
             <AccordionDetails>
               <Box
-                sx={{ overflowY: 'scroll', height: '30%' }}
+                sx={{ overflowY: 'scroll', scrollbarWidth: '0px', height: '30%' }}
               >
                 <Typography>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
@@ -149,10 +152,12 @@ function Posts({ data, callback }) {
 
         </Stack>
       </Box>
+
       <Stack width="100%">
         <Inputfield
           variant="outlined"
           fullWidth
+          placeholder="Add a comment..."
           value={comment}
           callback={(e) => setComment(e.target.value)}
           size="small"

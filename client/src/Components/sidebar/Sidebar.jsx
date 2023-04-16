@@ -43,6 +43,8 @@ function Sidebar() {
           alignSelf: 'center',
           borderRadius: '25px',
         },
+        backgroundColor: '#f0f0f0',
+        boxShadow: '2px 2px 8px #c7c7c7, -2px -2px 8px #ffffff',
       }}
       elevation={20}
     >

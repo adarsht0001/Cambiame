@@ -8,8 +8,9 @@ import VerifyEmail from '../Pages/verifyMail/verifyEmail';
 import Home from '../Pages/Home/Home';
 import Profile from '../Pages/Profile/Profile';
 import Layout from '../Pages/Layout/Layout';
-import Comments from '../Components/Home/main/comments';
+import SocialMediaAccordion from '../Components/Home/main/comments';
 import Search from '../Pages/Search/Search';
+import Viewprofile from '../Pages/viewprofile/Viewprofile';
 
 function Router() {
   return (
@@ -18,11 +19,12 @@ function Router() {
         <Route element={<IsLogged />}>
           <Route element={<Layout />}>
             <Route element={<Home />} exact path="/" />
+            <Route element={<Viewprofile />} exact path="/:username" />
             <Route element={<Profile />} exact path="/profile" />
             <Route element={<Search />} exact path="/search" />
           </Route>
         </Route>
-        <Route element={<Comments />} path="/tesing" />
+        <Route element={<SocialMediaAccordion />} path="/tesing" />
         <Route element={<LoggedIn />}>
           <Route element={<Resetpass />} path="/resetpassword/:id/:token" />
           <Route element={<VerifyEmail />} path="/verifyemail/:id/:token" />

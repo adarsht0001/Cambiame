@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import Buttons from '../../Components/button/Button';
 import axios from '../../Axios/axios';
@@ -8,6 +9,7 @@ import axios from '../../Axios/axios';
 function SearchResults({ userData }) {
   const user = useSelector((state) => state.user);
   const [followed, setFollowed] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     if (userData.isfollowing) {
       setFollowed(true);
@@ -15,6 +17,14 @@ function SearchResults({ userData }) {
       setFollowed(false);
     }
   }, []);
+
+  const viewprofile = (name) => {
+    if (name === user.name) {
+      navigate('/profile');
+    } else {
+      navigate(`/${name}`);
+    }
+  };
 
   const follow = (name) => {
     const follower = {
@@ -46,7 +56,7 @@ function SearchResults({ userData }) {
         boxShadow: '2px 2px 8px #c7c7c7, -2px -2px 8px #ffffff',
       }}
     >
-      <Box display="flex" flexDirection="row" alignItems="center">
+      <Box display="flex" flexDirection="row" alignItems="center" sx={{ cursor: 'pointer' }} onClick={() => viewprofile(userData.username)}>
         <BackgroundLetterAvatars user={userData.username || 'user'} />
         <Box marginLeft={4}>
           <Typography variant="h6">{userData.username}</Typography>

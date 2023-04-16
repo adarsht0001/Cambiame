@@ -10,6 +10,7 @@ import BackgroundLetterAvatars from '../avatar/StringAvatar';
 // import PictureAvatar from '../avatar/PictureAvatar';
 import axios from '../../Axios/axios';
 import Inputfield from '../input/Inputfield';
+import Posts from '../Home/main/Posts';
 // import BackgroundLetterAvatars from '../avatar/StringAvatar';
 // import Posts from '../Home/main/Posts';
 
@@ -17,7 +18,7 @@ function UserProfile() {
   const user = useSelector((state) => state.user);
   const [profile, setProfile] = useState({});
   const [edited, setedited] = useState(false);
-  // const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     axios.get(`/profile/${user.name}`, {
@@ -28,7 +29,7 @@ function UserProfile() {
     }).then((response) => {
       console.log(response.data);
       setProfile(response.data.user);
-      // setPosts(response.data.posts);
+      setPosts(response.data.posts);
     }).catch((err) => {
       alert(err.response.data.msg);
     });
@@ -37,7 +38,13 @@ function UserProfile() {
     <Grid container alignItems="center" direction="column">
       <Paper
         sx={{
-          width: '60%', padding: '30px', marginX: 'auto', marginTop: '4%',
+          width: '60%',
+          padding: '30px',
+          marginX: 'auto',
+          marginTop: '4%',
+          backgroundColor: '#f0f0f0',
+          borderRadius: 6,
+          boxShadow: '2px 2px 8px #c7c7c7, -2px -2px 8px #ffffff',
         }}
         elevation={20}
       >
@@ -94,7 +101,17 @@ function UserProfile() {
             }
           </Box>
         </Box>
-        <Paper sx={{ display: 'flex', margin: 'auto', padding: '1rem' }} elevation={15}>
+        <Paper
+          sx={{
+            display: 'flex',
+            margin: 'auto',
+            padding: '1rem',
+            backgroundColor: '#f0f0f0',
+            borderRadius: 6,
+            boxShadow: '2px 2px 8px #c7c7c7, -2px -2px 8px #ffffff',
+          }}
+          elevation={15}
+        >
           <Box sx={{ width: '50%' }} textAlign="center">
             {profile.followers?.length}
             {' '}
@@ -121,6 +138,14 @@ function UserProfile() {
           </Grid>
         </Box>
       </Paper>
+      <Box m={5}>
+        <Box>
+          <Typography variant="h5">  My Posts</Typography>
+        </Box>
+      </Box>
+      {posts.map((post) => (
+        <Posts data={post} key={post._id} />
+      ))}
     </Grid>
   );
 }
@@ -141,11 +166,3 @@ export default UserProfile;
 
 //   </Grid>
 // </Grid>
-// <Box>
-//   <Box>
-//     <Typography variant="h5">  My Posts</Typography>
-//   </Box>
-// </Box>
-// {posts.map((post) => (
-//   <Posts data={post} key={post._id} />
-// ))}
