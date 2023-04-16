@@ -12,6 +12,7 @@ function Viewprofile() {
   const { username } = useParams();
   const [profile, setProfile] = useState({});
   //   const [posts, setPosts] = useState([]);
+  const [following, setfollowing] = useState(false);
   const user = useSelector((state) => state.user);
   useEffect(() => {
     axios.get(`/profile/${username}`, {
@@ -21,9 +22,29 @@ function Viewprofile() {
       },
     }).then((response) => {
       setProfile(response.data.user);
+      const isfollowing = response.data?.user.followers.some((obj) => obj.id === user.id);
+      if (isfollowing) {
+        setfollowing(true);
+      } else {
+        setfollowing(false);
+      }
     //   setPosts(response.data.posts);
     });
   });
+  const follow = (name) => {
+    const follower = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      profle: user.profile || null,
+    };
+    axios.put(`/follow/${name}`, follower).then((res) => {
+      console.log(res);
+      setfollowing(true);
+    }).catch(() => {
+      setfollowing(false);
+    });
+  };
   return (
     <Grid container alignItems="center" direction="column">
       <Paper
@@ -67,9 +88,13 @@ function Viewprofile() {
               </Paper>
             </Box>
           </Box>
-          <Box display="flex" flexDirection="column">
+          <Box display="flex" flexDirection="column" gap={3}>
             <Buttons variant="contained" Text="Message" />
-            <Buttons variant="outlined" Text="Follow" color="secondary.main" />
+            {
+              following
+                ? <Buttons variant="outlined" Text="Follow" color="secondary.main" callback={follow} />
+                : <Buttons variant="outlined" Text="Un-Follow" color="secondary.main" callback={follow} />
+            }
           </Box>
         </Box>
       </Paper>
