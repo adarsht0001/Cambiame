@@ -29,7 +29,7 @@ const UserRoute = () => {
     .route("/delete-post/:id")
     .delete(authenticateToken, controller.deletePost);
   router.route("/like/:id/:post").put(authenticateToken, controller.likePost);
-  // router.route("/report/:id/:post").put(authenticateToken,controller.reportPost);
+  router.route("/report/:id/:post").put(authenticateToken,controller.reportPost);
   router.route("/profile/:name").get(authenticateToken,controller.getProfile);
   router.get('/search',(req,res)=>{
     const {name}= req.query
@@ -41,14 +41,33 @@ const UserRoute = () => {
       })
     }
   })
-  router.get('/search-user/:name',(req,res)=>{
-    console.log('here');
-    const {name} = req.params
+  router.get('/search-user/:name/:user',(req,res)=>{
+    const {name,user} = req.params
     userRepo.findByRegex(name).then(response=>{
       if(response.length>0){
-        res.json(response)
+        let searchResult= response.map((users)=>{
+          if(users.followers.findIndex((data)=>data.id==user)){
+            users.set("isfollowing", false, { strict: false });
+          }else{
+            users.set("isfollowing", true, { strict: false });
+          }
+          return users
+        })
+        res.json(searchResult)
       }else{
         res.status(404).json({msg:'user not found'})
+      }
+    })
+  })
+
+  router.put('/follow/:name',(req,res)=>{
+    const {name} = req.params
+    userRepo.getByName(name).then((user)=>{
+      if(user.followers.findIndex((data)=>data.id==user.id)){
+        console.log(req.body);
+        userRepo.update({username:name},{$pull:{followers:{id:req.body.id}}})
+      }else{
+        userRepo.update({username:name},{$push:{followers:req.body}})
       }
     })
   })
