@@ -35,4 +35,8 @@ module.exports = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  profilePhoto:{
+    type:String,
+    required:false
+  }
 });

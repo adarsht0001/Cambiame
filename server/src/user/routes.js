@@ -29,7 +29,7 @@ const UserRoute = () => {
     .route("/delete-post/:id")
     .delete(authenticateToken, controller.deletePost);
   router.route("/like/:id/:post").put(authenticateToken, controller.likePost);
-  router.route("/report/:id/:post").put(authenticateToken,controller.reportPost);
+  // router.route("/report/:id/:post").put(authenticateToken,controller.reportPost);
   router.route("/profile/:name").get(authenticateToken,controller.getProfile);
   router.get('/search',(req,res)=>{
     const {name}= req.query
@@ -41,11 +41,15 @@ const UserRoute = () => {
       })
     }
   })
-  router.get('/testing',(req,res)=>{
-    userRepo.find({}).then(response=>{
-      const usernames = response.map(user => user.username);
-      console.log(usernames);
-      res.json(usernames)
+  router.get('/search-user/:name',(req,res)=>{
+    console.log('here');
+    const {name} = req.params
+    userRepo.findByRegex(name).then(response=>{
+      if(response.length>0){
+        res.json(response)
+      }else{
+        res.status(404).json({msg:'user not found'})
+      }
     })
   })
 

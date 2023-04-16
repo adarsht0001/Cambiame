@@ -18,7 +18,6 @@ function Buttons(props) {
       }}
     >
       {Text}
-
     </Button>
   );
 }
