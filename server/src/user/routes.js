@@ -82,6 +82,18 @@ const UserRoute = () => {
     })
   })
 
+  router.post('/add-comment',(req,res)=>{
+    console.log(req.body);
+    const comment={
+      comment:req.body.comment,
+      id:req.body.id,
+      name:req.body.name,
+      profile:req.body.profile
+    }
+    postRepo.updateone(req.body.postid,{$push:{comments:comment}})
+    res.sendStatus(200)
+  })
+
   return router;
 };
 

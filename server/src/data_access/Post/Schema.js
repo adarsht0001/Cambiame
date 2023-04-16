@@ -38,4 +38,8 @@ module.exports = new mongoose.Schema({
   date: {
     type: Date,
   },
+  comments:{
+    type:Array,
+    default: [],
+  }
 });

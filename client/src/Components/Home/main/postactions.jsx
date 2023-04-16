@@ -36,7 +36,7 @@ export default function LongMenu({ postid, isUser, callback }) {
     setAnchorEl(null);
   };
 
-  const hyandleDelete = () => {
+  const handleDelete = () => {
     axios.delete(`/delete-post/${postid}`).then(() => {
       callback();
       setAnchorEl(null);
@@ -68,7 +68,7 @@ export default function LongMenu({ postid, isUser, callback }) {
       >
         {isUser
           ? (
-            <MenuItem onClick={hyandleDelete}>
+            <MenuItem onClick={handleDelete}>
               {loading ? (
                 <CircularProgress
                   color="secondary"
