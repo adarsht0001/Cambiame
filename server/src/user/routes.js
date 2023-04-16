@@ -46,7 +46,7 @@ const UserRoute = () => {
     userRepo.findByRegex(name).then(response=>{
       if(response.length>0){
         let searchResult= response.map((users)=>{
-          if(users.followers.findIndex((data)=>data.id==user)){
+          if(users.followers.findIndex((data)=>data.id==user)<0){
             users.set("isfollowing", false, { strict: false });
           }else{
             users.set("isfollowing", true, { strict: false });
@@ -63,11 +63,21 @@ const UserRoute = () => {
   router.put('/follow/:name',(req,res)=>{
     const {name} = req.params
     userRepo.getByName(name).then((user)=>{
-      if(user.followers.findIndex((data)=>data.id==user.id)){
-        console.log(req.body);
-        userRepo.update({username:name},{$pull:{followers:{id:req.body.id}}})
-      }else{
+      const toFollow={
+        id:user._id,
+        name:user.username,
+        email:user.email,
+        profile:user.profile||null
+      }
+      if(user.username===req.body.name) res.json({msg:'canat follow yourself'})
+      if(user.followers.findIndex((data)=>data.id==req.body.id)<0){
         userRepo.update({username:name},{$push:{followers:req.body}})
+        userRepo.update({username:req.body.name},{$push:{following:toFollow}})
+        res.status(200).json({msg:`following`})
+      }else{
+        userRepo.update({username:name},{$pull:{followers:{id:req.body.id}}})
+        userRepo.update({username:req.body.name},{$pull:{following:{id:toFollow.id}}})
+        res.status(410).json({msg:`un-following`})
       }
     })
   })

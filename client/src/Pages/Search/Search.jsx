@@ -7,8 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { GrClose, GrSearch } from 'react-icons/gr';
 import { useSelector } from 'react-redux';
 import axios from '../../Axios/axios';
-import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
-import Buttons from '../../Components/button/Button';
+import SearchResults from './SearchResults';
 
 function Search() {
   const [value, setValue] = useState('');
@@ -39,18 +38,6 @@ function Search() {
       setSearched(false);
       setnotFound(err.response?.data?.msg);
     });
-  };
-
-  const follow = (name) => {
-    const follower = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      profle: user.profile || null,
-    };
-    axios.put(`/follow/${name}`, follower).then((res) => {
-      console.log(res);
-    }).catch((err) => console.log(err));
   };
 
   return (
@@ -102,38 +89,7 @@ function Search() {
             </Typography>
             <Box width="50%" alignSelf="center">
               {results.map((userData) => (
-                <Box
-                  width="60%"
-                  key={userData.username}
-                  m={2}
-                  display="flex"
-                  flexDirection="row"
-                  justifyContent="space-between"
-                  p={4}
-                  sx={{
-                    marginX: 'auto',
-                    backgroundColor: '#f0f0f0',
-                    borderRadius: 6,
-                    boxShadow: '2px 2px 8px #c7c7c7, -2px -2px 8px #ffffff',
-                  }}
-                >
-                  <Box display="flex" flexDirection="row" alignItems="center">
-                    <BackgroundLetterAvatars user={userData.username || 'user'} />
-                    <Box marginLeft={4}>
-                      <Typography variant="h6">{userData.username}</Typography>
-                      <Typography variant="caption">
-                        {userData.email}
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Box>
-                    {
-                      userData.isfollowing
-                        ? <Buttons size="medium" variant="contained" color="primary" Text="UnFollow" callback={() => follow(userData.username)} />
-                        : <Buttons size="medium" variant="contained" color="secondar.main" Text="Follow" callback={() => follow(userData.username)} />
-                    }
-                  </Box>
-                </Box>
+                <SearchResults key={userData.username} userData={userData} />
               ))}
             </Box>
           </>
