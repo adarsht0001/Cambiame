@@ -33,7 +33,6 @@ module.exports = (userRepo, postRepo) => {
         return res.status(201).json({ status: true, user });
       })
       .catch((err) => {
-        console.log(err);
         return res.status(401).json({ ...err, status: false });
       });
   };
@@ -60,7 +59,6 @@ module.exports = (userRepo, postRepo) => {
     resetpasscase
       .execute(id, token, pass)
       .then((response) => {
-        console.log(response);
         return res.status(201).json({ status: true, ...response });
       })
       .catch((err) => {
@@ -90,7 +88,6 @@ module.exports = (userRepo, postRepo) => {
         return res.status(201).json({ status: true, ...response });
       })
       .catch((err) => {
-        console.log(err);
         return res.status(401).json({ status: false, ...err });
       });
   };
@@ -125,7 +122,6 @@ module.exports = (userRepo, postRepo) => {
 
   const reportPost = (req, res) => {
     const reportexe = reportaPost(postRepo);
-    console.log('here');
     const { id, post } = req.params;
     reportexe.execute(id, post).then((response) => {
       console.log(response);

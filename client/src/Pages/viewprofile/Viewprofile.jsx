@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -7,11 +8,12 @@ import {
 import axios from '../../Axios/axios';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import Buttons from '../../Components/button/Button';
+import Posts from '../../Components/Home/main/Posts';
 
 function Viewprofile() {
   const { username } = useParams();
   const [profile, setProfile] = useState({});
-  //   const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [following, setfollowing] = useState(false);
   const user = useSelector((state) => state.user);
   useEffect(() => {
@@ -22,23 +24,23 @@ function Viewprofile() {
       },
     }).then((response) => {
       setProfile(response.data.user);
+      setPosts(response.data.posts);
       const isfollowing = response.data?.user.followers.some((obj) => obj.id === user.id);
       if (isfollowing) {
         setfollowing(true);
       } else {
         setfollowing(false);
       }
-    //   setPosts(response.data.posts);
     });
   });
-  const follow = (name) => {
+  const follow = () => {
     const follower = {
       id: user.id,
       name: user.name,
       email: user.email,
       profle: user.profile || null,
     };
-    axios.put(`/follow/${name}`, follower).then((res) => {
+    axios.put(`/follow/${profile.username}`, follower).then((res) => {
       console.log(res);
       setfollowing(true);
     }).catch(() => {
@@ -92,12 +94,33 @@ function Viewprofile() {
             <Buttons variant="contained" Text="Message" />
             {
               following
-                ? <Buttons variant="outlined" Text="Follow" color="secondary.main" callback={follow} />
-                : <Buttons variant="outlined" Text="Un-Follow" color="secondary.main" callback={follow} />
+                ? <Buttons variant="outlined" Text="Un-Follow" color="secondary.main" callback={follow} />
+                : <Buttons variant="outlined" Text="Follow" color="secondary.main" callback={follow} />
             }
           </Box>
         </Box>
       </Paper>
+      {
+        posts.length > 0
+          ? (
+            <>
+              <Box m={5}>
+                <Box>
+                  <Typography variant="h5">
+                    {' '}
+                    {profile.username}
+                    {'\'s '}
+                    Posts
+                  </Typography>
+                </Box>
+              </Box>
+              {posts.map((post) => (
+                <Posts data={post} key={post._id} />
+              ))}
+            </>
+          )
+          : <Typography variant="h5"> No Posts</Typography>
+      }
     </Grid>
   );
 }

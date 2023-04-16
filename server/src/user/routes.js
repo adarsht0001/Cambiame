@@ -63,6 +63,7 @@ const UserRoute = () => {
   router.put('/follow/:name',(req,res)=>{
     const {name} = req.params
     userRepo.getByName(name).then((user)=>{
+      console.log(user);
       const toFollow={
         id:user._id,
         name:user.username,

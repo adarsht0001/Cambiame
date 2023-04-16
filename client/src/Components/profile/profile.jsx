@@ -138,14 +138,23 @@ function UserProfile() {
           </Grid>
         </Box>
       </Paper>
-      <Box m={5}>
-        <Box>
-          <Typography variant="h5">  My Posts</Typography>
-        </Box>
-      </Box>
-      {posts.map((post) => (
-        <Posts data={post} key={post._id} />
-      ))}
+      {
+        posts.length > 0
+          ? (
+            <>
+              <Box m={5}>
+                <Box>
+                  <Typography variant="h5">  My Posts</Typography>
+                </Box>
+              </Box>
+              {posts.map((post) => (
+                <Posts data={post} key={post._id} />
+              ))}
+            </>
+          )
+          : <Typography variant="h5"> No Posts</Typography>
+
+      }
     </Grid>
   );
 }

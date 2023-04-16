@@ -4,8 +4,6 @@ module.exports = (userRepo, postRepo) => {
       userRepo.getByName(name).then((user) => {
         if(!user) reject({msg:"user not found"})
         postRepo.getbyUser(user.username).then((posts) => {
-          const exist = posts.some((obj) => obj.id === user._id.toString());
-          console.log(exist);
           const profile = {
             user,
             posts,

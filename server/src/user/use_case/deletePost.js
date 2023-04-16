@@ -5,7 +5,7 @@ module.exports = (repository) => {
     return new Promise((resolve, reject) => {
       try {
         repository.delete(id).then(async (post) => {
-          if (post.image) {
+          if (post?.image) {
             await deleteFile(post.image);
           }
           repository.delete(id);
