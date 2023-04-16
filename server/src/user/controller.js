@@ -103,6 +103,7 @@ module.exports = (userRepo, postRepo) => {
   };
 
   const deletePost = (req, res, next) => {
+    console.log("here");
     const removePostexe = removePost(postRepo);
     const { id } = req.params;
     removePostexe.execute(id).then((response) => {

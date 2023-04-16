@@ -21,7 +21,13 @@ function Main() {
       }}
       />
       {posts.map((post) => (
-        <Posts data={post} key={post._id} />
+        <Posts
+          data={post}
+          key={post._id}
+          callback={() => {
+            setRefresh(!refresh);
+          }}
+        />
       ))}
       {/* // <Postshare />
 // <Postshare /> */}

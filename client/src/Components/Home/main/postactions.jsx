@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
 import axios from '../../../Axios/axios';
 
-export default function LongMenu({ postid }) {
+export default function LongMenu({ postid, isUser, callback }) {
   const [anchorEl, setAnchorEl] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const open = Boolean(anchorEl);
@@ -16,7 +16,7 @@ export default function LongMenu({ postid }) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleReport = () => {
     setLoading(true);
     axios.put(`/report/${user.id}/${postid}`, {}, {
       headers: {
@@ -30,6 +30,17 @@ export default function LongMenu({ postid }) {
     }).catch((err) => {
       console.log(err);
     });
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const hyandleDelete = () => {
+    axios.delete(`/delete-post/${postid}`).then(() => {
+      callback();
+      setAnchorEl(null);
+    }).catch((err) => console.log(err));
   };
 
   return (
@@ -55,17 +66,30 @@ export default function LongMenu({ postid }) {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>
-
-          {loading ? (
-            <CircularProgress
-              color="secondary"
-              size={20}
-              thickness={4}
-              value={100}
-            />
-          ) : 'Report'}
-        </MenuItem>
+        {isUser
+          ? (
+            <MenuItem onClick={hyandleDelete}>
+              {loading ? (
+                <CircularProgress
+                  color="secondary"
+                  size={20}
+                  thickness={4}
+                  value={100}
+                />
+              ) : 'Delete'}
+            </MenuItem>
+          ) : (
+            <MenuItem onClick={handleReport}>
+              {loading ? (
+                <CircularProgress
+                  color="secondary"
+                  size={20}
+                  thickness={4}
+                  value={100}
+                />
+              ) : 'Report'}
+            </MenuItem>
+          )}
       </Menu>
     </>
   );

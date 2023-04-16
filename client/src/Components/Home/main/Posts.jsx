@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react';
 import './main.css';
@@ -11,12 +10,16 @@ import BackgroundLetterAvatars from '../../avatar/StringAvatar';
 import axios from '../../../Axios/axios';
 import LongMenu from './postactions';
 
-function Posts({ data }) {
+function Posts({ data, callback }) {
   const [post, setPosts] = useState(data);
   const [liked, setLiked] = useState(false);
+  const [isUser, setisUser] = useState(false);
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
+    if (post.user === user.name) {
+      setisUser(true);
+    }
     const islikedby = post.likedby.some((obj) => obj.id === user.id);
     if (islikedby) {
       setLiked(true);
@@ -56,7 +59,7 @@ function Posts({ data }) {
           <Typography variant="body2" sx={{ marginLeft: '8px' }}>{post.user}</Typography>
         </Box>
         <Box>
-          <LongMenu postid={post._id} />
+          <LongMenu postid={post._id} isUser={isUser} callback={callback} />
         </Box>
       </Box>
       <Box sx={{
