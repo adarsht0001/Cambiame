@@ -152,7 +152,7 @@ function Posts({ data, callback }) {
       {showComment && (
       <Box
         sx={{
-          overflowY: 'scroll', scrollbarWidth: '0px', maxHeight: '250px', minHeight: '100px',
+          overflowY: 'scroll', scrollbarWidth: '0px', maxHeight: '250px', minHeight: '100px', padding: '5px',
         }}
       >
         {post.comments.length > 0
