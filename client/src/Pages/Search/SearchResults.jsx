@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -8,9 +9,15 @@ import axios from '../../Axios/axios';
 
 function SearchResults({ userData }) {
   const user = useSelector((state) => state.user);
+  const [isUser, setIsUser] = useState(false);
   const [followed, setFollowed] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
+    if (userData.username === user.name) {
+      setIsUser(true);
+    } else {
+      setIsUser(false);
+    }
     if (userData.isfollowing) {
       setFollowed(true);
     } else {
@@ -66,11 +73,11 @@ function SearchResults({ userData }) {
         </Box>
       </Box>
       <Box>
-        {
-        followed
-          ? <Buttons size="medium" variant="contained" color="primary" Text="UnFollow" callback={() => follow(userData.username)} />
-          : <Buttons size="medium" variant="contained" color="secondar.main" Text="Follow" callback={() => follow(userData.username)} />
-      }
+        {isUser
+          ? <Buttons size="medium" variant="contained" color="primary" Text="Go to profile" callback={() => navigate('/profile')} />
+          : followed
+            ? <Buttons size="medium" variant="contained" color="primary" Text="UnFollow" callback={() => follow(userData.username)} />
+            : <Buttons size="medium" variant="contained" color="secondar.main" Text="Follow" callback={() => follow(userData.username)} />}
       </Box>
     </Box>
   );
