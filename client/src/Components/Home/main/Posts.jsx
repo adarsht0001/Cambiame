@@ -150,13 +150,15 @@ function Posts({ data, callback }) {
       </Box>
       {showComment && (
       <Box
-        sx={{ overflowY: 'scroll', scrollbarWidth: '0px', height: '250px' }}
+        sx={{
+          overflowY: 'scroll', scrollbarWidth: '0px', maxHeight: '250px', minHeight: '100px',
+        }}
       >
-        {
-                  post.comments?.map((elemnt) => (
-                    <Comments key={elemnt.name} comments={elemnt} />
-                  ))
-                }
+        {post.comments.length > 0
+          ? post.comments?.map((elemnt) => (
+            <Comments key={elemnt.name} comments={elemnt} />
+          ))
+          : <Typography variant="caption">No comments</Typography>}
       </Box>
       )}
 
