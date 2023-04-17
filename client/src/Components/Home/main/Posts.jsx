@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import './main.css';
 import {
-  Box, Typography, Stack, Paper, Accordion,
-  AccordionSummary, AccordionDetails, InputAdornment, CircularProgress,
+  Box, Typography, Stack, Paper,
+  InputAdornment, CircularProgress,
 } from '@mui/material';
 import { AiFillHeart, AiOutlineHeart, AiOutlineComment } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
@@ -20,6 +20,10 @@ function Posts({ data, callback }) {
   const [liked, setLiked] = useState(false);
   const [isUser, setisUser] = useState(false);
   const [comment, setComment] = useState('');
+  const [showComment, setShowComment] = useState(null);
+  const changevisibilty = () => {
+    setShowComment(!showComment);
+  };
   const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
 
@@ -106,9 +110,10 @@ function Posts({ data, callback }) {
               )
           }
       </Box>
-      <Box sx={{
-        display: 'flex', width: '100%', alignItems: 'center',
-      }}
+      <Box
+        sx={{
+          display: 'flex', width: '100%', alignItems: 'center',
+        }}
       >
         <Stack
           direction="row"
@@ -127,30 +132,33 @@ function Posts({ data, callback }) {
           {post.likes}
           Likes
         </Stack>
-        <Stack sx={{ width: '50%', justifyContent: 'center' }}>
-          <Accordion sx={{ boxShadow: 'none', width: '100%' }}>
-            <AccordionSummary
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <AiOutlineComment size={20} />
-              Comments
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box
-                sx={{ overflowY: 'scroll', scrollbarWidth: '0px', height: '150px' }}
-              >
-                {
+        <Stack
+          direction="row"
+          sx={{
+            width: '50%',
+            justifyContent: 'center',
+            '&:hover': {
+              cursor: 'pointer',
+            },
+          }}
+          onClick={changevisibilty}
+        >
+          <AiOutlineComment size={20} />
+          Comments
+
+        </Stack>
+      </Box>
+      {showComment && (
+      <Box
+        sx={{ overflowY: 'scroll', scrollbarWidth: '0px', height: '250px' }}
+      >
+        {
                   post.comments?.map((elemnt) => (
                     <Comments key={elemnt.name} comments={elemnt} />
                   ))
                 }
-              </Box>
-            </AccordionDetails>
-          </Accordion>
-
-        </Stack>
       </Box>
+      )}
 
       <Stack width="100%">
         <Inputfield
