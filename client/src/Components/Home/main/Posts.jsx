@@ -161,7 +161,7 @@ function Posts({ data, callback }) {
       </Box>
       )}
 
-      <Stack width="100%">
+      <div width="100%" className="TextField-without-border-radius">
         <Inputfield
           variant="outlined"
           fullWidth
@@ -193,7 +193,7 @@ function Posts({ data, callback }) {
             ),
           }}
         />
-      </Stack>
+      </div>
     </Paper>
 
   );
