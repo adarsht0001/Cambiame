@@ -1,10 +1,13 @@
 import post from "../models/postModel";
 
 export const postRepositoryMongoDB = () => {
-  const addPost = async (post: any) => {
-    return await post.create(post);
+  const addPost = async (data: any) => {
+    return await post.create(data);
   };
   return {
     addPost,
   };
 };
+
+export type PostRepositoryMongoDB = typeof postRepositoryMongoDB;
+export type postRepositoryDbReturn = ReturnType<PostRepositoryMongoDB>;
