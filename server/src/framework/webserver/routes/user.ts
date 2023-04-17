@@ -1,5 +1,4 @@
 import express from "express";
-import Admin from "../../database/mongoDb/models/userModels";
 import authController from "../../../adapters/controllers/authController";
 import { userRepositoryMongoDB } from "../../database/mongoDb/repositories/userRepository";
 import { userRepository } from "../../../application/repositories/userRepositoryInterface";
