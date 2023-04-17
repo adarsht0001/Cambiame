@@ -147,7 +147,6 @@ function Posts({ data, callback }) {
         >
           <AiOutlineComment size={20} />
           Comments
-
         </Stack>
       </Box>
       {showComment && (

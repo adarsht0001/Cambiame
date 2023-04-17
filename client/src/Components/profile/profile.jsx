@@ -18,6 +18,7 @@ function UserProfile() {
   const [profile, setProfile] = useState({});
   const [edited, setedited] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     axios.get(`/profile/${user.name}`, {
       headers: {
@@ -30,7 +31,7 @@ function UserProfile() {
     }).catch((err) => {
       alert(err.response.data.msg);
     });
-  }, []);
+  }, [refresh]);
   return (
     <Grid container alignItems="center" direction="column">
       <Paper
@@ -139,17 +140,17 @@ function UserProfile() {
         posts.length > 0
           ? (
             <>
-              <Box m={5}>
+              <Box marginTop={5}>
                 <Box>
                   <Typography variant="h5">  My Posts</Typography>
                 </Box>
               </Box>
               {posts.map((post) => (
-                <Posts data={post} key={post._id} />
+                <Posts data={post} key={post._id} callback={() => setRefresh(!refresh)} />
               ))}
             </>
           )
-          : <Typography variant="h5"> No Posts</Typography>
+          : <Typography variant="h5" marginTop={5}> No Posts</Typography>
 
       }
     </Grid>
