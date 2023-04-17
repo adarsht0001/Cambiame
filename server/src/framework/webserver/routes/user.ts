@@ -1,5 +1,4 @@
 import express from "express";
-import expressAsyncHandler from "express-async-handler";
 import Admin from "../../database/mongoDb/models/userModels";
 import authController from "../../../adapters/controllers/authController";
 import { userRepositoryMongoDB } from "../../database/mongoDb/repositories/userRepository";
@@ -22,6 +21,8 @@ const UserRoute = () => {
   );
   router.post("/login", controller.login);
   router.post("/signup", controller.signup);
+  router.post("/forgot-password", controller.forgotPassword);
+  router.post("/reset-password/:id/:token");
   return router;
 };
 

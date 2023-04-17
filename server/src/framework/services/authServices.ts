@@ -23,12 +23,20 @@ export const authService = () => {
     return jwt.sign(payload, secretKey);
   };
 
+  const forgottenPassword = (
+    payload: Verificationpayload,
+    secretKey: string
+  ) => {
+    return jwt.sign(payload, secretKey, { expiresIn: "15m" });
+  };
+
   return {
     comparePassword,
     createToken,
     hashPassword,
     secretKey,
     onetimeLink,
+    forgottenPassword,
   };
 };
 

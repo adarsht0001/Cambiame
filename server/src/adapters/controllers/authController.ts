@@ -7,6 +7,7 @@ import { Request, Response } from "express";
 import {
   userLogin,
   userSignup,
+  forgottenPassword,
 } from "../../application/use_cases/auth/userAuth";
 import { MailService } from "../../framework/services/mailServices";
 import { MailServiceInterface } from "../../application/services/mailServicesInterface";
@@ -56,9 +57,27 @@ const authController = (
         return res.status(401).json({ ...err, status: false });
       });
   });
+
+  const forgotPassword = expressAsyncHandler((req: Request, res: Response) => {
+    const { email }: { email: string } = req.body;
+    forgottenPassword(email, dbRepositortUser, authservice, mailServices)
+      .then(() => {
+        return res
+          .status(201)
+          .json({ status: true, msg: "Check Email... Link Has been Sent" });
+      })
+      .catch((err) => {
+        return res.status(401).json({ ...err, status: false });
+      });
+  });
+
+  const resetPassword = expressAsyncHandler((req: Request, res: Response) => {
+    const { id, token } = req.params;
+  });
   return {
     login,
     signup,
+    forgotPassword,
   };
 };
 

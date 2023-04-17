@@ -4,7 +4,7 @@ import { Signup, User, Verificationpayload } from "../../../types/userTypes";
 import { MailServiceInterface } from "../../services/mailServicesInterface";
 import { Mail } from "../../../types/mailOption";
 
-export const userLogin = async (
+export const userLogin = (
   email: string,
   password: string,
   userRepository: ReturnType<UserRepositoryInterFace>,
@@ -39,7 +39,7 @@ export const userLogin = async (
   });
 };
 
-export const userSignup = async (
+export const userSignup = (
   username: string,
   email: string,
   password: string,
@@ -48,7 +48,7 @@ export const userSignup = async (
   mailService: ReturnType<MailServiceInterface>
 ) => {
   return new Promise<Signup>(async (resolve, reject) => {
-    const user = userRepository.getByName(username);
+    const user = await userRepository.getByName(username);
     if (user !== null) {
       const emailExist = await userRepository.getByEmail(email);
       if (emailExist) {
@@ -89,4 +89,36 @@ export const userSignup = async (
   });
 };
 
-export default userLogin;
+export const forgottenPassword = async (
+  email: string,
+  userRepository: ReturnType<UserRepositoryInterFace>,
+  authService: ReturnType<AuthServiceInterface>,
+  mailService: ReturnType<MailServiceInterface>
+) => {
+  return new Promise<void>(async (resolve, reject) => {
+    const user = await userRepository.getByEmail(email);
+    if (user) {
+      const secretKey = authService.secretKey(user.password);
+      const payload: Verificationpayload = {
+        email: user.email,
+        _id: user._id,
+      };
+      const token = authService.forgottenPassword(payload, secretKey);
+      const link = `http://localhost:3000/verifyemail/${user._id}/${token}`;
+      const mailOpt: Mail = {
+        from: "Cambiame <Cambiame@gmail.com>",
+        to: "adarsht00001@gmail.com",
+        subject: "RESET PASSWORD",
+        text: `Your Reset Password Link is:${link}`,
+        html: `<hi>Your Reset Password Link is:${link}</h1>`,
+      };
+      mailService.sendMail(mailOpt);
+      resolve();
+    } else {
+      reject({
+        msg: "User Not Found",
+        email: true,
+      });
+    }
+  });
+};

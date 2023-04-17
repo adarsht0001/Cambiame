@@ -14,12 +14,16 @@ export const authServiceInterface = (service: AuthServiceReturn) => {
 
   const onetimeLink = (payload: Verificationpayload, secretKey: string) =>
     service.onetimeLink(payload, secretKey);
+
+  const forgottenPassword = (payload: Verificationpayload, secretKey: string) =>
+    service.forgottenPassword(payload, secretKey);
   return {
     comparePassword,
     createToken,
     hashPassword,
     secretKey,
     onetimeLink,
+    forgottenPassword,
   };
 };
 
