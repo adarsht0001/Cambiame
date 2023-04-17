@@ -1,13 +1,14 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
+import React, { Suspense, useEffect, useState } from 'react';
+import { Grid, Skeleton } from '@mui/material';
 import Postshare from './Postshare';
-import Posts from './Posts';
+// import Posts from './Posts';
 import axios from '../../../Axios/axios';
 
 function Main() {
   const [posts, setPosts] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const Posts = React.lazy(() => import('./Posts'));
   useEffect(() => {
     axios.get('/get-post').then((response) => {
       setPosts(response.data);
@@ -21,13 +22,23 @@ function Main() {
       }}
       />
       {posts.map((post) => (
-        <Posts
-          data={post}
+        <Suspense
           key={post._id}
-          callback={() => {
-            setRefresh(!refresh);
-          }}
-        />
+          fallback={(
+            <>
+              <Skeleton variant="circular" width={40} height={40} />
+              <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+              <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
+            </>
+)}
+        >
+          <Posts
+            data={post}
+            callback={() => {
+              setRefresh(!refresh);
+            }}
+          />
+        </Suspense>
       ))}
       {/* // <Postshare />
 // <Postshare /> */}
