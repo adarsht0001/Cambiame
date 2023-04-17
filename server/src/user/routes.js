@@ -83,7 +83,6 @@ const UserRoute = () => {
   })
 
   router.post('/add-comment',(req,res)=>{
-    console.log(req.body);
     const comment={
       comment:req.body.comment,
       id:req.body.id,
@@ -92,6 +91,13 @@ const UserRoute = () => {
     }
     postRepo.updateone(req.body.postid,{$push:{comments:comment}})
     res.sendStatus(200)
+  })
+
+  router.get('/get-comments/:postId',(req,res)=>{
+    postRepo.getById(req.params.postId).then((post)=>{
+      const comments = post.comments
+      res.json(comments)
+    })
   })
 
   return router;

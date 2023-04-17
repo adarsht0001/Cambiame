@@ -21,6 +21,7 @@ function Posts({ data, callback }) {
   const [isUser, setisUser] = useState(false);
   const [comment, setComment] = useState('');
   const [showComment, setShowComment] = useState(null);
+  const [refresh, setRefresh] = useState(null);
   const changevisibilty = () => {
     setShowComment(!showComment);
   };
@@ -69,9 +70,10 @@ function Posts({ data, callback }) {
       comment,
     };
     axios.post('/add-comment', commentData).then(() => {
-      callback();
+      // callback();
       setComment('');
       setLoading(false);
+      setRefresh(!refresh);
     }).catch((err) => console.log(err));
   };
   return (
@@ -155,9 +157,7 @@ function Posts({ data, callback }) {
         }}
       >
         {post.comments.length > 0
-          ? post.comments?.map((elemnt) => (
-            <Comments key={elemnt.name} comments={elemnt} />
-          ))
+          ? <Comments postid={post._id} refresh={refresh} />
           : <Typography variant="caption">No comments</Typography>}
       </Box>
       )}
