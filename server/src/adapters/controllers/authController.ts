@@ -4,16 +4,24 @@ import { AuthService } from "../../framework/services/authServices";
 import { AuthServiceInterface } from "../../application/services/authServiceInterface";
 import expressAsyncHandler from "express-async-handler";
 import { Request, Response } from "express";
-import { userLogin } from "../../application/use_cases/auth/userAuth";
+import {
+  userLogin,
+  userSignup,
+} from "../../application/use_cases/auth/userAuth";
+import { MailService } from "../../framework/services/mailServices";
+import { MailServiceInterface } from "../../application/services/mailServicesInterface";
 
 const authController = (
   useRepositoryImpl: UserRepositoryMongoDB,
   userDbrepository: UserRepositoryInterFace,
   authServiceImpl: AuthService,
-  authService: AuthServiceInterface
+  authService: AuthServiceInterface,
+  mailServiceimpl: MailService,
+  mailService: MailServiceInterface
 ) => {
   const dbRepositortUser = userDbrepository(useRepositoryImpl());
   const authservice = authService(authServiceImpl());
+  const mailServices = mailService(mailServiceimpl());
 
   const login = expressAsyncHandler(async (req: Request, res: Response) => {
     const { email, password }: { email: string; password: string } = req.body;
@@ -28,10 +36,25 @@ const authController = (
 
   const signup = expressAsyncHandler(async (req: Request, res: Response) => {
     const {
-      email,
       name,
+      email,
       password,
-    }: { email: string; name: string; password: string } = req.body;
+    }: { name: string; email: string; password: string } = req.body;
+    userSignup(
+      name,
+      email,
+      password,
+      dbRepositortUser,
+      authservice,
+      mailServices
+    )
+      .then((user) => {
+        delete user.password;
+        return res.status(201).json({ status: true, user });
+      })
+      .catch((err) => {
+        return res.status(401).json({ ...err, status: false });
+      });
   });
   return {
     login,

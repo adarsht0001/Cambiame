@@ -1,4 +1,5 @@
 import { AuthServiceReturn } from "../../framework/services/authServices";
+import { Verificationpayload } from "../../types/userTypes";
 
 export const authServiceInterface = (service: AuthServiceReturn) => {
   const comparePassword = (password: string, hashedPassword: string) =>
@@ -6,9 +7,19 @@ export const authServiceInterface = (service: AuthServiceReturn) => {
 
   const createToken = (user: object) => service.createToken(user);
 
+  const hashPassword = (password: string) => service.hashPassword(password);
+
+  const secretKey = (hashedPassword: string) =>
+    service.secretKey(hashedPassword);
+
+  const onetimeLink = (payload: Verificationpayload, secretKey: string) =>
+    service.onetimeLink(payload, secretKey);
   return {
     comparePassword,
     createToken,
+    hashPassword,
+    secretKey,
+    onetimeLink,
   };
 };
 

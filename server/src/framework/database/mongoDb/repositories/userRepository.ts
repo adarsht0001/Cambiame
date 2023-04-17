@@ -1,3 +1,4 @@
+import { Signup } from "../../../../types/userTypes";
 import User from "../models/userModels";
 
 export const userRepositoryMongoDB = () => {
@@ -13,10 +14,15 @@ export const userRepositoryMongoDB = () => {
     return await User.findById(id);
   };
 
+  const adduser = async (user: Signup) => {
+    return await User.create(user);
+  };
+
   return {
     getByEmail,
     getByName,
     getById,
+    adduser,
   };
 };
 

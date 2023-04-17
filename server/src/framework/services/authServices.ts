@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import configKeys from "../../config";
+import { Verificationpayload } from "../../types/userTypes";
 
 export const authService = () => {
   const comparePassword = (password: string, hashedPassword: string) => {
@@ -10,9 +11,24 @@ export const authService = () => {
     return jwt.sign({ token: user }, configKeys.jwtSecret);
   };
 
+  const hashPassword = async (password: string) => {
+    return await bcrypt.hash(password, 10);
+  };
+
+  const secretKey = (hashedPassword: string) => {
+    return configKeys.jwtSecret + hashedPassword;
+  };
+
+  const onetimeLink = (payload: Verificationpayload, secretKey: string) => {
+    return jwt.sign(payload, secretKey);
+  };
+
   return {
     comparePassword,
     createToken,
+    hashPassword,
+    secretKey,
+    onetimeLink,
   };
 };
 

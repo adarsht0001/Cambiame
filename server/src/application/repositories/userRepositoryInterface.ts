@@ -1,4 +1,5 @@
 import { UserRepositoryDbReturn } from "../../framework/database/mongoDb/repositories/userRepository";
+import { Signup } from "../../types/userTypes";
 
 export const userRepository = (repository: UserRepositoryDbReturn) => {
   const getByEmail = async (email: string) => repository.getByEmail(email);
@@ -7,10 +8,12 @@ export const userRepository = (repository: UserRepositoryDbReturn) => {
 
   const getById = async (id: string) => repository.getById(id);
 
+  const adduser = async (user: Signup) => repository.adduser(user);
   return {
     getByEmail,
     getByName,
     getById,
+    adduser,
   };
 };
 
