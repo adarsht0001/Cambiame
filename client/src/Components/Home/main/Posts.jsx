@@ -81,6 +81,7 @@ function Posts({ data, callback }) {
       sx={{
         width: '30%', border: 'red', padding: '20px', marginTop: '20px',
       }}
+      elevation={10}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
