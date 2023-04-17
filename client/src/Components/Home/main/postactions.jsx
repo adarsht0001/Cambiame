@@ -37,7 +37,12 @@ export default function LongMenu({ postid, isUser, callback }) {
   };
 
   const handleDelete = () => {
-    axios.delete(`/delete-post/${postid}`).then(() => {
+    axios.delete(`/delete-post/${postid}`, {}, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then(() => {
       callback();
       setAnchorEl(null);
     }).catch((err) => console.log(err));

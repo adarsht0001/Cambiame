@@ -27,7 +27,7 @@ const UserRoute = () => {
   router.route("/get-post").get(controller.getPost);
   router
     .route("/delete-post/:id")
-    .delete(controller.deletePost);
+    .delete(authenticateToken,controller.deletePost);
   router.route("/like/:id/:post").put(authenticateToken, controller.likePost);
   router.route("/report/:id/:post").put(authenticateToken,controller.reportPost);
   router.route("/profile/:name").get(authenticateToken,controller.getProfile);
@@ -63,7 +63,6 @@ const UserRoute = () => {
   router.put('/follow/:name',(req,res)=>{
     const {name} = req.params
     userRepo.getByName(name).then((user)=>{
-      console.log(user);
       const toFollow={
         id:user._id,
         name:user.username,

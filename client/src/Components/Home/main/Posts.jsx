@@ -13,6 +13,7 @@ import BackgroundLetterAvatars from '../../avatar/StringAvatar';
 import axios from '../../../Axios/axios';
 import LongMenu from './postactions';
 import Inputfield from '../../input/Inputfield';
+import Comments from './comments';
 
 function Posts({ data, callback }) {
   const [post, setPosts] = useState(data);
@@ -64,6 +65,7 @@ function Posts({ data, callback }) {
       comment,
     };
     axios.post('/add-comment', commentData).then(() => {
+      callback();
       setComment('');
       setLoading(false);
     }).catch((err) => console.log(err));
@@ -136,16 +138,13 @@ function Posts({ data, callback }) {
             </AccordionSummary>
             <AccordionDetails>
               <Box
-                sx={{ overflowY: 'scroll', scrollbarWidth: '0px', height: '30%' }}
+                sx={{ overflowY: 'scroll', scrollbarWidth: '0px', height: '150px' }}
               >
-                <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                  malesuada lacus ex, sit amet blandit leo lobortis eget.
-                </Typography>
-                <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                  malesuada lacus ex, sit amet blandit leo lobortis eget.
-                </Typography>
+                {
+                  post.comments?.map((elemnt) => (
+                    <Comments key={elemnt.name} comments={elemnt} />
+                  ))
+                }
               </Box>
             </AccordionDetails>
           </Accordion>

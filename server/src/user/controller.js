@@ -139,6 +139,10 @@ module.exports = (userRepo, postRepo) => {
     })
   };
 
+  const search=(req,res)=>{
+    
+  }
+
   return {
     login,
     Signup,
