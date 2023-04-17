@@ -30,6 +30,16 @@ export const authService = () => {
     return jwt.sign(payload, secretKey, { expiresIn: "15m" });
   };
 
+  const verifyJWT = (token: string, secretKey: string) => {
+    try {
+      return jwt.verify(token, secretKey);
+    } catch (error) {
+      return {
+        msg: "Link Expired",
+        expired: true,
+      };
+    }
+  };
   return {
     comparePassword,
     createToken,
@@ -37,6 +47,7 @@ export const authService = () => {
     secretKey,
     onetimeLink,
     forgottenPassword,
+    verifyJWT,
   };
 };
 

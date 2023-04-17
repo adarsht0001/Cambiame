@@ -17,6 +17,10 @@ export const authServiceInterface = (service: AuthServiceReturn) => {
 
   const forgottenPassword = (payload: Verificationpayload, secretKey: string) =>
     service.forgottenPassword(payload, secretKey);
+
+  const verifyJWT = (token: string, secretKey: string) =>
+    service.verifyJWT(token, secretKey);
+
   return {
     comparePassword,
     createToken,
@@ -24,6 +28,7 @@ export const authServiceInterface = (service: AuthServiceReturn) => {
     secretKey,
     onetimeLink,
     forgottenPassword,
+    verifyJWT,
   };
 };
 

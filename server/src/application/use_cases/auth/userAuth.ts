@@ -89,7 +89,7 @@ export const userSignup = (
   });
 };
 
-export const forgottenPassword = async (
+export const forgottenPassword = (
   email: string,
   userRepository: ReturnType<UserRepositoryInterFace>,
   authService: ReturnType<AuthServiceInterface>,
@@ -118,6 +118,64 @@ export const forgottenPassword = async (
       reject({
         msg: "User Not Found",
         email: true,
+      });
+    }
+  });
+};
+
+export const resetpassword = (
+  id: string,
+  token: string,
+  password: string,
+  userRepository: ReturnType<UserRepositoryInterFace>,
+  authService: ReturnType<AuthServiceInterface>
+) => {
+  return new Promise<object>(async (resolve, reject) => {
+    const user = await userRepository.getById(id);
+    if (user) {
+      const secretKey = authService.secretKey(user.password);
+      const payload: any = authService.verifyJWT(token, secretKey);
+      if (payload.expired) {
+        reject(payload);
+      } else {
+        const hashedPassword = await authService.hashPassword(password);
+        await userRepository.updateOne(
+          { email: payload.email },
+          { password: hashedPassword }
+        );
+        resolve({ msg: "password changed" });
+      }
+    } else {
+      reject({
+        msg: "User Not Found",
+      });
+    }
+  });
+};
+
+export const verifyMail = (
+  id: string,
+  token: string,
+  userRepository: ReturnType<UserRepositoryInterFace>,
+  authService: ReturnType<AuthServiceInterface>
+) => {
+  return new Promise<object>(async (resolve, reject) => {
+    const user = await userRepository.getById(id);
+    if (user) {
+      const secretKey = authService.secretKey(user.password);
+      const payload: any = authService.verifyJWT(token, secretKey);
+      if (payload.expired) {
+        reject(payload);
+      } else {
+        await userRepository.updateOne(
+          { email: user.email },
+          { verified: true }
+        );
+        resolve({ msg: "Status changed" });
+      }
+    } else {
+      reject({
+        msg: "User Not Found",
       });
     }
   });

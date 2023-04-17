@@ -18,11 +18,16 @@ export const userRepositoryMongoDB = () => {
     return await User.create(user);
   };
 
+  const updateOne = async (filter: object, update: object) => {
+    return await User.updateOne(filter, update);
+  };
+
   return {
     getByEmail,
     getByName,
     getById,
     adduser,
+    updateOne,
   };
 };
 

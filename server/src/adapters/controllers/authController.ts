@@ -8,6 +8,8 @@ import {
   userLogin,
   userSignup,
   forgottenPassword,
+  resetpassword,
+  verifyMail,
 } from "../../application/use_cases/auth/userAuth";
 import { MailService } from "../../framework/services/mailServices";
 import { MailServiceInterface } from "../../application/services/mailServicesInterface";
@@ -73,11 +75,32 @@ const authController = (
 
   const resetPassword = expressAsyncHandler((req: Request, res: Response) => {
     const { id, token } = req.params;
+    const { pass } = req.body;
+    resetpassword(id, token, pass, dbRepositortUser, authservice)
+      .then((response) => {
+        return res.status(201).json({ status: true, ...response });
+      })
+      .catch((err) => {
+        return res.status(401).json({ status: false, ...err });
+      });
+  });
+
+  const verifyEmail = expressAsyncHandler((req: Request, res: Response) => {
+    const { id, token } = req.params;
+    verifyMail(id, token, dbRepositortUser, authservice)
+      .then((response) => {
+        return res.status(201).json({ status: true, ...response });
+      })
+      .catch((err) => {
+        return res.status(401).json({ status: false, ...err });
+      });
   });
   return {
     login,
     signup,
     forgotPassword,
+    resetPassword,
+    verifyEmail,
   };
 };
 

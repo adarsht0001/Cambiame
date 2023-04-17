@@ -22,7 +22,8 @@ const UserRoute = () => {
   router.post("/login", controller.login);
   router.post("/signup", controller.signup);
   router.post("/forgot-password", controller.forgotPassword);
-  router.post("/reset-password/:id/:token");
+  router.post("/reset-password/:id/:token", controller.resetPassword);
+  router.post("/verify-email/:id/:token", controller.verifyEmail);
   return router;
 };
 

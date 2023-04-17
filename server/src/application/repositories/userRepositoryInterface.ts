@@ -9,11 +9,16 @@ export const userRepository = (repository: UserRepositoryDbReturn) => {
   const getById = async (id: string) => repository.getById(id);
 
   const adduser = async (user: Signup) => repository.adduser(user);
+
+  const updateOne = async (filter: object, update: object) =>
+    repository.updateOne(filter, update);
+
   return {
     getByEmail,
     getByName,
     getById,
     adduser,
+    updateOne,
   };
 };
 
