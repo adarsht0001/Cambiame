@@ -11,7 +11,6 @@ import BackgroundLetterAvatars from '../avatar/StringAvatar';
 import axios from '../../Axios/axios';
 import Inputfield from '../input/Inputfield';
 import Posts from '../Home/main/Posts';
-// import BackgroundLetterAvatars from '../avatar/StringAvatar';
 // import Posts from '../Home/main/Posts';
 
 function UserProfile() {
@@ -19,7 +18,6 @@ function UserProfile() {
   const [profile, setProfile] = useState({});
   const [edited, setedited] = useState(false);
   const [posts, setPosts] = useState([]);
-
   useEffect(() => {
     axios.get(`/profile/${user.name}`, {
       headers: {
@@ -27,7 +25,6 @@ function UserProfile() {
         Authorization: `Bearer ${user.access_Token}`,
       },
     }).then((response) => {
-      console.log(response.data);
       setProfile(response.data.user);
       setPosts(response.data.posts);
     }).catch((err) => {
@@ -160,18 +157,3 @@ function UserProfile() {
 }
 
 export default UserProfile;
-
-// <Grid container alignItems="center" direction="column">
-//   <Grid sx={{ width: '60%', padding: '30px' }}>
-//     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-//       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-//         {/* <PictureAvatar image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT50hnwfx3suGC7Nhg1mTRdd1iPkFXI4eJBN8IrkAtu-w&s" width="150px" height="150px" /> */}
-//       </Box>
-//       <Box>
-//         <Typography variant="subtitle1">Hello,</Typography>
-//         <Typography variant="h3">{profile.username}</Typography>
-//       </Box>
-//     </Box>
-
-//   </Grid>
-// </Grid>
