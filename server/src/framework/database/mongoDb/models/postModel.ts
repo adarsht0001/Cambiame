@@ -43,5 +43,5 @@ const postSchema = new Schema({
     type: Date,
   },
 });
-const post = model("post", postSchema, "post");
-export default post;
+const Post = model("posts", postSchema, "posts");
+export default Post;
