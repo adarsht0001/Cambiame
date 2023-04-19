@@ -3,7 +3,7 @@ import { PostRepositoryInterface } from "../../application/repositories/postRepo
 import { S3service } from "../../framework/services/s3Service";
 import { S3serviceInterface } from "../../application/services/s3serviceInterface";
 import { Request, Response } from "express";
-import { addPost } from "../../application/use_cases/post/postCrud";
+import { addPost, getPosts } from "../../application/use_cases/post/postCrud";
 const postController = (
   postRepositortyImpl: PostRepositoryMongoDB,
   postRepository: PostRepositoryInterface,
@@ -24,8 +24,15 @@ const postController = (
       });
   };
 
+  const getPost = async (req: Request, res: Response) => {
+    getPosts(postRepo, s3Services).then((data) => {
+      return res.status(200).json(data);
+    });
+  };
+
   return {
     createPost,
+    getPost,
   };
 };
 export default postController;

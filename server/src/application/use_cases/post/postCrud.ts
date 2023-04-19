@@ -1,5 +1,8 @@
 import { postType } from "../../../types/postType";
-import { PostRepositoryInterface } from "../../repositories/postRepositoryInterface";
+import {
+  PostRepositoryInterface,
+  postRepository,
+} from "../../repositories/postRepositoryInterface";
 import { S3serviceInterface } from "../../services/s3serviceInterface";
 
 export const addPost = (
@@ -12,7 +15,7 @@ export const addPost = (
   return new Promise<object>(async (resolve, reject) => {
     const post: postType = {
       user: name,
-      caption: name,
+      caption: caption,
       date: Date.now(),
     };
     if (file) {
@@ -36,5 +39,22 @@ export const addPost = (
         })
         .catch((err) => reject(err));
     }
+  });
+};
+
+export const getPosts = (
+  postRepository: ReturnType<PostRepositoryInterface>,
+  s3Services: ReturnType<S3serviceInterface>
+) => {
+  return new Promise<object[]>((resolve, reject) => {
+    postRepository.getPosts().then(async (posts) => {
+      for (let post of posts) {
+        if (post.image) {
+          let url = await s3Services.getObjectSignedUrl(post.image);
+          post.set("link", url, { strict: false });
+        }
+      }
+      resolve(posts);
+    });
   });
 };

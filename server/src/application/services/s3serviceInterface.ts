@@ -5,8 +5,12 @@ export const s3ServiceInterface = (service: S3serviceReturn) => {
     return await service.uploadtoS3(fileData, name, mimetype);
   };
 
+  const getObjectSignedUrl = async (key: string) => {
+    return await service.getObjectSignedUrl(key);
+  };
   return {
     uploadtoS3,
+    getObjectSignedUrl,
   };
 };
 

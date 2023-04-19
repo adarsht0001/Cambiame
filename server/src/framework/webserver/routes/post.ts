@@ -4,7 +4,7 @@ import { postRepositoryMongoDB } from "../../database/mongoDb/repositories/postR
 import { postRepository } from "../../../application/repositories/postRepositoryInterface";
 import { s3ServiceInterface } from "../../../application/services/s3serviceInterface";
 import { s3Service } from "../../services/s3Service";
-import multer, { Multer } from "multer";
+import multer from "multer";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -17,6 +17,7 @@ const PostRoute = () => {
     s3Service,
     s3ServiceInterface
   );
+  router.get("/", controller.getPost);
   router.post("/", upload.single("file"), controller.createPost);
   return router;
 };

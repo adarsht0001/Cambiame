@@ -30,8 +30,20 @@ export const s3Service = () => {
     await s3.send(command);
     return path;
   };
+
+  const getObjectSignedUrl = async (key: string) => {
+    const params = {
+      Bucket: configKeys.awsBucketName,
+      Key: key,
+    };
+    const command = new GetObjectCommand(params);
+    const seconds = 600000;
+    const url = await getSignedUrl(s3, command, { expiresIn: seconds });
+    return url;
+  };
   return {
     uploadtoS3,
+    getObjectSignedUrl,
   };
 };
 

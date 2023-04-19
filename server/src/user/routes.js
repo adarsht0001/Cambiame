@@ -24,6 +24,7 @@ const UserRoute = () => {
   router
     .route("/post")
     .post(authenticateToken, multer.single("file"), controller.post);
+    
   router.route("/get-post").get(controller.getPost);
   router
     .route("/delete-post/:id")
