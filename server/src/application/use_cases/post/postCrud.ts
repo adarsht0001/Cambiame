@@ -103,3 +103,26 @@ export const likeaPost = (
     });
   });
 };
+
+export const reportaPost = (
+  userId: string,
+  postId: string,
+  postRepository: ReturnType<PostRepositoryInterface>,
+  userRepository: ReturnType<UserRepositoryInterFace>
+) => {
+  return new Promise<object>((resolve, reject) => {
+    postRepository.getById(postId).then(async (post) => {
+      const exist = post?.reportedby.some((obj) => obj === userId);
+      if (exist) {
+        resolve({ msg: "Already reported" });
+      } else {
+        const update = {
+          $push: { reportedby: userId },
+          $inc: { report: +1 },
+        };
+        postRepository.updateById(postId, update);
+        resolve({ msg: "Reported SuccesFully" });
+      }
+    });
+  });
+};

@@ -10,6 +10,7 @@ import {
   getPosts,
   likeaPost,
   removePost,
+  reportaPost,
 } from "../../application/use_cases/post/postCrud";
 const postController = (
   postRepositortyImpl: PostRepositoryMongoDB,
@@ -54,11 +55,19 @@ const postController = (
     });
   };
 
+  const reportPost = (req: Request, res: Response) => {
+    const { id, post } = req.params;
+    reportaPost(id, post, postRepo, dbRepositortUser).then((response) => {
+      res.json(response);
+    });
+  };
+
   return {
     createPost,
     getPost,
     deletePost,
     likePost,
+    reportPost,
   };
 };
 export default postController;

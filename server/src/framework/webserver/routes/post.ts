@@ -25,6 +25,8 @@ const PostRoute = () => {
   router.post("/", upload.single("file"), controller.createPost);
   router.delete("/delete-post/:id", controller.deletePost);
   router.put("/like/:id/:post", controller.likePost);
+  router.put("/report/:id/:post", controller.reportPost);
+
   return router;
 };
 
