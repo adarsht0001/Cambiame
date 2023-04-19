@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { postType } from "../../../../types/postType";
 import Post from "../models/postModel";
 
@@ -10,11 +11,15 @@ export const postRepositoryMongoDB = () => {
 
   const deleteById = async (id: string) => await Post.findByIdAndDelete(id);
 
+  const updateById = async (id: ObjectId | undefined, update: object) =>
+    await Post.findByIdAndUpdate(id, update);
+
   return {
     getPosts,
     addPost,
     getById,
     deleteById,
+    updateById,
   };
 };
 

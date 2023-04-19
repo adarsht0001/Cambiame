@@ -1,8 +1,6 @@
 import { postType } from "../../../types/postType";
-import {
-  PostRepositoryInterface,
-  postRepository,
-} from "../../repositories/postRepositoryInterface";
+import { PostRepositoryInterface } from "../../repositories/postRepositoryInterface";
+import { UserRepositoryInterFace } from "../../repositories/userRepositoryInterface";
 import { S3serviceInterface } from "../../services/s3serviceInterface";
 
 export const addPost = (
@@ -70,6 +68,38 @@ export const removePost = (
       resolve({
         msg: "post deleted",
       });
+    });
+  });
+};
+
+export const likeaPost = (
+  userId: string,
+  postId: string,
+  postRepository: ReturnType<PostRepositoryInterface>,
+  userRepository: ReturnType<UserRepositoryInterFace>
+) => {
+  return new Promise<object>((resolve, reject) => {
+    postRepository.getById(postId).then(async (post) => {
+      const exist = post?.likedby.some((obj) => obj.id === userId);
+      const filter = post?._id;
+      if (exist) {
+        const update = {
+          $pull: { likedby: { id: userId } },
+          $inc: { likes: -1 },
+        };
+        await postRepository.updateById(filter, update);
+        resolve({ msg: "un-liked post" });
+      } else {
+        const data = await userRepository.getById(userId);
+        const user = {
+          id: data?._id.toString(),
+          name: data?.username,
+          profile: data?.profile,
+        };
+        const update = { $push: { likedby: user }, $inc: { likes: +1 } };
+        await postRepository.updateById(filter, update);
+        resolve({ msg: "liked the post" });
+      }
     });
   });
 };

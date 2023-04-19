@@ -4,6 +4,8 @@ import { postRepositoryMongoDB } from "../../database/mongoDb/repositories/postR
 import { postRepository } from "../../../application/repositories/postRepositoryInterface";
 import { s3ServiceInterface } from "../../../application/services/s3serviceInterface";
 import { s3Service } from "../../services/s3Service";
+import { userRepositoryMongoDB } from "../../database/mongoDb/repositories/userRepository";
+import { userRepository } from "../../../application/repositories/userRepositoryInterface";
 import multer from "multer";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -14,12 +16,15 @@ const PostRoute = () => {
   const controller = postController(
     postRepositoryMongoDB,
     postRepository,
+    userRepositoryMongoDB,
+    userRepository,
     s3Service,
     s3ServiceInterface
   );
   router.get("/", controller.getPost);
   router.post("/", upload.single("file"), controller.createPost);
   router.delete("/delete-post/:id", controller.deletePost);
+  router.put("/like/:id/:post", controller.likePost);
   return router;
 };
 
