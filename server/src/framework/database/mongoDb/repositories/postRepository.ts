@@ -6,9 +6,15 @@ export const postRepositoryMongoDB = () => {
 
   const addPost = async (data: postType) => await Post.create(data);
 
+  const getById = async (id: any) => await Post.findById(id);
+
+  const deleteById = async (id: string) => await Post.findByIdAndDelete(id);
+
   return {
     getPosts,
     addPost,
+    getById,
+    deleteById,
   };
 };
 

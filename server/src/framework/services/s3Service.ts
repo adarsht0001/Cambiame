@@ -41,9 +41,18 @@ export const s3Service = () => {
     const url = await getSignedUrl(s3, command, { expiresIn: seconds });
     return url;
   };
+
+  const deleteFile = async (filename: string) => {
+    const deleteParams = {
+      Bucket: configKeys.awsBucketName,
+      Key: filename,
+    };
+    return s3.send(new DeleteObjectCommand(deleteParams));
+  };
   return {
     uploadtoS3,
     getObjectSignedUrl,
+    deleteFile,
   };
 };
 

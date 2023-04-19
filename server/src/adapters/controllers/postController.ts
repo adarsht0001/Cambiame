@@ -3,7 +3,11 @@ import { PostRepositoryInterface } from "../../application/repositories/postRepo
 import { S3service } from "../../framework/services/s3Service";
 import { S3serviceInterface } from "../../application/services/s3serviceInterface";
 import { Request, Response } from "express";
-import { addPost, getPosts } from "../../application/use_cases/post/postCrud";
+import {
+  addPost,
+  getPosts,
+  removePost,
+} from "../../application/use_cases/post/postCrud";
 const postController = (
   postRepositortyImpl: PostRepositoryMongoDB,
   postRepository: PostRepositoryInterface,
@@ -30,9 +34,17 @@ const postController = (
     });
   };
 
+  const deletePost = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    removePost(id, postRepo, s3Services).then((response) => {
+      res.status(200).json({ status: true, ...response });
+    });
+  };
+
   return {
     createPost,
     getPost,
+    deletePost,
   };
 };
 export default postController;

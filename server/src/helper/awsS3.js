@@ -58,7 +58,6 @@ module.exports={
           Bucket: BUCKET,
           Key: fileName,
         }
-      
         return s3.send(new DeleteObjectCommand(deleteParams));
       }
 

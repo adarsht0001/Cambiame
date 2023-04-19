@@ -6,9 +6,15 @@ export const postRepository = (repository: PostRepositoryDbReturn) => {
 
   const addPost = async (data: postType) => await repository.addPost(data);
 
+  const getById = async (id: any) => await repository.getById(id);
+
+  const deleteById = async (id: string) => await repository.deleteById(id);
+
   return {
     getPosts,
     addPost,
+    getById,
+    deleteById,
   };
 };
 export type PostRepositoryInterface = typeof postRepository;

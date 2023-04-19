@@ -8,9 +8,14 @@ export const s3ServiceInterface = (service: S3serviceReturn) => {
   const getObjectSignedUrl = async (key: string) => {
     return await service.getObjectSignedUrl(key);
   };
+
+  const deleteFile = async (filename: string) => {
+    return await service.deleteFile(filename);
+  };
   return {
     uploadtoS3,
     getObjectSignedUrl,
+    deleteFile,
   };
 };
 

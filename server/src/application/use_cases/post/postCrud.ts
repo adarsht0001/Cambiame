@@ -58,3 +58,18 @@ export const getPosts = (
     });
   });
 };
+
+export const removePost = (
+  id: string,
+  postRepository: ReturnType<PostRepositoryInterface>,
+  s3Services: ReturnType<S3serviceInterface>
+) => {
+  return new Promise<object>((resolve, reject) => {
+    postRepository.deleteById(id).then(async (post) => {
+      await s3Services.deleteFile(post?.image as string);
+      resolve({
+        msg: "post deleted",
+      });
+    });
+  });
+};
