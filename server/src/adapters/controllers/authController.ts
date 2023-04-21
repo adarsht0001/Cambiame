@@ -95,6 +95,7 @@ const authController = (
         return res.status(401).json({ status: false, ...err });
       });
   });
+
   return {
     login,
     signup,

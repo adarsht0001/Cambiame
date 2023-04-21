@@ -1,10 +1,11 @@
 import { Application } from "express";
-import UserRoute from "./user";
+import authRoute from "./auth";
 import AdminRoute from "./admin";
 import PostRoute from "./post";
+import userRoute from "./user";
 
 const router = (app: Application) => {
-  app.use("/", UserRoute());
+  app.use("/", authRoute(), userRoute());
   app.use("/admin", AdminRoute());
   app.use("/post", PostRoute());
 };

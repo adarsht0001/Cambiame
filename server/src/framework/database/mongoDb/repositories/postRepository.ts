@@ -14,12 +14,16 @@ export const postRepositoryMongoDB = () => {
   const updateById = async (id: ObjectId | undefined, update: object) =>
     await Post.findByIdAndUpdate(id, update);
 
+  const getbyUser = async (name: string | undefined) =>
+    await Post.find({ user: name });
+
   return {
     getPosts,
     addPost,
     getById,
     deleteById,
     updateById,
+    getbyUser,
   };
 };
 

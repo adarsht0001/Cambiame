@@ -1,4 +1,3 @@
-import { ObjectId } from "mongoose";
 import { PostRepositoryDbReturn } from "../../framework/database/mongoDb/repositories/postRepository";
 import { postType } from "../../types/postType";
 
@@ -14,12 +13,16 @@ export const postRepository = (repository: PostRepositoryDbReturn) => {
   const updateById = async (id: any, update: object) =>
     await repository.updateById(id, update);
 
+  const getbyUser = async (name: string | undefined) =>
+    await repository.getbyUser(name);
+
   return {
     getPosts,
     addPost,
     getById,
     deleteById,
     updateById,
+    getbyUser,
   };
 };
 export type PostRepositoryInterface = typeof postRepository;

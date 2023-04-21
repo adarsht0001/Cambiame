@@ -21,6 +21,7 @@ const PostRoute = () => {
     s3Service,
     s3ServiceInterface
   );
+
   router.get("/", controller.getPost);
   router.post("/", upload.single("file"), controller.createPost);
   router.delete("/delete-post/:id", controller.deletePost);
