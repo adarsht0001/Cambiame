@@ -30,7 +30,8 @@ export const userLogin = (
         email: user.email,
         username: user.username,
       };
-      const token = authService.createToken(user);
+      const token = authService.createToken(payload);
+      payload.id = user._id;
       payload.token = token;
       resolve(payload);
     } else {

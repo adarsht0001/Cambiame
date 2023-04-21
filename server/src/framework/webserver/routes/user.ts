@@ -15,7 +15,7 @@ const userRoute = () => {
     postRepository
   );
 
-  router.get("/profile/:id", controller.getProfile);
+  router.get("/profile/:name", controller.getProfile);
   return router;
 };
 

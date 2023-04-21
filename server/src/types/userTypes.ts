@@ -1,6 +1,7 @@
 import { ObjectId } from "mongoose";
 
 export interface User {
+  id?: any;
   email: string;
   username: string;
   token?: string;

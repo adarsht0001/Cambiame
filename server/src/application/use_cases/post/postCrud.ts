@@ -64,7 +64,9 @@ export const removePost = (
 ) => {
   return new Promise<object>((resolve, reject) => {
     postRepository.deleteById(id).then(async (post) => {
-      await s3Services.deleteFile(post?.image as string);
+      if (post?.image) {
+        await s3Services.deleteFile(post?.image as string);
+      }
       resolve({
         msg: "post deleted",
       });

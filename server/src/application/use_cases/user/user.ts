@@ -2,12 +2,12 @@ import { PostRepositoryInterface } from "../../repositories/postRepositoryInterf
 import { UserRepositoryInterFace } from "../../repositories/userRepositoryInterface";
 
 export const getUserById = (
-  id: string,
+  name: string,
   userRepository: ReturnType<UserRepositoryInterFace>,
   postRepository: ReturnType<PostRepositoryInterface>
 ) => {
   return new Promise<object>((resolve, reject) => {
-    userRepository.getById(id).then((user) => {
+    userRepository.getByName(name).then((user) => {
       if (user) {
         postRepository.getbyUser(user?.username).then((posts) => {
           const profile = {

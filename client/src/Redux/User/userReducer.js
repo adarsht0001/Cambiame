@@ -15,7 +15,7 @@ const reducer = (state = initialState, { type, payload }) => {
         loggedIn: true,
         name: payload.username,
         email: payload.email,
-        access_Token: payload.accesToken,
+        access_Token: payload.token,
         id: payload.id,
       };
 

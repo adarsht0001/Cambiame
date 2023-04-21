@@ -18,7 +18,7 @@ export default function LongMenu({ postid, isUser, callback }) {
   };
   const handleReport = () => {
     setLoading(true);
-    axios.put(`/report/${user.id}/${postid}`, {}, {
+    axios.put(`/post/report/${user.id}/${postid}`, {}, {
       headers: {
         'Content-Type': 'multipart/form-data',
         authorization: `Bearer ${user.access_Token}`,
@@ -37,7 +37,7 @@ export default function LongMenu({ postid, isUser, callback }) {
   };
 
   const handleDelete = () => {
-    axios.delete(`/delete-post/${postid}`, {
+    axios.delete(`/post/delete-post/${postid}`, {
       headers: {
         'Content-Type': 'multipart/form-data',
         authorization: `Bearer ${user.access_Token}`,

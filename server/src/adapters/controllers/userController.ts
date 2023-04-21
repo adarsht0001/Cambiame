@@ -15,8 +15,8 @@ const userController = (
   const postRepo = postRepository(postRepositortyImpl());
 
   const getProfile = (req: Request, res: Response) => {
-    const { id } = req.params;
-    getUserById(id, userRepo, postRepo)
+    const { name } = req.params;
+    getUserById(name, userRepo, postRepo)
       .then((data) => {
         res.json(data);
       })

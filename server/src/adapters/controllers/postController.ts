@@ -50,6 +50,7 @@ const postController = (
 
   const likePost = (req: Request, res: Response) => {
     const { id, postId } = req.params;
+
     likeaPost(id, postId, postRepo, dbRepositortUser).then((response) => {
       res.json(response);
     });

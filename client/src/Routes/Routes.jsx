@@ -6,29 +6,16 @@ import { IsLogged, LoggedIn } from '../Auth/LoginAuth';
 import Resetpass from '../Pages/ResetPassword/Resetpass';
 import VerifyEmail from '../Pages/verifyMail/verifyEmail';
 import Home from '../Pages/Home/Home';
-<<<<<<< HEAD
-// import Sidebar from '../Components/sidebar/Sidebar';
-import Layout from '../Pages/layout/Layout';
-import Homes from '../Pages/Home/TeHome';
-=======
 import Profile from '../Pages/Profile/Profile';
 import Layout from '../Pages/Layout/Layout';
 import SocialMediaAccordion from '../Components/Home/main/comments';
 import Search from '../Pages/Search/Search';
 import Viewprofile from '../Pages/viewprofile/Viewprofile';
->>>>>>> main
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
-<<<<<<< HEAD
-        <Route element={<Layout />}>
-          <Route element={<Home />} path="/" />
-        </Route>
-        <Route element={<Homes />} exact path="/test" />
-        <Route element={<IsLogged />} />
-=======
         <Route element={<IsLogged />}>
           <Route element={<Layout />}>
             <Route element={<Home />} exact path="/" />
@@ -38,7 +25,6 @@ function Router() {
           </Route>
         </Route>
         <Route element={<SocialMediaAccordion />} path="/tesing" />
->>>>>>> main
         <Route element={<LoggedIn />}>
           <Route element={<Resetpass />} path="/resetpassword/:id/:token" />
           <Route element={<VerifyEmail />} path="/verifyemail/:id/:token" />

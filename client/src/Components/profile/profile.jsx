@@ -29,6 +29,7 @@ function UserProfile() {
       setProfile(response.data.user);
       setPosts(response.data.posts);
     }).catch((err) => {
+      console.log(err);
       alert(err.response.data.msg);
     });
   }, [refresh]);
