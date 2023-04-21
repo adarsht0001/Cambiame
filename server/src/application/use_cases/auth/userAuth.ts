@@ -50,7 +50,7 @@ export const userSignup = (
 ) => {
   return new Promise<Signup>(async (resolve, reject) => {
     const user = await userRepository.getByName(username);
-    if (user !== null) {
+    if (!user) {
       const emailExist = await userRepository.getByEmail(email);
       if (emailExist) {
         reject({
