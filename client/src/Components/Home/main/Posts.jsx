@@ -29,6 +29,7 @@ function Posts({ data, callback }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log(post);
     if (post.user === user.name) {
       setisUser(true);
     }
@@ -41,7 +42,7 @@ function Posts({ data, callback }) {
   }, []);
 
   const like = (values) => {
-    axios.put(`/like/${user.id}/${values._id}`, {}, {
+    axios.put(`/post/like/${user.id}/${values._id}`, {}, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${user.access_Token}`,

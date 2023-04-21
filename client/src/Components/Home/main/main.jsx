@@ -10,7 +10,7 @@ function Main() {
   const [refresh, setRefresh] = useState(false);
   const Posts = React.lazy(() => import('./Posts'));
   useEffect(() => {
-    axios.get('/get-post').then((response) => {
+    axios.get('/post').then((response) => {
       setPosts(response.data);
     });
   }, [refresh]);
