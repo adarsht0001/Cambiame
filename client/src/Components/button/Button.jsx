@@ -2,8 +2,9 @@ import Button from '@mui/material/Button';
 
 function Buttons(props) {
   const {
-    variant, type, Text, size, callback,
+    variant, type, Text, size, callback, color = 'primary.main',
   } = props;
+
   return (
     <Button
       size={size}
@@ -11,14 +12,13 @@ function Buttons(props) {
       type={type}
       onClick={callback}
       sx={{
-        bgcolor: 'primary.main',
-        // borderRadius: '28px',
+        bgcolor: color,
+        borderRadius: '28px',
         // background: '#00000',
         // boxShadow: ' -1px -1px 100px #4e4e4e,1px 1px 100px #121212',
       }}
     >
       {Text}
-
     </Button>
   );
 }

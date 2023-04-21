@@ -1,20 +1,49 @@
-import React from 'react';
-// import Stack from '@mui/material/Stack';
+/* eslint-disable no-underscore-dangle */
+import React, { Suspense, useEffect, useState } from 'react';
+import { Grid, Skeleton } from '@mui/material';
 import Postshare from './Postshare';
+// import Posts from './Posts';
+import axios from '../../../Axios/axios';
 
 function Main() {
-  return (
-  // <Stack
-  //   direction="column"
-  //   justifyContent="space-between"
-  //   alignItems="stretch"
-  //   spacing={1}
-  // >
-    <Postshare />
-  //   <Postshare />
-  //   <Postshare />
+  const [posts, setPosts] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  const Posts = React.lazy(() => import('./Posts'));
+  useEffect(() => {
+    axios.get('/get-post').then((response) => {
+      setPosts(response.data);
+    });
+  }, [refresh]);
 
-  // </Stack>
+  return (
+    <Grid container alignItems="center" direction="column">
+      <Postshare callback={() => {
+        setRefresh(!refresh);
+      }}
+      />
+      {posts.map((post) => (
+        <Suspense
+          key={post._id}
+          fallback={(
+            <>
+              <Skeleton variant="circular" width={40} height={40} />
+              <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+              <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
+            </>
+)}
+        >
+          <Posts
+            data={post}
+            callback={() => {
+              setRefresh(!refresh);
+            }}
+          />
+        </Suspense>
+      ))}
+      {/* // <Postshare />
+// <Postshare /> */}
+
+    </Grid>
   );
 }
 

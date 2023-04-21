@@ -42,6 +42,10 @@ const postSchema = new Schema({
   date: {
     type: Date,
   },
+  comments:{
+    type:Array,
+    default: [],
+  }
 });
 const Post = model("posts", postSchema, "posts");
 export default Post;

@@ -38,6 +38,10 @@ const userShema = new Schema({
     type: Array,
     default: [],
   },
+  profilePhoto:{
+    type:String,
+    required:false
+  }
 });
 const User = model("users", userShema, "users");
 export default User;

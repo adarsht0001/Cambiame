@@ -6,7 +6,11 @@ import React from 'react';
 function SidebarLinks({ Icon, text, callback }) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+<<<<<<< HEAD
   const iconSize = isSmallScreen ? 40 : 30;
+=======
+  const iconSize = isSmallScreen ? 30 : 20;
+>>>>>>> main
 
   return (
     <Grid
@@ -20,6 +24,14 @@ function SidebarLinks({ Icon, text, callback }) {
         cursor: 'pointer',
         [theme.breakpoints.up('sm')]: {
           margin: '15px',
+<<<<<<< HEAD
+=======
+          '&:hover': {
+            bgcolor: 'primary.main',
+            padding: '0',
+            color: 'wheat',
+          },
+>>>>>>> main
         },
         '&:hover': {
           bgcolor: 'primary.main',

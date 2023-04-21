@@ -5,6 +5,7 @@ const initialState = {
   name: '',
   email: '',
   access_Token: '',
+  id: '',
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -15,6 +16,7 @@ const reducer = (state = initialState, { type, payload }) => {
         name: payload.username,
         email: payload.email,
         access_Token: payload.accesToken,
+        id: payload.id,
       };
 
     case USER_LOGOUT:
