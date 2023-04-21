@@ -6,7 +6,7 @@ export const getUserById = (
   userRepository: ReturnType<UserRepositoryInterFace>,
   postRepository: ReturnType<PostRepositoryInterface>
 ) => {
-  return new Promise((resolve, reject) => {
+  return new Promise<object>((resolve, reject) => {
     userRepository.getById(id).then((user) => {
       if (user) {
         postRepository.getbyUser(user?.username).then((posts) => {

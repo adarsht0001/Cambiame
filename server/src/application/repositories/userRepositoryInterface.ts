@@ -13,12 +13,15 @@ export const userRepository = (repository: UserRepositoryDbReturn) => {
   const updateOne = async (filter: object, update: object) =>
     repository.updateOne(filter, update);
 
+  const getAllUser = async () => await repository.getAllUser();
+
   return {
     getByEmail,
     getByName,
     getById,
     adduser,
     updateOne,
+    getAllUser,
   };
 };
 

@@ -22,12 +22,15 @@ export const userRepositoryMongoDB = () => {
     return await User.updateOne(filter, update);
   };
 
+  const getAllUser = async () => await User.find({});
+
   return {
     getByEmail,
     getByName,
     getById,
     adduser,
     updateOne,
+    getAllUser,
   };
 };
 

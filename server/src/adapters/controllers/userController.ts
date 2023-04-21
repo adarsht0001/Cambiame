@@ -28,6 +28,4 @@ const userController = (
   return { getProfile };
 };
 
-const test = () => {};
-
 export default userController;
