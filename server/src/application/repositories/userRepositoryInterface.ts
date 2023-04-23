@@ -15,6 +15,9 @@ export const userRepository = (repository: UserRepositoryDbReturn) => {
 
   const getAllUser = async () => await repository.getAllUser();
 
+  const findByRegex = async (char: string) =>
+    await repository.findByRegex(char);
+
   return {
     getByEmail,
     getByName,
@@ -22,6 +25,7 @@ export const userRepository = (repository: UserRepositoryDbReturn) => {
     adduser,
     updateOne,
     getAllUser,
+    findByRegex,
   };
 };
 

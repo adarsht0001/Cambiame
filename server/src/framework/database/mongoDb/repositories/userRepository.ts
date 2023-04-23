@@ -24,6 +24,11 @@ export const userRepositoryMongoDB = () => {
 
   const getAllUser = async () => await User.find({});
 
+  const findByRegex = async (char: string) => {
+    let regex = new RegExp("^" + char, "i");
+    return await User.find({ username: { $regex: regex } });
+  };
+
   return {
     getByEmail,
     getByName,
@@ -31,6 +36,7 @@ export const userRepositoryMongoDB = () => {
     adduser,
     updateOne,
     getAllUser,
+    findByRegex,
   };
 };
 
