@@ -16,6 +16,7 @@ const userRoute = () => {
   );
 
   router.get("/profile/:name", controller.getProfile);
+  router.get("/search", controller.searchUsername);
   return router;
 };
 

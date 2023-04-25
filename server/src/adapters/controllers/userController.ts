@@ -3,7 +3,10 @@ import { UserRepositoryInterFace } from "../../application/repositories/userRepo
 import { PostRepositoryMongoDB } from "../../framework/database/mongoDb/repositories/postRepository";
 import { UserRepositoryMongoDB } from "../../framework/database/mongoDb/repositories/userRepository";
 import { Request, Response } from "express";
-import { getUserById } from "../../application/use_cases/user/user";
+import {
+  getUserById,
+  getUsernames,
+} from "../../application/use_cases/user/user";
 
 const userController = (
   useRepositoryImpl: UserRepositoryMongoDB,
@@ -25,7 +28,14 @@ const userController = (
       });
   };
 
-  return { getProfile };
+  const searchUsername = (req: Request, res: Response) => {
+    const { name } = req.query;
+    getUsernames(name, userRepo).then((data) => {
+      res.json(data);
+    });
+  };
+
+  return { getProfile, searchUsername };
 };
 
 export default userController;

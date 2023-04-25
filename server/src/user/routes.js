@@ -87,7 +87,8 @@ const UserRoute = () => {
       comment:req.body.comment,
       id:req.body.id,
       name:req.body.name,
-      profile:req.body.profile
+      profile:req.body.profile,
+      Date:Date.now()
     }
     postRepo.updateone(req.body.postid,{$push:{comments:comment}})
     res.sendStatus(200)
