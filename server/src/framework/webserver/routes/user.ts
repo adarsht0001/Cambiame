@@ -17,6 +17,8 @@ const userRoute = () => {
 
   router.get("/profile/:name", controller.getProfile);
   router.get("/search", controller.searchUsername);
+  router.get("/search-user/:name/:user", controller.searchResult);
+  router.put("/follow/:name");
   return router;
 };
 

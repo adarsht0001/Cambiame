@@ -6,6 +6,7 @@ import { Request, Response } from "express";
 import {
   getUserById,
   getUsernames,
+  searchUsers,
 } from "../../application/use_cases/user/user";
 
 const userController = (
@@ -35,7 +36,18 @@ const userController = (
     });
   };
 
-  return { getProfile, searchUsername };
+  const searchResult = (req: Request, res: Response) => {
+    const { name, user } = req.params;
+    searchUsers(name, user, userRepo)
+      .then((response) => {
+        res.json(response);
+      })
+      .catch((err) => {
+        return res.status(401).json({ status: false, ...err });
+      });
+  };
+
+  return { getProfile, searchUsername, searchResult };
 };
 
 export default userController;

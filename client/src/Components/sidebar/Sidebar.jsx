@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Grid, Paper } from '@mui/material';
 import {
   AiOutlineHome, AiOutlineMessage, AiOutlineLogout,
-  AiOutlineUser, AiOutlineSetting, AiOutlineSearch,
+  AiOutlineUser, AiOutlineSearch,
 } from 'react-icons/ai';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
@@ -87,7 +87,6 @@ function Sidebar() {
         <SidebarLinks text="Messges" Icon={AiOutlineMessage} />
         <SidebarLinks text="Search" Icon={AiOutlineSearch} callback={() => redirect('/search')} />
         <SidebarLinks text="Profile" Icon={AiOutlineUser} callback={() => redirect('/profile')} />
-        <SidebarLinks text="Settings" Icon={AiOutlineSetting} />
         <SidebarLinks text="Logout" Icon={AiOutlineLogout} callback={handleLogout} />
       </Grid>
 
