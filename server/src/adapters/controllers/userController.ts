@@ -4,10 +4,12 @@ import { PostRepositoryMongoDB } from "../../framework/database/mongoDb/reposito
 import { UserRepositoryMongoDB } from "../../framework/database/mongoDb/repositories/userRepository";
 import { Request, Response } from "express";
 import {
+  followUser,
   getUserById,
   getUsernames,
   searchUsers,
 } from "../../application/use_cases/user/user";
+import { Follow } from "../../types/userTypes";
 
 const userController = (
   useRepositoryImpl: UserRepositoryMongoDB,
@@ -47,7 +49,19 @@ const userController = (
       });
   };
 
-  return { getProfile, searchUsername, searchResult };
+  const follow = (req: Request, res: Response) => {
+    const { name } = req.params;
+    const follower: Follow = req.body;
+    followUser(name, follower, userRepo)
+      .then((response) => {
+        res.status(202).json(response);
+      })
+      .catch((err) => {
+        res.status(410).json(err);
+      });
+  };
+
+  return { getProfile, searchUsername, searchResult, follow };
 };
 
 export default userController;

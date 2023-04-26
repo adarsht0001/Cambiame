@@ -1,6 +1,7 @@
 import { response } from "express";
 import { PostRepositoryInterface } from "../../repositories/postRepositoryInterface";
 import { UserRepositoryInterFace } from "../../repositories/userRepositoryInterface";
+import { Follow } from "../../../types/userTypes";
 
 export const getUserById = (
   name: string,
@@ -58,6 +59,50 @@ export const searchUsers = (
         resolve(searchResult);
       } else {
         reject({ msg: "user not found" });
+      }
+    });
+  });
+};
+
+export const followUser = (
+  name: any,
+  user: Follow,
+  userRepository: ReturnType<UserRepositoryInterFace>
+) => {
+  return new Promise<object>((resolve, reject) => {
+    userRepository.getByName(name).then((data) => {
+      if (data?.username === user.name) {
+        reject({ msg: "cannot follow yourself" });
+      }
+      const toFollow = {
+        id: data?._id,
+        name: data?.username,
+        email: data?.email,
+        profile: data?.profile || null,
+      };
+      if (
+        data?.followers.findIndex((followers) => followers.id == user.id) ??
+        -1 < 0
+      ) {
+        userRepository.updateOne(
+          { username: name },
+          { $push: { followers: user } }
+        );
+        userRepository.updateOne(
+          { username: user.name },
+          { $push: { following: toFollow } }
+        );
+        resolve({ msg: `following` });
+      } else {
+        userRepository.updateOne(
+          { username: name },
+          { $pull: { followers: { id: user.id } } }
+        );
+        userRepository.updateOne(
+          { username: user.name },
+          { $pull: { following: { id: toFollow.id } } }
+        );
+        resolve({ msg: `un-following` });
       }
     });
   });
