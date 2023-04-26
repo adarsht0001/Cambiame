@@ -1,4 +1,4 @@
-import { postType } from "../../../types/postType";
+import { CommentType, postType } from "../../../types/postType";
 import { PostRepositoryInterface } from "../../repositories/postRepositoryInterface";
 import { UserRepositoryInterFace } from "../../repositories/userRepositoryInterface";
 import { S3serviceInterface } from "../../services/s3serviceInterface";
@@ -109,8 +109,7 @@ export const likeaPost = (
 export const reportaPost = (
   userId: string,
   postId: string,
-  postRepository: ReturnType<PostRepositoryInterface>,
-  userRepository: ReturnType<UserRepositoryInterFace>
+  postRepository: ReturnType<PostRepositoryInterface>
 ) => {
   return new Promise<object>((resolve, reject) => {
     postRepository.getById(postId).then(async (post) => {
@@ -126,5 +125,16 @@ export const reportaPost = (
         resolve({ msg: "Reported SuccesFully" });
       }
     });
+  });
+};
+
+export const addComents = (
+  comment: CommentType,
+  postId: string,
+  postRepository: ReturnType<PostRepositoryInterface>
+) => {
+  return new Promise<void>(async (resolve, reject) => {
+    await postRepository.updateById(postId, { $push: { comments: comment } });
+    resolve();
   });
 };

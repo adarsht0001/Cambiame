@@ -70,7 +70,7 @@ function Posts({ data, callback }) {
       postid: post._id,
       comment,
     };
-    axios.post('/add-comment', commentData).then(() => {
+    axios.post('/post/add-comment', commentData).then(() => {
       // callback();
       setComment('');
       setLoading(false);

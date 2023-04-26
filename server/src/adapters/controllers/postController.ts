@@ -6,12 +6,14 @@ import { UserRepositoryInterFace } from "../../application/repositories/userRepo
 import { Request, Response } from "express";
 import { UserRepositoryMongoDB } from "../../framework/database/mongoDb/repositories/userRepository";
 import {
+  addComents,
   addPost,
   getPosts,
   likeaPost,
   removePost,
   reportaPost,
 } from "../../application/use_cases/post/postCrud";
+import { CommentType } from "../../types/postType";
 const postController = (
   postRepositortyImpl: PostRepositoryMongoDB,
   postRepository: PostRepositoryInterface,
@@ -58,9 +60,27 @@ const postController = (
 
   const reportPost = (req: Request, res: Response) => {
     const { id, post } = req.params;
-    reportaPost(id, post, postRepo, dbRepositortUser).then((response) => {
+    reportaPost(id, post, postRepo).then((response) => {
       res.json(response);
     });
+  };
+
+  const addComent = (req: Request, res: Response) => {
+    const comment: CommentType = {
+      comment: req.body.comment,
+      id: req.body.id,
+      name: req.body.name,
+      profile: req.body.profile,
+      Date: Date.now(),
+    };
+    const postId = req.body.postid;
+    addComents(comment, postId, postRepo).then(() => {
+      res.sendStatus(200);
+    });
+  };
+
+  const getAllcomments = (req: Request, res: Response) => {
+    const { postId } = req.params;
   };
 
   return {
@@ -69,6 +89,7 @@ const postController = (
     deletePost,
     likePost,
     reportPost,
+    addComent,
   };
 };
 export default postController;

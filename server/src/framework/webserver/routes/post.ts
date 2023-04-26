@@ -27,6 +27,7 @@ const PostRoute = () => {
   router.delete("/delete-post/:id", controller.deletePost);
   router.put("/like/:id/:postId", controller.likePost);
   router.put("/report/:id/:postId", controller.reportPost);
+  router.post("/add-comment", controller.addComent);
 
   return router;
 };
