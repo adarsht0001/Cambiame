@@ -138,3 +138,15 @@ export const addComents = (
     resolve();
   });
 };
+
+export const getComments = (
+  postId: string,
+  postRepository: ReturnType<PostRepositoryInterface>
+) => {
+  return new Promise((resolve, reject) => {
+    postRepository.getById(postId).then((post) => {
+      const comments = post?.comments.sort((a, b) => b.Date - a.Date);
+      resolve(comments);
+    });
+  });
+};

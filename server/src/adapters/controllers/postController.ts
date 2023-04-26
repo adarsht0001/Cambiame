@@ -8,6 +8,7 @@ import { UserRepositoryMongoDB } from "../../framework/database/mongoDb/reposito
 import {
   addComents,
   addPost,
+  getComments,
   getPosts,
   likeaPost,
   removePost,
@@ -81,6 +82,9 @@ const postController = (
 
   const getAllcomments = (req: Request, res: Response) => {
     const { postId } = req.params;
+    getComments(postId, postRepo).then((data) => {
+      res.json(data);
+    });
   };
 
   return {
@@ -90,6 +94,7 @@ const postController = (
     likePost,
     reportPost,
     addComent,
+    getAllcomments,
   };
 };
 export default postController;

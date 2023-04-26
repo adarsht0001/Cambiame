@@ -28,6 +28,7 @@ const PostRoute = () => {
   router.put("/like/:id/:postId", controller.likePost);
   router.put("/report/:id/:postId", controller.reportPost);
   router.post("/add-comment", controller.addComent);
+  router.get("/get-comments/:postId", controller.getAllcomments);
 
   return router;
 };

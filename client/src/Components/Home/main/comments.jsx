@@ -7,7 +7,7 @@ import axios from '../../../Axios/axios';
 function Comments({ postid, refresh }) {
   const [comments, setComments] = useState([]);
   useEffect(() => {
-    axios.get(`/get-comments/${postid}`).then((response) => {
+    axios.get(`/post/get-comments/${postid}`).then((response) => {
       setComments(response.data);
     }).catch((err) => {
       console.log(err);
