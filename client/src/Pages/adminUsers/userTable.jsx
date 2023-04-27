@@ -7,12 +7,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Switch from '@mui/material/Switch';
-import axios from '../../Axios/Axios';
+import axios from '../../Axios/axios';
 
-export default function BasicTable() {
+export default function UserTables() {
   const [user, setUsers] = useState([]);
   useEffect(() => {
-    axios.get('/users').then((res) => {
+    axios.get('/admin/users').then((res) => {
       setUsers(res.data);
     }).catch((err) => {
       alert(err.msg);

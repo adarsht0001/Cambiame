@@ -21,7 +21,6 @@ function Form() {
     };
     axios.post('/admin/login', data)
       .then((res) => {
-        console.log(res.data.user);
         dispatch(adminLogin(res.data.user));
         localStorage.setItem('access_token', res.data.user.accesToken);
         localStorage.setItem('admin', true);

@@ -7,17 +7,22 @@ import Resetpass from '../Pages/ResetPassword/Resetpass';
 import VerifyEmail from '../Pages/verifyMail/verifyEmail';
 import Home from '../Pages/Home/Home';
 import Profile from '../Pages/Profile/Profile';
-import Layout from '../Pages/Layout/Layout';
+import Layout from '../Pages/Layout/user/Layout';
 import SocialMediaAccordion from '../Components/Home/main/comments';
 import Search from '../Pages/Search/Search';
 import Viewprofile from '../Pages/viewprofile/Viewprofile';
 import AdminLogin from '../Pages/Login/admin/Adminlogin';
+import SidebarAdmin from '../Pages/Layout/admin/AdminLayout';
+import UserTables from '../Pages/adminUsers/userTable';
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<AdminLogin />} path="/admin" />
+        <Route element={<SidebarAdmin />}>
+          <Route element={<UserTables />} path="/admin/user" />
+        </Route>
         <Route element={<IsLogged />}>
           <Route element={<Layout />}>
             <Route element={<Home />} exact path="/" />

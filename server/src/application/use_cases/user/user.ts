@@ -80,6 +80,11 @@ export const followUser = (
         email: data?.email,
         profile: data?.profile || null,
       };
+      const data22 = data?.followers?.findIndex(
+        (followers: any) => followers?.id == user?.id
+      );
+      console.log(data22);
+
       if (
         data?.followers?.findIndex(
           (followers: any) => followers?.id == user?.id
