@@ -16,7 +16,7 @@ function Main() {
   }, [refresh]);
 
   return (
-    <Grid container alignItems="center" direction="column">
+    <Grid container alignItems="center" direction="column" xs={12}>
       <Postshare callback={() => {
         setRefresh(!refresh);
       }}
@@ -40,9 +40,6 @@ function Main() {
           />
         </Suspense>
       ))}
-      {/* // <Postshare />
-// <Postshare /> */}
-
     </Grid>
   );
 }

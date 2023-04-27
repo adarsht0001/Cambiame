@@ -89,8 +89,3 @@ function Postshare({ callback }) {
 }
 
 export default Postshare;
-
-// <Button sx={{ marginLeft: '8px' }}
-//  onClick={handleSubmit} variant="contained" endIcon={<SendIcon />}>
-//   Upload
-// </Button>

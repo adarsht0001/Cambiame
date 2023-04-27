@@ -20,7 +20,7 @@ function Login() {
   const googleSignIn = () => {
     signInWithPopup(auth, provider).then((data) => {
       const value = {
-        usernam: data.user.displayName,
+        username: data.user.displayName,
         email: data.user.email,
       };
       localStorage.setItem('user', data.user.email);
