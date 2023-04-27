@@ -27,10 +27,10 @@ const adminController = (
     const { email, password } = req.body;
     Adminlogin(email, password, authServices)
       .then((user) => {
-        return res.status(200).json({ status: true, user });
+        res.status(200).json({ status: true, user });
       })
       .catch((err) => {
-        return res.status(404).json({ ...err, status: false });
+        res.status(404).json({ ...err, status: false });
       });
   };
 

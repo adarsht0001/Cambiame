@@ -6,14 +6,14 @@ import { signInWithPopup } from 'firebase/auth';
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
-import cambie from '../../Assets/svg/CAMBIAME.svg';
+import cambie from '../../../Assets/svg/CAMBIAME.svg';
 // import imgs from '../../Assets/Images/shubham-dhage-4MDR5izP5sY-unsplash.jpg';
 import './Login.css';
 import Form from './Form';
-import Buttons from '../../Components/button/Button';
-import { auth, provider } from '../../firebase/config';
-import axios from '../../Axios/axios';
-import Modals from '../../Components/Modal/Modal';
+import Buttons from '../../../Components/button/Button';
+import { auth, provider } from '../../../firebase/config';
+import axios from '../../../Axios/axios';
+import Modals from '../../../Components/Modal/Modal';
 
 function Login() {
   const navigate = useNavigate();

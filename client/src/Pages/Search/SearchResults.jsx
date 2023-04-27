@@ -42,8 +42,9 @@ function SearchResults({ userData }) {
     };
     axios.put(`/follow/${name}`, follower).then((res) => {
       console.log(res);
-      setFollowed(true);
-    }).catch(() => {
+      setFollowed(!followed);
+    }).catch((err) => {
+      console.log(err);
       setFollowed(false);
     });
   };

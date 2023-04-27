@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from '../Pages/Login/Login';
+import Login from '../Pages/Login/user/Login';
 import Signup from '../Pages/Signup/Signup';
 import { IsLogged, LoggedIn } from '../Auth/LoginAuth';
 import Resetpass from '../Pages/ResetPassword/Resetpass';
@@ -11,11 +11,13 @@ import Layout from '../Pages/Layout/Layout';
 import SocialMediaAccordion from '../Components/Home/main/comments';
 import Search from '../Pages/Search/Search';
 import Viewprofile from '../Pages/viewprofile/Viewprofile';
+import AdminLogin from '../Pages/Login/admin/Adminlogin';
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route element={<AdminLogin />} path="/admin" />
         <Route element={<IsLogged />}>
           <Route element={<Layout />}>
             <Route element={<Home />} exact path="/" />

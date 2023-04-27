@@ -70,7 +70,7 @@ export const followUser = (
   userRepository: ReturnType<UserRepositoryInterFace>
 ) => {
   return new Promise<object>((resolve, reject) => {
-    userRepository.getByName(name).then((data) => {
+    userRepository.getByName(name).then((data: any) => {
       if (data?.username === user.name) {
         reject({ msg: "cannot follow yourself" });
       }
@@ -81,8 +81,9 @@ export const followUser = (
         profile: data?.profile || null,
       };
       if (
-        data?.followers.findIndex((followers) => followers.id == user.id) ??
-        -1 < 0
+        data?.followers?.findIndex(
+          (followers: any) => followers?.id == user?.id
+        ) < 0
       ) {
         userRepository.updateOne(
           { username: name },

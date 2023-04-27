@@ -2,10 +2,10 @@ import { Typography, Grid } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import Inputfield from '../../Components/input/Inputfield';
-import Buttons from '../../Components/button/Button';
-import axios from '../../Axios/axios';
-import { Login } from '../../Redux';
+import Inputfield from '../../../Components/input/Inputfield';
+import Buttons from '../../../Components/button/Button';
+import axios from '../../../Axios/axios';
+import { Login } from '../../../Redux';
 
 function Form() {
   const navigate = useNavigate();
