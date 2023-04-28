@@ -1,3 +1,4 @@
+import { PostRepositoryInterface } from "../../repositories/postRepositoryInterface";
 import { UserRepositoryInterFace } from "../../repositories/userRepositoryInterface";
 import { AuthServiceInterface } from "../../services/authServiceInterface";
 
@@ -43,5 +44,23 @@ export const blockUnblock = (
     const user = await userRepository.getByEmail(email);
     await userRepository.updateOne({ email }, { blocked: !user?.blocked });
     resolve();
+  });
+};
+
+export const getDashboards = (
+  userRepository: ReturnType<UserRepositoryInterFace>,
+  postRepository: ReturnType<PostRepositoryInterface>
+) => {
+  return new Promise<object>(async (resolve, reject) => {
+    const [usercount, blockedCount, verifiedCount, postCount] =
+      await Promise.all([
+        userRepository.getUsercount(),
+        userRepository.getCountof({ blocked: true }),
+        userRepository.getCountof({ verified: true }),
+        postRepository.getPostcount(),
+      ]);
+
+    const data = { usercount, blockedCount, verifiedCount, postCount };
+    resolve(data);
   });
 };

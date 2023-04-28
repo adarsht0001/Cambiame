@@ -14,6 +14,7 @@ import Viewprofile from '../Pages/viewprofile/Viewprofile';
 import AdminLogin from '../Pages/Login/admin/Adminlogin';
 import SidebarAdmin from '../Pages/Layout/admin/AdminLayout';
 import UserTables from '../Pages/adminUsers/userTable';
+import Dashboard from '../Pages/adminDashboard/Dashboard';
 
 function Router() {
   return (
@@ -22,6 +23,7 @@ function Router() {
         <Route element={<AdminLogin />} path="/admin" />
         <Route element={<SidebarAdmin />}>
           <Route element={<UserTables />} path="/admin/user" />
+          <Route element={<Dashboard />} path="/admin/dashboard" />
         </Route>
         <Route element={<IsLogged />}>
           <Route element={<Layout />}>

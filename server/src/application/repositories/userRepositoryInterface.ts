@@ -18,6 +18,10 @@ export const userRepository = (repository: UserRepositoryDbReturn) => {
   const findByRegex = async (char: string) =>
     await repository.findByRegex(char);
 
+  const getUsercount = async () => await repository.getUsercount();
+
+  const getCountof = async (filter: object) =>
+    await repository.getCountof(filter);
   return {
     getByEmail,
     getByName,
@@ -26,6 +30,8 @@ export const userRepository = (repository: UserRepositoryDbReturn) => {
     updateOne,
     getAllUser,
     findByRegex,
+    getUsercount,
+    getCountof,
   };
 };
 

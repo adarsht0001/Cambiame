@@ -20,7 +20,7 @@ export default function UserTables() {
   }, []);
 
   const blockUser = (email) => {
-    axios.put('/block-user', { email }).then(() => {
+    axios.put('/admin/block-user', { email }).then(() => {
     }).catch((err) => {
       console.log(err);
     });

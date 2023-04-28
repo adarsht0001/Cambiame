@@ -9,6 +9,7 @@ import {
   Adminlogin,
   blockUnblock,
   getAllUser,
+  getDashboards,
 } from "../../application/use_cases/admin/admin";
 
 const adminController = (
@@ -55,10 +56,17 @@ const adminController = (
     });
   };
 
+  const getDashboard = (req: Request, res: Response) => {
+    getDashboards(userRepo, postRepo).then((data) => {
+      res.json(data);
+    });
+  };
+
   return {
     login,
     getAllUsers,
     blockUser,
+    getDashboard,
   };
 };
 

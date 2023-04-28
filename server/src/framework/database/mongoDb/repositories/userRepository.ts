@@ -29,6 +29,14 @@ export const userRepositoryMongoDB = () => {
     return await User.find({ username: { $regex: regex } });
   };
 
+  const getUsercount = async () => {
+    return await User.countDocuments();
+  };
+
+  const getCountof = async (filter: object) => {
+    return await User.countDocuments(filter);
+  };
+
   return {
     getByEmail,
     getByName,
@@ -37,6 +45,8 @@ export const userRepositoryMongoDB = () => {
     updateOne,
     getAllUser,
     findByRegex,
+    getUsercount,
+    getCountof,
   };
 };
 
