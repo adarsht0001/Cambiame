@@ -21,12 +21,14 @@ function Form() {
     };
     axios.post('/admin/login', data)
       .then((res) => {
+        console.log(res);
         dispatch(adminLogin(res.data.user));
-        localStorage.setItem('access_token', res.data.user.accesToken);
+        localStorage.setItem('access_token', res.data.user.token);
         localStorage.setItem('admin', true);
-        navigate('/admin');
+        navigate('/admin/dashboard');
       })
       .catch((err) => {
+        console.log(err);
         setErr(err.response.data);
       });
   };

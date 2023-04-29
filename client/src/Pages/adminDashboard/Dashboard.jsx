@@ -21,8 +21,8 @@ function Dashboard() {
           elevation={10}
           sx={{
             display: 'flex',
-            width: '250px',
-            height: '150px',
+            width: '15rem',
+            height: '10rem',
             alignItems: 'center',
             justifyContent: 'center',
           }}
@@ -41,8 +41,8 @@ function Dashboard() {
           elevation={10}
           sx={{
             display: 'flex',
-            width: '250px',
-            height: '150px',
+            width: '15rem',
+            height: '10rem',
             alignItems: 'center',
             justifyContent: 'center',
           }}
@@ -61,8 +61,8 @@ function Dashboard() {
           elevation={10}
           sx={{
             display: 'flex',
-            width: '250px',
-            height: '150px',
+            width: '15rem',
+            height: '10rem',
             alignItems: 'center',
             justifyContent: 'center',
           }}
@@ -81,8 +81,8 @@ function Dashboard() {
           elevation={10}
           sx={{
             display: 'flex',
-            width: '250px',
-            height: '150px',
+            width: '15rem',
+            height: '10rem',
             alignItems: 'center',
             justifyContent: 'center',
           }}

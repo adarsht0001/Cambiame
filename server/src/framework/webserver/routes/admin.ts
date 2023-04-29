@@ -23,6 +23,7 @@ const AdminRoute = () => {
   router.get("/users", controller.getAllUsers);
   router.put("/block-user", controller.blockUser);
   router.get("/user-dashboard", controller.getDashboard);
+  router.get("/reported-post", controller.getReportedPost);
 
   return router;
 };

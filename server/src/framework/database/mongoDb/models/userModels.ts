@@ -42,6 +42,9 @@ const userShema = new Schema({
     type: String,
     required: false,
   },
+  date: {
+    type: Date,
+  },
 });
 const User = model("users", userShema, "users");
 export default User;

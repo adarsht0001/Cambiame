@@ -21,6 +21,10 @@ export const postRepository = (repository: PostRepositoryDbReturn) => {
   const getCountof = async (filter: object) =>
     await repository.getCountof(filter);
 
+  const postByfilter = async (filter: object) => {
+    return await repository.postByfilter(filter);
+  };
+
   return {
     getPosts,
     addPost,
@@ -30,6 +34,7 @@ export const postRepository = (repository: PostRepositoryDbReturn) => {
     getbyUser,
     getPostcount,
     getCountof,
+    postByfilter,
   };
 };
 export type PostRepositoryInterface = typeof postRepository;

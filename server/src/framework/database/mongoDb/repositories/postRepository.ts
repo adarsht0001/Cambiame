@@ -25,6 +25,8 @@ export const postRepositoryMongoDB = () => {
     return await Post.countDocuments(filter);
   };
 
+  const postByfilter = async (filter: object) => await Post.find(filter);
+
   return {
     getPosts,
     addPost,
@@ -34,6 +36,7 @@ export const postRepositoryMongoDB = () => {
     getbyUser,
     getPostcount,
     getCountof,
+    postByfilter,
   };
 };
 

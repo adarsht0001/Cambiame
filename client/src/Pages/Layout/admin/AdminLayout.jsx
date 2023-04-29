@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { FaBars, FaUserAlt, FaRegChartBar } from 'react-icons/fa';
+import { FaBars, FaUserAlt } from 'react-icons/fa';
 import { RxDashboard } from 'react-icons/rx';
+import { GoReport } from 'react-icons/go';
 import { CgLogOut } from 'react-icons/cg';
 import './sidebar.css';
 import { Grid } from '@mui/material';
@@ -29,8 +30,8 @@ function SidebarAdmin() {
       },
     },
     {
-      name: 'Bookings',
-      icon: <FaRegChartBar />,
+      name: 'Reports',
+      icon: <GoReport />,
       action: () => {
         navigate('/admin/dashboard');
       },
@@ -40,6 +41,7 @@ function SidebarAdmin() {
       icon: <CgLogOut />,
       action: () => {
         dispatch(adminLogout());
+        navigate('/admin');
       },
     },
 

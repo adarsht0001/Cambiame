@@ -9,6 +9,7 @@ export interface Signup {
   username: string;
   email: string;
   password?: string;
+  date?: number;
 }
 
 export interface Verificationpayload {

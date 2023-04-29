@@ -64,3 +64,14 @@ export const getDashboards = (
     resolve(data);
   });
 };
+
+export const reportedPosts = (
+  postRepository: ReturnType<PostRepositoryInterface>
+) => {
+  return new Promise<object>(async (resolve, reject) => {
+    const posts = await postRepository.postByfilter({
+      report: { $gt: 10 },
+    });
+    resolve(posts);
+  });
+};

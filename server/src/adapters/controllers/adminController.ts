@@ -10,6 +10,7 @@ import {
   blockUnblock,
   getAllUser,
   getDashboards,
+  reportedPosts,
 } from "../../application/use_cases/admin/admin";
 
 const adminController = (
@@ -62,11 +63,18 @@ const adminController = (
     });
   };
 
+  const getReportedPost = (req: Request, res: Response) => {
+    reportedPosts(postRepo).then((post) => {
+      res.json(post);
+    });
+  };
+
   return {
     login,
     getAllUsers,
     blockUser,
     getDashboard,
+    getReportedPost,
   };
 };
 

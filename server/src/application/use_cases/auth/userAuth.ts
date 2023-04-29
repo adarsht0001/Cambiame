@@ -48,7 +48,7 @@ export const userSignup = (
   authService: ReturnType<AuthServiceInterface>,
   mailService: ReturnType<MailServiceInterface>
 ) => {
-  return new Promise<Signup>(async (resolve, reject) => {
+  return new Promise<any>(async (resolve, reject) => {
     const user = await userRepository.getByName(username);
     if (!user) {
       const emailExist = await userRepository.getByEmail(email);
@@ -63,6 +63,7 @@ export const userSignup = (
         username: username,
         email: email,
         password: hashedPassword,
+        date: Date.now(),
       };
       const inserted = await userRepository.adduser(user);
       const secretKey = authService.secretKey(hashedPassword);
