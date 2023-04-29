@@ -1,16 +1,30 @@
+/* eslint-disable no-underscore-dangle */
 import {
-  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  IconButton,
+  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip,
 } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { MdArrowForwardIos, MdDelete } from 'react-icons/md';
 import axios from '../../Axios/axios';
 
 function ReportPost() {
+  const [post, setPosts] = useState([]);
+  const [deletepost, setDeletepost] = useState(false);
   useEffect(() => {
-    axios.get('/reported-post').then((post) => {
-      console.log(post);
+    axios.get('/admin/reported-post').then((response) => {
+      console.log(response);
+      setPosts(response.data);
     });
   }, []);
-  const user = [{ hjsgdh: 'smnd' }, { dshf: 'dsjhj' }];
+  const handleDelete = (postid) => {
+    axios.delete(`/post/delete-post/${postid}`, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }).then(() => {
+      setDeletepost(!deletepost);
+    }).catch((err) => console.log(err));
+  };
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -20,12 +34,11 @@ function ReportPost() {
             <TableCell align="left">User Name</TableCell>
             <TableCell align="left">Caption</TableCell>
             <TableCell align="left">Reports</TableCell>
-            <TableCell align="left">Delete</TableCell>
-            <TableCell align="left">View Post</TableCell>
+            <TableCell align="left">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {user.map((row, i) => (
+          {post?.map((row, i) => (
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -33,11 +46,20 @@ function ReportPost() {
               <TableCell component="th" scope="row">
                 {i + 1}
               </TableCell>
-              <TableCell align="left">{row.id}</TableCell>
-              <TableCell align="left">{row.name}</TableCell>
-              <TableCell align="left">{row.email}</TableCell>
+              <TableCell align="left">{row.user}</TableCell>
+              <TableCell align="left">{row.caption}</TableCell>
+              <TableCell align="left">{row.report}</TableCell>
               <TableCell align="left">
-                abjd
+                <Tooltip title="Delete" sx={{ padding: '5px' }} onClick={() => handleDelete(row._id)}>
+                  <IconButton>
+                    <MdDelete />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="View Post" sx={{ padding: '5px', marginX: '2px' }}>
+                  <IconButton>
+                    <MdArrowForwardIos />
+                  </IconButton>
+                </Tooltip>
               </TableCell>
             </TableRow>
           ))}

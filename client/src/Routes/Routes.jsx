@@ -15,6 +15,7 @@ import AdminLogin from '../Pages/Login/admin/Adminlogin';
 import SidebarAdmin from '../Pages/Layout/admin/AdminLayout';
 import UserTables from '../Pages/adminUsers/userTable';
 import Dashboard from '../Pages/adminDashboard/Dashboard';
+import ReportPost from '../Pages/adminReport/ReportPost';
 
 function Router() {
   return (
@@ -24,6 +25,7 @@ function Router() {
         <Route element={<SidebarAdmin />}>
           <Route element={<UserTables />} path="/admin/user" />
           <Route element={<Dashboard />} path="/admin/dashboard" />
+          <Route element={<ReportPost />} path="/admin/post" />
         </Route>
         <Route element={<IsLogged />}>
           <Route element={<Layout />}>

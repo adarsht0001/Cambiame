@@ -33,7 +33,7 @@ function SidebarAdmin() {
       name: 'Reports',
       icon: <GoReport />,
       action: () => {
-        navigate('/admin/dashboard');
+        navigate('/admin/post');
       },
     },
     {

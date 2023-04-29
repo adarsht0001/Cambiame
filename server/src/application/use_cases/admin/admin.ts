@@ -70,7 +70,7 @@ export const reportedPosts = (
 ) => {
   return new Promise<object>(async (resolve, reject) => {
     const posts = await postRepository.postByfilter({
-      report: { $gt: 10 },
+      report: { $gte: 10 },
     });
     resolve(posts);
   });
