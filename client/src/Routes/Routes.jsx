@@ -26,6 +26,8 @@ function Router() {
           <Route element={<UserTables />} path="/admin/user" />
           <Route element={<Dashboard />} path="/admin/dashboard" />
           <Route element={<ReportPost />} path="/admin/post" />
+          <Route element={<Viewprofile />} exact path="/:username" />
+
         </Route>
         <Route element={<IsLogged />}>
           <Route element={<Layout />}>
@@ -36,6 +38,7 @@ function Router() {
           </Route>
         </Route>
         <Route element={<SocialMediaAccordion />} path="/tesing" />
+
         <Route element={<LoggedIn />}>
           <Route element={<Resetpass />} path="/resetpassword/:id/:token" />
           <Route element={<VerifyEmail />} path="/verifyemail/:id/:token" />

@@ -11,6 +11,7 @@ import {
   IconButton, Pagination, Stack, Tooltip, Typography,
 } from '@mui/material';
 import { MdArrowForwardIos } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import axios from '../../Axios/axios';
 
 export default function UserTables() {
@@ -19,6 +20,7 @@ export default function UserTables() {
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({});
 
+  const navigate = useNavigate();
   useEffect(() => {
     axios.get(`/admin/users?page=${page}`).then((res) => {
       setUsers(res.data.results);
@@ -69,7 +71,7 @@ export default function UserTables() {
                   <Switch defaultChecked={row.status} onChange={() => blockUser(row.email)} />
                 </TableCell>
                 <TableCell align="left">
-                  <Tooltip title="View Profile" sx={{ padding: '5px', marginX: '2px' }}>
+                  <Tooltip title="View Profile" sx={{ padding: '5px', marginX: '2px' }} onClick={() => navigate(`/${row.name}`)}>
                     <IconButton>
                       <MdArrowForwardIos />
                     </IconButton>
