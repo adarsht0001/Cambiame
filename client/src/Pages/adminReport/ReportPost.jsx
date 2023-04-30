@@ -5,10 +5,12 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { MdArrowForwardIos, MdDelete } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import axios from '../../Axios/axios';
 
 function ReportPost() {
   const [post, setPosts] = useState([]);
+  const navigate = useNavigate();
   const [deletepost, setDeletepost] = useState(false);
   useEffect(() => {
     axios.get('/admin/reported-post').then((response) => {
@@ -23,6 +25,10 @@ function ReportPost() {
     }).then(() => {
       setDeletepost(!deletepost);
     }).catch((err) => console.log(err));
+  };
+
+  const handleNavigate = (id) => {
+    navigate(`/admin/post/${id}`);
   };
   return (
     <TableContainer component={Paper}>
@@ -54,7 +60,7 @@ function ReportPost() {
                     <MdDelete />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="View Post" sx={{ padding: '5px', marginX: '2px' }}>
+                <Tooltip title="View Post" sx={{ padding: '5px', marginX: '2px' }} onClick={() => handleNavigate(row._id)}>
                   <IconButton>
                     <MdArrowForwardIos />
                   </IconButton>

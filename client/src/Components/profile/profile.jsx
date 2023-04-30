@@ -7,11 +7,9 @@ import { useSelector } from 'react-redux';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { AiTwotoneEdit, AiTwotoneSave } from 'react-icons/ai';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
-// import PictureAvatar from '../avatar/PictureAvatar';
 import axios from '../../Axios/axios';
 import Inputfield from '../input/Inputfield';
 import Posts from '../Home/main/Posts';
-// import Posts from '../Home/main/Posts';
 
 function UserProfile() {
   const user = useSelector((state) => state.user);

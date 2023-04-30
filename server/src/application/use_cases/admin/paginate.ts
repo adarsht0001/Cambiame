@@ -34,8 +34,6 @@ export const paginateUser = (model: any, pageno: string) => {
           }
         }
       }
-      console.log(results);
-
       resolve(results);
     } catch (err) {
       reject(err);

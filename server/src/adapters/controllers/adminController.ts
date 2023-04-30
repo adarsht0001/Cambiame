@@ -11,9 +11,12 @@ import {
   getAllUser,
   getDashboards,
   reportedPosts,
+  singlePost,
 } from "../../application/use_cases/admin/admin";
 import { paginateUser } from "../../application/use_cases/admin/paginate";
 import User from "../../framework/database/mongoDb/models/userModels";
+import { S3service } from "../../framework/services/s3Service";
+import { S3serviceInterface } from "../../application/services/s3serviceInterface";
 
 const adminController = (
   useRepositoryImpl: UserRepositoryMongoDB,
@@ -21,11 +24,14 @@ const adminController = (
   postRepositortyImpl: PostRepositoryMongoDB,
   postRepository: PostRepositoryInterface,
   authServiceImpl: AuthService,
-  authService: AuthServiceInterface
+  authService: AuthServiceInterface,
+  s3ServiceImpl: S3service,
+  s3Service: S3serviceInterface
 ) => {
   const userRepo = userDbrepository(useRepositoryImpl());
   const postRepo = postRepository(postRepositortyImpl());
   const authServices = authService(authServiceImpl());
+  const s3Services = s3Service(s3ServiceImpl());
 
   const login = (req: Request, res: Response) => {
     const { email, password } = req.body;
@@ -73,12 +79,24 @@ const adminController = (
     });
   };
 
+  const getSinglepost = (req: Request, res: Response) => {
+    const { id } = req.params;
+    singlePost(postRepo, s3Services, id)
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => {
+        res.status(500).json({ ...err });
+      });
+  };
+
   return {
     login,
     getAllUsers,
     blockUser,
     getDashboard,
     getReportedPost,
+    getSinglepost,
   };
 };
 

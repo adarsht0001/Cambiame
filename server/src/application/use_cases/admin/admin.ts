@@ -1,6 +1,8 @@
+import AppError from "../../../utils/appErrors";
 import { PostRepositoryInterface } from "../../repositories/postRepositoryInterface";
 import { UserRepositoryInterFace } from "../../repositories/userRepositoryInterface";
 import { AuthServiceInterface } from "../../services/authServiceInterface";
+import { S3serviceInterface } from "../../services/s3serviceInterface";
 
 const admin = { email: "Admin", pass: "123" };
 
@@ -73,5 +75,24 @@ export const reportedPosts = (
       report: { $gte: 10 },
     });
     resolve(posts);
+  });
+};
+
+export const singlePost = (
+  postRepository: ReturnType<PostRepositoryInterface>,
+  s3Services: ReturnType<S3serviceInterface>,
+  postId: string
+) => {
+  return new Promise<any>(async (resolve, reject) => {
+    try {
+      const post = await postRepository.getById(postId);
+      if (post?.image) {
+        let url = await s3Services.getObjectSignedUrl(post.image);
+        post.set("link", url, { strict: false });
+      }
+      resolve(post);
+    } catch (error) {
+      reject(error);
+    }
   });
 };

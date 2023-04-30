@@ -29,7 +29,6 @@ function Posts({ data, callback }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(post);
     if (post.user === user.name) {
       setisUser(true);
     }
@@ -71,7 +70,6 @@ function Posts({ data, callback }) {
       comment,
     };
     axios.post('/post/add-comment', commentData).then(() => {
-      // callback();
       setComment('');
       setLoading(false);
       setRefresh(!refresh);
@@ -197,7 +195,6 @@ function Posts({ data, callback }) {
         />
       </div>
     </Paper>
-
   );
 }
 
