@@ -12,6 +12,8 @@ import {
   getDashboards,
   reportedPosts,
 } from "../../application/use_cases/admin/admin";
+import { paginateUser } from "../../application/use_cases/admin/paginate";
+import User from "../../framework/database/mongoDb/models/userModels";
 
 const adminController = (
   useRepositoryImpl: UserRepositoryMongoDB,
@@ -37,8 +39,9 @@ const adminController = (
   };
 
   const getAllUsers = (req: Request, res: Response) => {
-    getAllUser(userRepo).then((data) => {
-      let users = data.map((e: any) => {
+    const { page } = req.query;
+    paginateUser(User, page as string).then((data) => {
+      let users = data?.results.map((e: any) => {
         return {
           id: e["_id"],
           name: e["username"],
@@ -46,8 +49,21 @@ const adminController = (
           status: e["blocked"],
         };
       });
-      res.status(200).json(users);
+      data.results = users;
+      console.log(data);
+      res.json(data);
     });
+    // getAllUser(userRepo).then((data) => {
+    //   let users = data.map((e: any) => {
+    //     return {
+    //       id: e["_id"],
+    //       name: e["username"],
+    //       email: e["email"],
+    //       status: e["blocked"],
+    //     };
+    //   });
+    //   res.status(200).json(users);
+    // });
   };
 
   const blockUser = (req: Request, res: Response) => {

@@ -12,7 +12,6 @@ function ReportPost() {
   const [deletepost, setDeletepost] = useState(false);
   useEffect(() => {
     axios.get('/admin/reported-post').then((response) => {
-      console.log(response);
       setPosts(response.data);
     });
   }, []);

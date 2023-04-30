@@ -2,7 +2,9 @@ import { PostRepositoryInterface } from "../../application/repositories/postRepo
 import { UserRepositoryInterFace } from "../../application/repositories/userRepositoryInterface";
 import { PostRepositoryMongoDB } from "../../framework/database/mongoDb/repositories/postRepository";
 import { UserRepositoryMongoDB } from "../../framework/database/mongoDb/repositories/userRepository";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import User from "../../framework/database/mongoDb/models/userModels";
+
 import {
   followUser,
   getUserById,
