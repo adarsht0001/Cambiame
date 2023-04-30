@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
+import { toast } from 'react-hot-toast';
 import axios from '../../../Axios/axios';
 
 export default function LongMenu({ postid, isUser, callback }) {
@@ -24,11 +25,12 @@ export default function LongMenu({ postid, isUser, callback }) {
         authorization: `Bearer ${user.access_Token}`,
       },
     }).then((response) => {
-      alert(response.data.msg);
+      toast.success(response.data.msg);
       setLoading(false);
       setAnchorEl(null);
     }).catch((err) => {
-      console.log(err);
+      toast.error(err.response.data.msg);
+      setLoading(false);
     });
   };
 
@@ -43,6 +45,7 @@ export default function LongMenu({ postid, isUser, callback }) {
         authorization: `Bearer ${user.access_Token}`,
       },
     }).then(() => {
+      toast.success('post deleted');
       callback();
       setAnchorEl(null);
     }).catch((err) => console.log(err));

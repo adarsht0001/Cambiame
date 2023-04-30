@@ -2,6 +2,7 @@ import { Typography, Grid } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-hot-toast';
 import Inputfield from '../../../Components/input/Inputfield';
 import Buttons from '../../../Components/button/Button';
 import axios from '../../../Axios/axios';
@@ -23,6 +24,9 @@ function Form() {
       dispatch(Login(res.data.user));
       localStorage.setItem('user', res.data.user.email);
       localStorage.setItem('access_token', res.data.user.accesToken);
+      toast.success(`Hello ${res.data.user.username}`, {
+        icon: '👏',
+      });
       navigate('/');
     }).catch((err) => {
       setErr(err.response.data);

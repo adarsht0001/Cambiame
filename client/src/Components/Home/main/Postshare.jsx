@@ -8,6 +8,8 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import SendIcon from '@mui/icons-material/Send';
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import toast from 'react-hot-toast';
 import axios from '../../../Axios/axios';
 import Inputfield from '../../input/Inputfield';
 
@@ -34,7 +36,8 @@ function Postshare({ callback }) {
       setImg();
       setText('');
       setLoading(false);
-      alert(res.data.msg);
+      toast.success(res.data.msg);
+      // alert(res.data.msg);
     }).catch((err) => {
       alert(err.response.data.msg);
     });

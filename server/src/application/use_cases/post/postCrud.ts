@@ -115,7 +115,7 @@ export const reportaPost = (
     postRepository.getById(postId).then(async (post) => {
       const exist = post?.reportedby.some((obj) => obj === userId);
       if (exist) {
-        resolve({ msg: "Already reported" });
+        reject({ msg: "Already reported" });
       } else {
         const update = {
           $push: { reportedby: userId },

@@ -60,10 +60,12 @@ const postController = (
   };
 
   const reportPost = (req: Request, res: Response) => {
-    const { id, post } = req.params;
-    reportaPost(id, post, postRepo).then((response) => {
+    const { id, postId } = req.params;
+    reportaPost(id, postId, postRepo).then((response) => {
       res.json(response);
-    });
+    }).catch((err)=>{
+      res.status(401).json(err)
+    })
   };
 
   const addComent = (req: Request, res: Response) => {

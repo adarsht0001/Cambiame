@@ -1,6 +1,7 @@
 import { Typography, Grid } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import Inputfield from '../../Components/input/Inputfield';
 import Buttons from '../../Components/button/Button';
 import axios from '../../Axios/axios';
@@ -42,6 +43,7 @@ function Form() {
     };
     if (validatePass() && validateEmail()) {
       axios.post('/signup', data).then(() => {
+        toast.success('Account Created');
         navigate('/login');
       }).catch((err) => {
         setErr(err.response.data);

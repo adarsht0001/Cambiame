@@ -16,6 +16,7 @@ import UserTables from '../Pages/adminUsers/userTable';
 import Dashboard from '../Pages/adminDashboard/Dashboard';
 import ReportPost from '../Pages/adminReport/ReportPost';
 import AdminPost from '../Pages/adminPost/AdminPost';
+import LoadingLazy from '../Components/LoadingLazy';
 
 function Router() {
   return (
@@ -44,6 +45,7 @@ function Router() {
           <Route element={<Signup />} exact path="/signup" />
           <Route element={<Login />} exact path="/login" />
         </Route>
+        <Route element={<LoadingLazy />} path="/testing" />
       </Routes>
     </BrowserRouter>
   );
