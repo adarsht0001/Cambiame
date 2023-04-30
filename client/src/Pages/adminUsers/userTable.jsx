@@ -21,9 +21,8 @@ export default function UserTables() {
 
   useEffect(() => {
     axios.get(`/admin/users?page=${page}`).then((res) => {
-      console.log(res.data);
       setUsers(res.data.results);
-      setPageInfo({ count: res.data.totalPages, page: res.data.pageNo });
+      setPageInfo({ count: res.data.totalPages });
     }).catch((err) => {
       alert(err.msg);
     });
@@ -31,6 +30,7 @@ export default function UserTables() {
 
   const blockUser = (email) => {
     axios.put('/admin/block-user', { email }).then(() => {
+      alert('blocked');
     }).catch((err) => {
       console.log(err);
     });
@@ -69,7 +69,7 @@ export default function UserTables() {
                   <Switch defaultChecked={row.status} onChange={() => blockUser(row.email)} />
                 </TableCell>
                 <TableCell align="left">
-                  <Tooltip title="View Post" sx={{ padding: '5px', marginX: '2px' }}>
+                  <Tooltip title="View Profile" sx={{ padding: '5px', marginX: '2px' }}>
                     <IconButton>
                       <MdArrowForwardIos />
                     </IconButton>
@@ -80,12 +80,12 @@ export default function UserTables() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Stack spacing={2} alignItems="center">
+      <Stack spacing={2} alignItems="center" p={2}>
         <Typography>
           Page:
-          {2}
+          {page}
         </Typography>
-        <Pagination count={pageInfo.count} page={pageInfo.page} onChange={handleChange} color="primary" />
+        <Pagination count={pageInfo.count} page={page} onChange={handleChange} color="primary" />
       </Stack>
 
     </>

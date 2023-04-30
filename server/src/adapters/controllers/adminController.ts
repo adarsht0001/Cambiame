@@ -50,20 +50,8 @@ const adminController = (
         };
       });
       data.results = users;
-      console.log(data);
       res.json(data);
     });
-    // getAllUser(userRepo).then((data) => {
-    //   let users = data.map((e: any) => {
-    //     return {
-    //       id: e["_id"],
-    //       name: e["username"],
-    //       email: e["email"],
-    //       status: e["blocked"],
-    //     };
-    //   });
-    //   res.status(200).json(users);
-    // });
   };
 
   const blockUser = (req: Request, res: Response) => {
