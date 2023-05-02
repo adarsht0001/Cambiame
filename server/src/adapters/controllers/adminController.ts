@@ -53,6 +53,7 @@ const adminController = (
           name: e["username"],
           email: e["email"],
           status: e["blocked"],
+          verified: e["verified"],
         };
       });
       data.results = users;
@@ -90,6 +91,17 @@ const adminController = (
       });
   };
 
+  const userChart = (req: Request, res: Response) => {
+    userRepo.getAllUser().then((users) => {
+      res.json(users);
+    });
+  };
+
+  const postChart = (req: Request, res: Response) => {
+    postRepo.getPosts().then((posts) => {
+      res.json(posts);
+    });
+  };
   return {
     login,
     getAllUsers,
@@ -97,6 +109,8 @@ const adminController = (
     getDashboard,
     getReportedPost,
     getSinglepost,
+    userChart,
+    postChart,
   };
 };
 

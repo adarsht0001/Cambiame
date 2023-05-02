@@ -113,7 +113,7 @@ export const reportaPost = (
 ) => {
   return new Promise<object>((resolve, reject) => {
     postRepository.getById(postId).then(async (post) => {
-      const exist = post?.reportedby.some((obj) => obj === userId);
+      const exist = post?.reportedby.some((obj: string) => obj === userId);
       if (exist) {
         reject({ msg: "Already reported" });
       } else {

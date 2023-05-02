@@ -17,6 +17,9 @@ import Dashboard from '../Pages/adminDashboard/Dashboard';
 import ReportPost from '../Pages/adminReport/ReportPost';
 import AdminPost from '../Pages/adminPost/AdminPost';
 import LoadingLazy from '../Components/LoadingLazy';
+import UserGraph from '../Pages/chart';
+// import UserGraph from '../Pages/adminDashboard/Charts';
+// import LineChart from '../Pages/chart';
 
 function Router() {
   return (
@@ -30,6 +33,8 @@ function Router() {
           <Route element={<Viewprofile />} exact path="/:username" />
           <Route element={<AdminPost />} path="/admin/post/:id" />
         </Route>
+        {/* <Route element={<LineChart />} path="/admin/chart" /> */}
+        <Route element={<UserGraph />} path="/admin/chart" />
         <Route element={<IsLogged />}>
           <Route element={<Layout />}>
             <Route element={<Home />} exact path="/" />

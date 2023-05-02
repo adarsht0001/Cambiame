@@ -96,3 +96,12 @@ export const singlePost = (
     }
   });
 };
+
+export const getAllpostGraph = (
+  postRepository: ReturnType<PostRepositoryInterface>
+) => {
+  return new Promise<any>(async (resolve, reject) => {
+    const post = await postRepository.getPosts();
+    resolve(post);
+  });
+};

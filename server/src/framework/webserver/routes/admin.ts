@@ -29,6 +29,8 @@ const AdminRoute = () => {
   router.get("/user-dashboard", controller.getDashboard);
   router.get("/reported-post", controller.getReportedPost);
   router.get("/post/:id", controller.getSinglepost);
+  router.get("/chart", controller.userChart);
+  router.get("/postchart", controller.postChart);
 
   return router;
 };

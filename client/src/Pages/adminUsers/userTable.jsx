@@ -10,6 +10,7 @@ import Switch from '@mui/material/Switch';
 import {
   IconButton, Pagination, Stack, Tooltip, Typography,
 } from '@mui/material';
+import { GoVerified, GoX } from 'react-icons/go';
 import { MdArrowForwardIos } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../Axios/axios';
@@ -44,7 +45,7 @@ export default function UserTables() {
   };
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ m: '20' }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -53,6 +54,7 @@ export default function UserTables() {
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">Blocked</TableCell>
+              <TableCell align="left">Verified</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -69,6 +71,9 @@ export default function UserTables() {
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">
                   <Switch defaultChecked={row.status} onChange={() => blockUser(row.email)} />
+                </TableCell>
+                <TableCell align="left">
+                  {row.verified ? <GoVerified /> : <GoX />}
                 </TableCell>
                 <TableCell align="left">
                   <Tooltip title="View Profile" sx={{ padding: '5px', marginX: '2px' }} onClick={() => navigate(`/${row.name}`)}>

@@ -155,9 +155,10 @@ function Posts({ data, callback }) {
           overflowY: 'scroll', scrollbarWidth: '0px', maxHeight: '250px', minHeight: '100px', padding: '5px',
         }}
       >
-        {post.comments.length > 0
-          ? <Comments postid={post._id} refresh={refresh} />
-          : <Typography variant="caption">No comments</Typography>}
+        {/* {post.comments.length > 0 */}
+          {/* ?  */}
+        <Comments postid={post._id} refresh={refresh} />
+          {/* : <Typography variant="caption">No comments</Typography>} */}
       </Box>
       )}
 

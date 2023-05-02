@@ -14,9 +14,7 @@ function Comments({ postid, refresh }) {
     });
   }, [refresh]);
   return (
-
     comments.map((data, i) => (
-
       <Box
         key={data.name + i}
         sx={{
