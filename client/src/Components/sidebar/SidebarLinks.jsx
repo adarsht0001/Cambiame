@@ -6,7 +6,7 @@ import React from 'react';
 function SidebarLinks({ Icon, text, callback }) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const iconSize = isSmallScreen ? 30 : 20;
+  const iconSize = isSmallScreen ? 30 : 10;
 
   return (
     <Grid
@@ -37,7 +37,7 @@ function SidebarLinks({ Icon, text, callback }) {
       role="presentation"
     >
       <Grid item>
-        <Icon size={iconSize} />
+        <Icon size={iconSize} fontSize="medium" color="action" />
       </Grid>
       <Grid item>
         <Typography

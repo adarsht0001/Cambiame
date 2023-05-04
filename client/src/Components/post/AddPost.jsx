@@ -1,19 +1,16 @@
-/* eslint-disable no-return-assign */
 import InputAdornment from '@mui/material/InputAdornment';
 import React, { useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-// import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import toast from 'react-hot-toast';
-import axios from '../../../Axios/axios';
-import Inputfield from '../../input/Inputfield';
+import axios from '../../Axios/axios';
+import Inputfield from '../input/Inputfield';
 
-function Postshare({ callback }) {
+function AddPost({ callback }) {
   const [text, setText] = useState('');
   const [img, setImg] = useState();
   const [loading, setLoading] = useState(false);
@@ -79,6 +76,7 @@ function Postshare({ callback }) {
                   : (
                     <SendIcon
                       onClick={handleSubmit}
+                      // eslint-disable-next-line no-return-assign
                       onMouseOver={(e) => e.target.style.cursor = 'pointer'}
                     />
                   )}
@@ -91,4 +89,4 @@ function Postshare({ callback }) {
   );
 }
 
-export default Postshare;
+export default AddPost;

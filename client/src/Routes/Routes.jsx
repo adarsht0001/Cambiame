@@ -18,6 +18,8 @@ import ReportPost from '../Pages/adminReport/ReportPost';
 import AdminPost from '../Pages/adminPost/AdminPost';
 import LoadingLazy from '../Components/LoadingLazy';
 import UserGraph from '../Pages/chart';
+import LayoutTest from '../Pages/newDesign/design';
+import Test from '../Components/test';
 // import UserGraph from '../Pages/adminDashboard/Charts';
 // import LineChart from '../Pages/chart';
 
@@ -25,6 +27,11 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route element={<LayoutTest />}>
+          <Route element={<Home />} exact path="/new" />
+          <Route element={<Test />} exact path="/news" />
+
+        </Route>
         <Route element={<AdminLogin />} path="/admin" />
         <Route element={<SidebarAdmin />}>
           <Route element={<UserTables />} path="/admin/user" />
