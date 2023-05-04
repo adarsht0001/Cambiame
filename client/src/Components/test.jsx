@@ -5,6 +5,7 @@ import { Box } from '@mui/system';
 import React from 'react';
 import AssistantIcon from '@mui/icons-material/Assistant';
 import AddPost from './post/AddPost';
+import Post from './post/Post';
 
 export default function Test() {
   return (
@@ -21,8 +22,20 @@ export default function Test() {
           </Grid>
         </Grid>
       </Box>
-      <Box height="92vh" sx={{ overflowY: 'hidden', px: 4 }}>
+      <Box height="92vh" sx={{ overflowY: 'scroll', px: 4 }}>
         <AddPost />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
       </Box>
     </Box>
   );
