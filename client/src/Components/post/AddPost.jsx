@@ -6,7 +6,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import SendIcon from '@mui/icons-material/Send';
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import axios from '../../Axios/axios';
 import Inputfield from '../input/Inputfield';
 
@@ -29,14 +29,13 @@ function AddPost({ callback }) {
         Authorization: `Bearer ${user.access_Token}`,
       },
     }).then((res) => {
-      callback();
       setImg();
       setText('');
       setLoading(false);
-      toast.success(res.data.msg);
-      // alert(res.data.msg);
+      toast.success(res?.data.msg);
+      callback();
     }).catch((err) => {
-      alert(err.response.data.msg);
+      toast.error(err.response.data.msg);
     });
   };
   return (

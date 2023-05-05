@@ -20,6 +20,7 @@ import LoadingLazy from '../Components/LoadingLazy';
 import UserGraph from '../Pages/chart';
 import LayoutTest from '../Pages/newDesign/design';
 import Test from '../Components/test';
+import PostDetails from '../Components/post/PostDetails';
 // import UserGraph from '../Pages/adminDashboard/Charts';
 // import LineChart from '../Pages/chart';
 
@@ -30,6 +31,7 @@ function Router() {
         <Route element={<LayoutTest />}>
           <Route element={<Home />} exact path="/new" />
           <Route element={<Test />} exact path="/news" />
+          <Route element={<PostDetails />} exact path="/newspost/:id" />
 
         </Route>
         <Route element={<AdminLogin />} path="/admin" />

@@ -29,6 +29,7 @@ const PostRoute = () => {
   router.put("/report/:id/:postId", controller.reportPost);
   router.post("/add-comment", controller.addComent);
   router.get("/get-comments/:postId", controller.getAllcomments);
+  router.get("/get-post/:id", controller.getSinglepost);
 
   return router;
 };

@@ -15,6 +15,7 @@ import {
   reportaPost,
 } from "../../application/use_cases/post/postCrud";
 import { CommentType } from "../../types/postType";
+import { singlePost } from "../../application/use_cases/admin/admin";
 const postController = (
   postRepositortyImpl: PostRepositoryMongoDB,
   postRepository: PostRepositoryInterface,
@@ -61,11 +62,13 @@ const postController = (
 
   const reportPost = (req: Request, res: Response) => {
     const { id, postId } = req.params;
-    reportaPost(id, postId, postRepo).then((response) => {
-      res.json(response);
-    }).catch((err)=>{
-      res.status(401).json(err)
-    })
+    reportaPost(id, postId, postRepo)
+      .then((response) => {
+        res.json(response);
+      })
+      .catch((err) => {
+        res.status(401).json(err);
+      });
   };
 
   const addComent = (req: Request, res: Response) => {
@@ -89,6 +92,17 @@ const postController = (
     });
   };
 
+  const getSinglepost = (req: Request, res: Response) => {
+    const { id } = req.params;
+    singlePost(postRepo, s3Services, id)
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => {
+        res.status(500).json({ ...err });
+      });
+  };
+
   return {
     createPost,
     getPost,
@@ -97,6 +111,7 @@ const postController = (
     reportPost,
     addComent,
     getAllcomments,
+    getSinglepost,
   };
 };
 export default postController;

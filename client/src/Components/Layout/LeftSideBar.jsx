@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import {
-  AiOutlineHome, AiOutlineLogout, AiOutlineMessage, AiOutlineSearch, AiOutlineUser,
+  AiOutlineHome, AiOutlineLogout, AiOutlineMessage, AiOutlineUser,
 } from 'react-icons/ai';
 import {
   Button, Grid, Hidden, IconButton, Input,
@@ -62,7 +62,6 @@ export default function LeftSidebar() {
             <SidebarLinks text="Home" Icon={AiOutlineHome} callback={() => redirect('/')} />
           </NavLink>
           <SidebarLinks text="Messges" Icon={AiOutlineMessage} />
-          <SidebarLinks text="Search" Icon={AiOutlineSearch} callback={() => redirect('/search')} />
           <SidebarLinks text="Profile" Icon={AiOutlineUser} callback={() => redirect('/profile')} />
           <SidebarLinks text="Logout" Icon={AiOutlineLogout} callback={handleLogout} />
 

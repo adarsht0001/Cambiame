@@ -3,7 +3,6 @@ import { UserRepositoryInterFace } from "../../application/repositories/userRepo
 import { PostRepositoryMongoDB } from "../../framework/database/mongoDb/repositories/postRepository";
 import { UserRepositoryMongoDB } from "../../framework/database/mongoDb/repositories/userRepository";
 import { NextFunction, Request, Response } from "express";
-import User from "../../framework/database/mongoDb/models/userModels";
 
 import {
   followUser,
