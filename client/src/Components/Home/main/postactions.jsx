@@ -15,9 +15,11 @@ export default function LongMenu({ postid, isUser, callback }) {
   const user = useSelector((state) => state.user);
 
   const handleClick = (event) => {
+    event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
-  const handleReport = () => {
+  const handleReport = (e) => {
+    e.preventDefault();
     setLoading(true);
     axios.put(`/post/report/${user.id}/${postid}`, {}, {
       headers: {
@@ -38,7 +40,8 @@ export default function LongMenu({ postid, isUser, callback }) {
     setAnchorEl(null);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
+    e.preventDefault();
     axios.delete(`/post/delete-post/${postid}`, {
       headers: {
         'Content-Type': 'multipart/form-data',

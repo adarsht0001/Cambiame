@@ -80,8 +80,10 @@ export default function Post({ data, callback }) {
   };
 
   const copyClipboard = async () => {
-    navigator.clipboard.writeText('hello');
-    toast.success('copied to clipboard');
+    navigator.clipboard.writeText(`http://localhost:3000/post/${post._id}`);
+    toast('Copied To ClipBoard!', {
+      icon: '📋',
+    });
   };
 
   const [openModal, setOpenModal] = React.useState(false);
@@ -94,7 +96,7 @@ export default function Post({ data, callback }) {
   };
   return (
     <>
-      <Link to={`/newspost/${post._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link to={`/post/${post._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <Box
           padding="1rem"
           sx={{

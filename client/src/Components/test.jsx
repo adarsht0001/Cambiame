@@ -13,7 +13,6 @@ export default function Test() {
   const [posts, setPosts] = useState([]);
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
-    alert('here');
     axios.get('/post').then((response) => {
       setPosts(response.data);
     });

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { Grid, Hidden } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { Outlet } from 'react-router-dom';
-import RightSidebar from './RightSideBar';
+import RightSidebar from '../../Components/Layout/RightSideBar';
 import LeftSidebar from '../../Components/Layout/LeftSideBar';
 // import LeftSidebar from './LeftSideBar';
 

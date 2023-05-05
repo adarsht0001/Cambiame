@@ -8,6 +8,8 @@ import BackgroundLetterAvatars from '../avatar/StringAvatar';
 
 export default function Comment({ postid, refresh }) {
   const [comments, setComments] = useState([]);
+  //   const [Loading, setLoading] = useState(true);
+
   useEffect(() => {
     axios.get(`/post/get-comments/${postid}`).then((response) => {
       setComments(response.data);
@@ -16,8 +18,12 @@ export default function Comment({ postid, refresh }) {
     });
   }, [refresh]);
   return (
+    //   <Box textAlign="center" marginTop="1rem">
+    //           {'loading' === 'loading' && (
+    //           <CircularProgress size={20} color="primary" />
+    //           )}
+    //         </Box>
     comments.map((comment, i) => (
-
       <Box
         // eslint-disable-next-line react/no-array-index-key
         key={i}

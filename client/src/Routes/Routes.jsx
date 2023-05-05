@@ -18,7 +18,7 @@ import ReportPost from '../Pages/adminReport/ReportPost';
 import AdminPost from '../Pages/adminPost/AdminPost';
 import LoadingLazy from '../Components/LoadingLazy';
 import UserGraph from '../Pages/chart';
-import LayoutTest from '../Pages/newDesign/design';
+// import LayoutTest from '../Pages/newDesign/design';
 import Test from '../Components/test';
 import PostDetails from '../Components/post/PostDetails';
 // import UserGraph from '../Pages/adminDashboard/Charts';
@@ -28,10 +28,10 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<LayoutTest />}>
+        <Route element={<Layout />}>
           <Route element={<Home />} exact path="/new" />
           <Route element={<Test />} exact path="/news" />
-          <Route element={<PostDetails />} exact path="/newspost/:id" />
+          <Route element={<PostDetails />} exact path="/post/:id" />
 
         </Route>
         <Route element={<AdminLogin />} path="/admin" />

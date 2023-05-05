@@ -103,15 +103,23 @@ export default function PostDetails() {
       toast.success('Comment Added');
       // setLoading(false);
       setRefresh(!refresh);
-    }).catch((err) => toast.error(err.messsage));
+    }).catch((err) => {
+      toast.error(err.messsage);
+      navigate('/');
+    });
   };
-
+  const copyClipboard = () => {
+    navigator.clipboard.writeText(`http://localhost:3000/post/${id}`);
+    toast('Copied To ClipBoard!', {
+      icon: '📋',
+    });
+  };
   return (
     <Box>
       <Box borderBottom="1px solid #ccc" padding="8px 20px">
         <Grid container alignItems="center">
           <Grid item sx={{ mr: '10px' }}>
-            <IconButton onClick={() => alert('navigate home')}>
+            <IconButton onClick={() => navigate('/')}>
               <ArrowBackIcon />
             </IconButton>
           </Grid>
@@ -131,7 +139,7 @@ export default function PostDetails() {
           <Box>
             <Grid container alignItems="center">
               <Grid item>
-                <BackgroundLetterAvatars user={post.user} />
+                <BackgroundLetterAvatars user={post?.user} />
               </Grid>
               <Grid item flexGrow="1" mx={2}>
                 <Grid container justifyContent="space-between">
@@ -213,7 +221,13 @@ export default function PostDetails() {
               )}
             </IconButton>
             <IconButton size="small">
-              <IosShareIcon fontSize="small" />
+              <IosShareIcon
+                fontSize="small"
+                onClick={(e) => {
+                  e.preventDefault();
+                  copyClipboard();
+                }}
+              />
             </IconButton>
           </Box>
           <Box>
@@ -251,15 +265,6 @@ export default function PostDetails() {
                 </Box>
               </Grid>
             </Grid>
-            {/* <Box textAlign="center" marginTop="1rem">
-              {commentStatus === 'loading' && (
-              <CircularProgress size={20} color="primary" />
-              )}
-            </Box> */}
-            {/* {commentStatus === 'success'
-                  && comments.map((comment) => (
-                    <Comment key={comment._id} comment={comment} />
-                  ))} */}
             <Comment postid={post._id} refresh={refresh} />
           </Box>
         </Box>
