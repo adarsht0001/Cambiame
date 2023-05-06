@@ -76,7 +76,7 @@ export default function UserTables() {
                   {row.verified ? <GoVerified /> : <GoX />}
                 </TableCell>
                 <TableCell align="left">
-                  <Tooltip title="View Profile" sx={{ padding: '5px', marginX: '2px' }} onClick={() => navigate(`/${row.name}`)}>
+                  <Tooltip title="View Profile" sx={{ padding: '5px', marginX: '2px' }} onClick={() => navigate(`/profile/${row.name}`)}>
                     <IconButton>
                       <MdArrowForwardIos />
                     </IconButton>

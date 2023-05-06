@@ -6,10 +6,8 @@ import { IsLogged, LoggedIn } from '../Auth/LoginAuth';
 import Resetpass from '../Pages/ResetPassword/Resetpass';
 import VerifyEmail from '../Pages/verifyMail/verifyEmail';
 import Home from '../Pages/Home/Home';
-import Profile from '../Pages/Profile/Profile';
 import Layout from '../Pages/Layout/user/Layout';
 import Search from '../Pages/Search/Search';
-import Viewprofile from '../Pages/viewprofile/Viewprofile';
 import AdminLogin from '../Pages/Login/admin/Adminlogin';
 import SidebarAdmin from '../Pages/Layout/admin/AdminLayout';
 import UserTables from '../Pages/adminUsers/userTable';
@@ -18,9 +16,8 @@ import ReportPost from '../Pages/adminReport/ReportPost';
 import AdminPost from '../Pages/adminPost/AdminPost';
 import LoadingLazy from '../Components/LoadingLazy';
 import UserGraph from '../Pages/chart';
-// import LayoutTest from '../Pages/newDesign/design';
-import Test from '../Components/test';
 import PostDetails from '../Components/post/PostDetails';
+import Profile from '../Pages/Profile/Profile';
 // import UserGraph from '../Pages/adminDashboard/Charts';
 // import LineChart from '../Pages/chart';
 
@@ -30,16 +27,13 @@ function Router() {
       <Routes>
         <Route element={<Layout />}>
           <Route element={<Home />} exact path="/new" />
-          <Route element={<Test />} exact path="/news" />
           <Route element={<PostDetails />} exact path="/post/:id" />
-
         </Route>
         <Route element={<AdminLogin />} path="/admin" />
         <Route element={<SidebarAdmin />}>
           <Route element={<UserTables />} path="/admin/user" />
           <Route element={<Dashboard />} path="/admin/dashboard" />
           <Route element={<ReportPost />} path="/admin/post" />
-          <Route element={<Viewprofile />} exact path="/:username" />
           <Route element={<AdminPost />} path="/admin/post/:id" />
         </Route>
         {/* <Route element={<LineChart />} path="/admin/chart" /> */}
@@ -47,8 +41,7 @@ function Router() {
         <Route element={<IsLogged />}>
           <Route element={<Layout />}>
             <Route element={<Home />} exact path="/" />
-            <Route element={<Viewprofile />} exact path="/:username" />
-            <Route element={<Profile />} exact path="/profile" />
+            <Route element={<Profile />} exact path="/profile/:username" />
             <Route element={<Search />} exact path="/search" />
           </Route>
         </Route>

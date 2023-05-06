@@ -6,9 +6,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
 import { toast } from 'react-hot-toast';
-import axios from '../../../Axios/axios';
+import axios from '../../Axios/axios';
 
-export default function LongMenu({ postid, isUser, callback }) {
+export default function PostActions({ postid, isUser, callback }) {
   const [anchorEl, setAnchorEl] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const open = Boolean(anchorEl);
@@ -36,7 +36,8 @@ export default function LongMenu({ postid, isUser, callback }) {
     });
   };
 
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.preventDefault();
     setAnchorEl(null);
   };
 

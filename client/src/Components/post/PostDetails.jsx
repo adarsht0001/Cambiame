@@ -12,28 +12,20 @@ import {
   useTheme,
 } from '@mui/material';
 // import format from 'date-fns/format';
-
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 // import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-
 import IosShareIcon from '@mui/icons-material/IosShare';
-import { useNavigate, useParams } from 'react-router-dom';
-// import { useHistory, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import axios from '../../Axios/axios';
-import LongMenu from '../Home/main/postactions';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
 import Comment from './Comment';
-
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getComments, getPostDetails } from '../redux/postSlice';
-// import { addComment, deletePost, likeOrDislikePost } from '../api';
-// import Comment from '../components/Comment';
+import PostActions from './PostAction';
 
 export default function PostDetails() {
   const { id } = useParams();
@@ -139,7 +131,10 @@ export default function PostDetails() {
           <Box>
             <Grid container alignItems="center">
               <Grid item>
-                <BackgroundLetterAvatars user={post?.user} />
+                <Link to={`/profile/${post.user}`}>
+                  <BackgroundLetterAvatars user={post?.user} />
+
+                </Link>
               </Grid>
               <Grid item flexGrow="1" mx={2}>
                 <Grid container justifyContent="space-between">
@@ -149,7 +144,7 @@ export default function PostDetails() {
                     </Typography>
                   </Grid>
                   <Grid item>
-                    <LongMenu postid={post?._id} isUser={isUser} callback={callback} />
+                    <PostActions postid={post?._id} isUser={isUser} callback={callback} />
                   </Grid>
                 </Grid>
               </Grid>

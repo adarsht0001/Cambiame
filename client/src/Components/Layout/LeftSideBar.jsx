@@ -9,12 +9,13 @@ import {
 } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import cambie from '../../Assets/svg/CAMBIAME.svg';
 import SidebarLinks from './SidebarLinks';
 import { Logout } from '../../Redux';
 
 export default function LeftSidebar() {
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -62,7 +63,7 @@ export default function LeftSidebar() {
             <SidebarLinks text="Home" Icon={AiOutlineHome} callback={() => redirect('/')} />
           </NavLink>
           <SidebarLinks text="Messges" Icon={AiOutlineMessage} />
-          <SidebarLinks text="Profile" Icon={AiOutlineUser} callback={() => redirect('/profile')} />
+          <SidebarLinks text="Profile" Icon={AiOutlineUser} callback={() => redirect(`/profile/${user.name}`)} />
           <SidebarLinks text="Logout" Icon={AiOutlineLogout} callback={handleLogout} />
 
         </List>

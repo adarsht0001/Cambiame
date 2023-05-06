@@ -3,8 +3,9 @@ import Box from '@mui/material/Box';
 import { Grid, Hidden } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { Outlet } from 'react-router-dom';
-import RightSidebar from '../../../Components/Layout/RightSideBar';
+// import RightSidebar from '../../../Components/Layout/RightSideBar';
 import LeftSidebar from '../../../Components/Layout/LeftSideBar';
+import RightSidebar from '../../Search/test';
 // import LeftSidebar from './LeftSideBar';
 
 export default function Layout() {
@@ -37,6 +38,7 @@ export default function Layout() {
             </Grid>
             <Hidden lgDown>
               <Grid item lg={4} sx={{ height: '100vh' }}>
+                {/* <RightSidebar /> */}
                 <RightSidebar />
               </Grid>
             </Hidden>
