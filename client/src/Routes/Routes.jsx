@@ -14,10 +14,11 @@ import UserTables from '../Pages/adminUsers/userTable';
 import Dashboard from '../Pages/adminDashboard/Dashboard';
 import ReportPost from '../Pages/adminReport/ReportPost';
 import AdminPost from '../Pages/adminPost/AdminPost';
-import LoadingLazy from '../Components/LoadingLazy';
+// import LoadingLazy from '../Components/LoadingLazy';
 import UserGraph from '../Pages/chart';
 import PostDetails from '../Components/post/PostDetails';
 import Profile from '../Pages/Profile/Profile';
+import Chat from '../Pages/test';
 // import UserGraph from '../Pages/adminDashboard/Charts';
 // import LineChart from '../Pages/chart';
 
@@ -25,10 +26,6 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout />}>
-          <Route element={<Home />} exact path="/new" />
-          <Route element={<PostDetails />} exact path="/post/:id" />
-        </Route>
         <Route element={<AdminLogin />} path="/admin" />
         <Route element={<SidebarAdmin />}>
           <Route element={<UserTables />} path="/admin/user" />
@@ -36,12 +33,12 @@ function Router() {
           <Route element={<ReportPost />} path="/admin/post" />
           <Route element={<AdminPost />} path="/admin/post/:id" />
         </Route>
-        {/* <Route element={<LineChart />} path="/admin/chart" /> */}
         <Route element={<UserGraph />} path="/admin/chart" />
         <Route element={<IsLogged />}>
           <Route element={<Layout />}>
             <Route element={<Home />} exact path="/" />
             <Route element={<Profile />} exact path="/profile/:username" />
+            <Route element={<PostDetails />} exact path="/post/:id" />
             <Route element={<Search />} exact path="/search" />
           </Route>
         </Route>
@@ -52,7 +49,7 @@ function Router() {
           <Route element={<Signup />} exact path="/signup" />
           <Route element={<Login />} exact path="/login" />
         </Route>
-        <Route element={<LoadingLazy />} path="/testing" />
+        <Route element={<Chat />} path="/testing" />
       </Routes>
     </BrowserRouter>
   );

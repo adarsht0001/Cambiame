@@ -6,7 +6,6 @@ import { Outlet } from 'react-router-dom';
 // import RightSidebar from '../../../Components/Layout/RightSideBar';
 import LeftSidebar from '../../../Components/Layout/LeftSideBar';
 import RightSidebar from '../../Search/test';
-// import LeftSidebar from './LeftSideBar';
 
 export default function Layout() {
   const theme = useTheme();

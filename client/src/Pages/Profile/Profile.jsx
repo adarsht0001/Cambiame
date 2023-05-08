@@ -11,7 +11,8 @@ import {
   useTheme,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'; import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import DateRangeIcon from '@mui/icons-material/DateRange';
@@ -49,6 +50,7 @@ export default function Profile() {
       }
     });
   }, [refresh]);
+
   const handleFollow = () => {
     const follower = {
       id: user.id,

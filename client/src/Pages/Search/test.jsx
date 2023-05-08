@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable import/no-extraneous-dependencies */
@@ -9,10 +10,10 @@ import {
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from '../../Axios/axios';
-
-// import { Link } from 'react-router-dom';
+// import SearchResult from './SearchFollow';
+import WhoToFollow from './SearchFollow';
 
 export default function RightSidebar() {
   const [query, setQuery] = React.useState('');
@@ -21,6 +22,7 @@ export default function RightSidebar() {
   const [searched, setSearched] = useState(false);
   const [notfound, setnotFound] = useState(false);
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`/search?name=${query}`).then((res) => {
@@ -37,6 +39,7 @@ export default function RightSidebar() {
     setSearched(username);
     axios.get(`/search-user/${username}/${user.id}`).then((res) => {
       setResults(res.data);
+      setQuery('');
     }).catch((err) => {
       setSearched(false);
       setnotFound(err.response?.data?.msg);
@@ -67,7 +70,7 @@ export default function RightSidebar() {
             placeholder="Search"
             startAdornment={(
               <Search
-                onClick={handleSearch}
+                onClick={() => handleSearch()}
                 sx={{
                   paddingLeft: '20px',
                   color: '#777',
@@ -99,11 +102,11 @@ export default function RightSidebar() {
             </Box>
           )}
           {users.map((data) => (
-            <Box key={user._id}>
+            <Box key={user._id} onClick={() => navigate(`/profile/${data}`)}>
               <Link
-                onClick={() => setQuery('')}
+                // onClick={() => setQuery('')}
                 style={{ textDecoration: 'none' }}
-                to={`/profile/${user?._id}`}
+                // to={`/profile/${data}`}
               >
                 <Grid
                   sx={{
@@ -116,9 +119,9 @@ export default function RightSidebar() {
                   container
                   alignItems="center"
                 >
-                  <Grid item sx={{ paddingRight: '12px' }}>
+                  {/* <Grid item sx={{ paddingRight: '12px' }}>
                     <img src="/logo.png" width="50px" alt="logo" />
-                  </Grid>
+                  </Grid> */}
                   <Grid item>
                     <Grid container alignItems="center">
                       <Grid item>
@@ -150,30 +153,33 @@ export default function RightSidebar() {
             </Box>
           ))}
         </Box>
-        {searched
-          ? results.map((userDate) => userDate.username)
-          : notfound ? <Typography variant="h5">{notfound}</Typography> : ''}
-        <Box
-          sx={{
-            background: '#eee',
-            borderRadius: '28px',
-            padding: '10px 20px',
-            margin: '1rem 0',
-          }}
-        >
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            Who to follow
-          </Typography>
-          <Box textAlign="center" marginTop="1rem">
-            {/* {(userStatus === 'loading' || followingStatus === 'loading') && ( */}
-            {/* <CircularProgress size={20} color="primary" /> */}
-            {/* )} */}
+        {searched && results ? (
+          <Box
+            sx={{
+              background: '#eee',
+              borderRadius: '28px',
+              padding: '10px 20px',
+              margin: '1rem 0',
+            }}
+          >
+            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+              Search Result For
+              {' '}
+              {searched}
+            </Typography>
+            <Box textAlign="center" marginTop="1rem">
+              {/* {(userStatus === 'loading' || followingStatus === 'loading') && ( */}
+              {/* <CircularProgress size={20} color="primary" /> */}
+              {/* )} */}
+            </Box>
+            {results.map((userData) => (
+              <WhoToFollow user={userData} />
+            ))}
           </Box>
-          {/* {userStatus === 'success' */}
-          {/* && showToFollow() */}
-          {/* .slice(0, 7) */}
-          {/* .map((item) => <WhoToFollow key={item._id} user={item} />)} */}
-        </Box>
+        ) : notfound ? (
+          <Typography variant="h5">{notfound}</Typography>
+        ) : ''}
+
       </Box>
     </Box>
   );

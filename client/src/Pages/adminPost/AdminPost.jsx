@@ -6,9 +6,9 @@ import React, { useEffect, useState } from 'react';
 import { AiFillHeart, AiOutlineComment, AiOutlineHeart } from 'react-icons/ai';
 import { useNavigate, useParams } from 'react-router-dom';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
-import Comments from '../../Components/Home/main/comments';
+import Comments from '../../Components/post/Comment';
 import axios from '../../Axios/axios';
-import LongMenu from '../../Components/Home/main/postactions';
+import LongMenu from '../../Components/post/PostAction';
 
 function AdminPost() {
   const [post, setPost] = useState([]);
