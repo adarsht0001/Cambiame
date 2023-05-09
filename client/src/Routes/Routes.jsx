@@ -19,6 +19,8 @@ import UserGraph from '../Pages/chart';
 import PostDetails from '../Components/post/PostDetails';
 import Profile from '../Pages/Profile/Profile';
 import Chat from '../Pages/test';
+import Conversation from '../Pages/Chat/Converstaion';
+import Message from '../Pages/Chat/Chat';
 // import UserGraph from '../Pages/adminDashboard/Charts';
 // import LineChart from '../Pages/chart';
 
@@ -40,6 +42,9 @@ function Router() {
             <Route element={<Profile />} exact path="/profile/:username" />
             <Route element={<PostDetails />} exact path="/post/:id" />
             <Route element={<Search />} exact path="/search" />
+            <Route element={<Conversation />} exact path="/conversations" />
+            <Route element={<Message />} exact path="/Messages" />
+            <Route element={<Chat />} path="/testing" />
           </Route>
         </Route>
 
@@ -49,7 +54,6 @@ function Router() {
           <Route element={<Signup />} exact path="/signup" />
           <Route element={<Login />} exact path="/login" />
         </Route>
-        <Route element={<Chat />} path="/testing" />
       </Routes>
     </BrowserRouter>
   );
