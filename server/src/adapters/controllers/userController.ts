@@ -34,6 +34,8 @@ const userController = (
 
   const searchUsername = (req: Request, res: Response) => {
     const { name } = req.query;
+    console.log(name);
+
     getUsernames(name, userRepo).then((data) => {
       res.json(data);
     });
@@ -62,7 +64,12 @@ const userController = (
       });
   };
 
-  return { getProfile, searchUsername, searchResult, follow };
+  const getUser = async (req: Request, res: Response) => {
+    const user = await userRepo.getById(req.params.id);
+    res.json(user);
+  };
+
+  return { getProfile, searchUsername, searchResult, follow, getUser };
 };
 
 export default userController;

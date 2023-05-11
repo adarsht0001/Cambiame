@@ -23,7 +23,6 @@ const authRoute = () => {
   router.post("/forgot-password", controller.forgotPassword);
   router.post("/reset-password/:id/:token", controller.resetPassword);
   router.post("/verify-email/:id/:token", controller.verifyEmail);
-  router.get("/profile/:id");
   return router;
 };
 

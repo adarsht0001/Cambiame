@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable import/no-extraneous-dependencies */
 import { Search } from '@mui/icons-material';
 import {
   Grid,
@@ -16,7 +15,7 @@ import axios from '../../Axios/axios';
 import WhoToFollow from './SearchFollow';
 
 export default function RightSidebar() {
-  const [query, setQuery] = React.useState('');
+  const [query, setQuery] = useState('');
   const [users, setUser] = useState([]);
   const [results, setResults] = useState([]);
   const [searched, setSearched] = useState(false);

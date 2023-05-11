@@ -5,7 +5,7 @@ import { useTheme } from '@mui/system';
 import { Outlet } from 'react-router-dom';
 // import RightSidebar from '../../../Components/Layout/RightSideBar';
 import LeftSidebar from '../../../Components/Layout/LeftSideBar';
-import RightSidebar from '../../Search/test';
+// import RightSidebar from '../../Search/test';
 
 export default function Layout() {
   const theme = useTheme();
@@ -38,7 +38,7 @@ export default function Layout() {
             <Hidden lgDown>
               <Grid item lg={4} sx={{ height: '100vh' }}>
                 {/* <RightSidebar /> */}
-                <RightSidebar />
+                {/* <RightSidebar /> */}
               </Grid>
             </Hidden>
           </Grid>

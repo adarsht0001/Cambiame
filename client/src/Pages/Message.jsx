@@ -40,7 +40,7 @@ function Message() {
   const {
     chat1, chat2, chatroot1, chatroot2,
   } = useStyles();
-  const own = false;
+  const own = true;
 
   return (
     <Stack
