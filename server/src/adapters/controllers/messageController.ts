@@ -11,12 +11,21 @@ const messageController = (
   const messageRepo = messageDbrepository(messageRepositoryImpl());
 
   const createMessage = async (req: Request, res: Response) => {
-    console.log(req.body);
     messageRepo.addMessage(req.body);
+  };
+
+  const getMessage = async (req: Request, res: Response) => {
+    const msg = await messageRepo.getMessage(req.params.conversationId);
+    if (msg) {
+      res.json(msg);
+    } else {
+      res.json({ msg: "No message found" });
+    }
   };
 
   return {
     createMessage,
+    getMessage,
   };
 };
 

@@ -11,13 +11,11 @@ const conversationController = (
   );
 
   const createConversation = async (req: Request, res: Response) => {
-    console.log(req.body);
     conversationRepo.createConversation(req.body.senderId, req.body.receiverId);
   };
 
   const getConversation = async (req: Request, res: Response) => {
     const data = await conversationRepo.getConversation(req.params.userId);
-    console.log(data);
     res.json(data);
   };
   return {

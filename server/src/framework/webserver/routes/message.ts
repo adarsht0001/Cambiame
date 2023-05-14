@@ -12,7 +12,7 @@ const messageRoute = () => {
   );
 
   router.post("/", controller.createMessage);
-  //   router.get("/:userId", controller.getConversation);
+  router.get("/:conversationId", controller.getMessage);
 
   return router;
 };

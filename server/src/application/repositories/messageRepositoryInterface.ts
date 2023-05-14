@@ -2,11 +2,12 @@ import { MessageRepositoryDbReturn } from "../../framework/database/mongoDb/repo
 
 export const messageRepository = (repository: MessageRepositoryDbReturn) => {
   const addMessage = async (data: any) => await repository.addMessage(data);
-  const getConversation = async (userId: string) =>
-    await repository.addMessage(userId);
+
+  const getMessage = async (id: string) => await repository.getMessages(id);
 
   return {
     addMessage,
+    getMessage,
   };
 };
 export type MessageRepositoryInterface = typeof messageRepository;
