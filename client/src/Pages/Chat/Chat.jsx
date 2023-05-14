@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Stack } from '@mui/system';
 import {
   Button,
@@ -9,18 +9,29 @@ import {
   Typography,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Link as RouteLink } from 'react-router-dom';
+import { Link as RouteLink, useParams } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
+import { useSelector } from 'react-redux';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
-import Message from '../Message';
+import axios from '../../Axios/axios';
+import Message from './Message';
 
 function Chat() {
+  const { id } = useParams();
+  const user = useSelector((state) => state.user);
+
+  const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    axios.get(`/message/${id}`).then((res) => {
+      setMessages(res.data);
+    });
+  }, []);
   return (
     <Box>
       <Box borderBottom="1px solid #ccc" padding="8px 20px" mt="5px">
         <Grid container alignItems="center">
           <Grid item sx={{ mr: '10px' }}>
-            <RouteLink to="/conversations">
+            <RouteLink to="/chat">
               <IconButton>
                 <ArrowBackIcon />
               </IconButton>
@@ -85,15 +96,13 @@ function Chat() {
             },
           }}
         >
-          {[1, 2, 3, 8, 8, 6, 8, 8, 8, 88, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-            8, 8, 8, 8, 8]?.map((item, index) => (
-              <div
-                id="scroll"
-                key={index}
-              >
-                <Message />
-              </div>
-          ))}
+          <div
+            id="scroll"
+          >
+            {messages?.map((item, index) => (
+              <Message key={index} message={item} own={item.sender === user.id} />
+            ))}
+          </div>
         </Box>
         <Stack direction="row">
           <TextField

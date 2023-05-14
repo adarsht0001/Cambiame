@@ -36,11 +36,10 @@ const useStyles = makeStyles({
   },
 });
 
-function Message() {
+function Message({ message, own }) {
   const {
     chat1, chat2, chatroot1, chatroot2,
   } = useStyles();
-  const own = true;
 
   return (
     <Stack
@@ -56,16 +55,13 @@ function Message() {
           borderRadius={2}
           variant="body2"
         >
-          sdjlkasdfa saf
+          {message.text}
         </Typography>
         <Typography
           sx={{ float: own ? 'right' : 'left' }}
           variant="caption"
         >
-          {/* <ReactTimeAgo date={data.createdAt} locale="en-US" />
-           */}
-          {' '}
-          22:34
+          {message.createdAt}
         </Typography>
       </Box>
       {/* <Avatar sx={{ bgcolor: own ? 'blue' : 'green' }}>

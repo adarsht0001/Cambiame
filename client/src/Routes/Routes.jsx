@@ -42,8 +42,8 @@ function Router() {
             <Route element={<Profile />} exact path="/profile/:username" />
             <Route element={<PostDetails />} exact path="/post/:id" />
             <Route element={<Search />} exact path="/search" />
-            <Route element={<Conversation />} exact path="/conversations" />
-            <Route element={<Message />} exact path="/Messages" />
+            <Route element={<Conversation />} exact path="/chat" />
+            <Route element={<Message />} exact path="/chat/:id" />
             <Route element={<Chat />} path="/testing" />
           </Route>
         </Route>

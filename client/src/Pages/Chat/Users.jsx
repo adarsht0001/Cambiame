@@ -1,10 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import axios from '../../Axios/axios';
 
 function Users({ conversation, userId }) {
+  const navigate = useNavigate();
   const [user, setUser] = useState('');
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== userId);
@@ -22,7 +25,7 @@ function Users({ conversation, userId }) {
         },
       }}
     >
-      <Grid container flexWrap="nowrap">
+      <Grid container flexWrap="nowrap" onClick={() => navigate(`/chat/${conversation._id}`)}>
         <Grid item sx={{ paddingRight: '1rem' }}>
           <BackgroundLetterAvatars user={user?.username || ''} />
         </Grid>

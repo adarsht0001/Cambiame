@@ -62,7 +62,7 @@ export default function LeftSidebar() {
           >
             <SidebarLinks text="Home" Icon={AiOutlineHome} callback={() => redirect('/')} />
           </NavLink>
-          <SidebarLinks text="Messges" Icon={AiOutlineMessage} />
+          <SidebarLinks text="Messges" Icon={AiOutlineMessage} callback={() => redirect('/chat')} />
           <SidebarLinks text="Profile" Icon={AiOutlineUser} callback={() => redirect(`/profile/${user.name}`)} />
           <SidebarLinks text="Logout" Icon={AiOutlineLogout} callback={handleLogout} />
 
