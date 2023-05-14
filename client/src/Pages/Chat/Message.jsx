@@ -4,6 +4,7 @@ import {
   Box, Typography, Stack,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { format } from 'timeago.js';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 // import ReactTimeAgo from 'react-time-ago';
 
@@ -61,7 +62,7 @@ function Message({ message, own }) {
           sx={{ float: own ? 'right' : 'left' }}
           variant="caption"
         >
-          {message.createdAt}
+          {format(message.createdAt)}
         </Typography>
       </Box>
       {/* <Avatar sx={{ bgcolor: own ? 'blue' : 'green' }}>

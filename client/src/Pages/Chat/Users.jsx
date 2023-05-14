@@ -3,18 +3,26 @@ import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import axios from '../../Axios/axios';
+import { CHAT } from '../../Redux';
 
 function Users({ conversation, userId }) {
   const navigate = useNavigate();
   const [user, setUser] = useState('');
+  const dispatch = useDispatch();
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== userId);
     axios.get(`/user/${friendId}`).then((res) => {
       setUser(res.data);
     });
   }, []);
+
+  const handleNavigate = () => {
+    dispatch(CHAT(user));
+    navigate(`/chat/${conversation._id}`);
+  };
   return (
     <Box
       padding="1rem"
@@ -25,7 +33,7 @@ function Users({ conversation, userId }) {
         },
       }}
     >
-      <Grid container flexWrap="nowrap" onClick={() => navigate(`/chat/${conversation._id}`)}>
+      <Grid container flexWrap="nowrap" onClick={handleNavigate}>
         <Grid item sx={{ paddingRight: '1rem' }}>
           <BackgroundLetterAvatars user={user?.username || ''} />
         </Grid>

@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Stack } from '@mui/system';
 import {
   Button,
@@ -9,39 +11,64 @@ import {
   Typography,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Link as RouteLink, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import axios from '../../Axios/axios';
 import Message from './Message';
+import { ENDCHAT } from '../../Redux';
 
 function Chat() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const chat = useSelector((state) => state.chat);
+  const scrollRef = useRef();
 
+  const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
   useEffect(() => {
     axios.get(`/message/${id}`).then((res) => {
       setMessages(res.data);
     });
   }, []);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const message = {
+      sender: user.id,
+      text: newMessage,
+      conversationId: id,
+    };
+    axios.post('/message', message).then((res) => {
+      setMessages([...messages, res.data]);
+      setNewMessage('');
+    });
+  };
+  const HandleBack = () => {
+    dispatch(ENDCHAT());
+    navigate('/chat');
+  };
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
   return (
     <Box>
       <Box borderBottom="1px solid #ccc" padding="8px 20px" mt="5px">
         <Grid container alignItems="center">
           <Grid item sx={{ mr: '10px' }}>
-            <RouteLink to="/chat">
+            <div onClick={HandleBack}>
               <IconButton>
                 <ArrowBackIcon />
               </IconButton>
-            </RouteLink>
+            </div>
           </Grid>
           <Grid item>
             <Grid container flexWrap="nowrap">
               <Grid item sx={{ paddingRight: '1rem' }}>
                 {/* <img src="/logo.png" alt="lgoog" width="50px" /> */}
-                <BackgroundLetterAvatars user="yse" />
+                <BackgroundLetterAvatars user={chat.name} />
               </Grid>
               <Grid item flexGrow="1">
                 <Box>
@@ -56,14 +83,12 @@ function Chat() {
                         <Typography
                           sx={{ fontSize: '16px', fontWeight: 500, mr: '6px' }}
                         >
-                          adjh
+                          {chat.name}
                         </Typography>
                       </Box>
                       <Box>
                         <Typography sx={{ fontSize: '15px', color: '#555' }}>
-                          dhsajs
-                          {' '}
-
+                          22 min ago
                         </Typography>
                       </Box>
                     </Grid>
@@ -96,13 +121,11 @@ function Chat() {
             },
           }}
         >
-          <div
-            id="scroll"
-          >
-            {messages?.map((item, index) => (
+          {messages?.map((item, index) => (
+            <div ref={scrollRef}>
               <Message key={index} message={item} own={item.sender === user.id} />
-            ))}
-          </div>
+            </div>
+          ))}
         </Box>
         <Stack direction="row">
           <TextField
@@ -111,11 +134,15 @@ function Chat() {
             maxRows={4}
             fullWidth
             size="small"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Sent a message"
           />
           <Button
             variant="contained"
             sx={{ bgcolor: '#3b71ca' }}
             endIcon={<SendIcon />}
+            onClick={handleSubmit}
           />
         </Stack>
       </>
