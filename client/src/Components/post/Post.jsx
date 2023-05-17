@@ -18,6 +18,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
+import { format } from 'timeago.js';
 import axios from '../../Axios/axios';
 import Modal from './Modal';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
@@ -137,6 +138,7 @@ export default function Post({ data, callback }) {
                       <Typography
                         sx={{ fontSize: '15px', mr: '6px', color: '#555' }}
                       >
+                        {format(post?.date)}
                         {/* {formatDistanceToNow(new Date(post.createdAt))} */}
                       </Typography>
                     </Box>

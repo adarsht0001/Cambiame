@@ -14,6 +14,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate, useParams } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
 import { useDispatch, useSelector } from 'react-redux';
+import io from 'socket.io-client';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import axios from '../../Axios/axios';
 import Message from './Message';
@@ -26,14 +27,36 @@ function Chat() {
   const user = useSelector((state) => state.user);
   const chat = useSelector((state) => state.chat);
   const scrollRef = useRef();
-
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const socket = useRef();
   useEffect(() => {
     axios.get(`/message/${id}`).then((res) => {
       setMessages(res.data);
     });
   }, []);
+
+  useEffect(() => {
+    socket.current = io('http://localhost:5000');
+    socket.current?.emit('adduser', user.id);
+
+    socket.current.on('getMessage', (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    // arrivalMessage
+    //   && chat?.members.includes(arrivalMessage.sender)
+    //   &&
+    setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const message = {
@@ -41,6 +64,12 @@ function Chat() {
       text: newMessage,
       conversationId: id,
     };
+    socket.current.emit('sendMessage', {
+      senderid: user.id,
+      receiverid: chat.id,
+      text: newMessage,
+    });
+
     axios.post('/message', message).then((res) => {
       setMessages([...messages, res.data]);
       setNewMessage('');
@@ -123,7 +152,7 @@ function Chat() {
         >
           {messages?.map((item, index) => (
             <div ref={scrollRef}>
-              <Message key={index} message={item} own={item.sender === user.id} />
+              <Message key={index} message={item} own={item?.sender === user.id} />
             </div>
           ))}
         </Box>

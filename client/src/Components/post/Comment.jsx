@@ -3,11 +3,13 @@ import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 // import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 // import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { format } from 'timeago.js';
 import axios from '../../Axios/axios';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
 
 export default function Comment({ postid, refresh }) {
   const [comments, setComments] = useState([]);
+
   //   const [Loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -62,9 +64,7 @@ export default function Comment({ postid, refresh }) {
                     <Typography
                       sx={{ fontSize: '15px', mr: '6px', color: '#555' }}
                     >
-                      2:34
-                      {/* {formatDistanceToNow(new Date(comment.createdAt))} */}
-                      {' '}
+                      {format(comment?.Date)}
                     </Typography>
                   </Box>
                   <Box>

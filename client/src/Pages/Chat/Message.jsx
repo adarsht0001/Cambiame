@@ -56,13 +56,13 @@ function Message({ message, own }) {
           borderRadius={2}
           variant="body2"
         >
-          {message.text}
+          {message?.text}
         </Typography>
         <Typography
           sx={{ float: own ? 'right' : 'left' }}
           variant="caption"
         >
-          {format(message.createdAt)}
+          {format(message?.createdAt)}
         </Typography>
       </Box>
       {/* <Avatar sx={{ bgcolor: own ? 'blue' : 'green' }}>

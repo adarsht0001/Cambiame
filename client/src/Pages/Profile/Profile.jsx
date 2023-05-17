@@ -16,16 +16,19 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import DateRangeIcon from '@mui/icons-material/DateRange';
-import { Link as RouteLink, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link as RouteLink, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 // import format from 'date-fns/format';
 import axios from '../../Axios/axios';
 import Post from '../../Components/post/Post';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
+import { CHAT } from '../../Redux';
 
 export default function Profile() {
   const theme = useTheme();
   const { username } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState({});
   const [posts, setPosts] = useState([]);
   const [following, setfollowing] = useState(false);
@@ -64,6 +67,17 @@ export default function Profile() {
       setrefresh(!refresh);
     }).catch(() => {
       setfollowing(false);
+    });
+  };
+
+  const handleMessage = () => {
+    const data = {
+      senderId: user.id,
+      receiverId: profile._id,
+    };
+    axios.post('/conversation', data).then((res) => {
+      dispatch(CHAT(profile));
+      navigate(`/chat/${res.data._id}`);
     });
   };
 
@@ -139,7 +153,7 @@ export default function Profile() {
             <>
               {following && (
               <IconButton>
-                <MailOutlineIcon />
+                <MailOutlineIcon onClick={() => handleMessage()} />
               </IconButton>
               )}
               {following

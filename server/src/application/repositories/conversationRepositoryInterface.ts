@@ -8,9 +8,13 @@ export const conversationRepository = (
 
   const getConversation = async (userId: string) =>
     await repository.getConversation(userId);
+
+  const getBothMembers = async (senderId: string, receiverId: string) =>
+    await repository.getBothMembers(senderId, receiverId);
   return {
     createConversation,
     getConversation,
+    getBothMembers,
   };
 };
 export type ConversationRepositoryInterface = typeof conversationRepository;

@@ -14,9 +14,18 @@ export const conversationRepositoryMongoDb = () => {
     });
     return conversation;
   };
+
+  const getBothMembers = async (senderId: string, receiverId: string) => {
+    const data = await Conversation.find({
+      members: { $all: [senderId, receiverId] },
+    });
+    return data;
+  };
+
   return {
     createConversation,
     getConversation,
+    getBothMembers,
   };
 };
 

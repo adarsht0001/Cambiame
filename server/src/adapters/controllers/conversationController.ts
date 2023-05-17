@@ -11,7 +11,19 @@ const conversationController = (
   );
 
   const createConversation = async (req: Request, res: Response) => {
-    conversationRepo.createConversation(req.body.senderId, req.body.receiverId);
+    const Exist = await conversationRepo.getBothMembers(
+      req.body.senderId,
+      req.body.receiverId
+    );
+    if (Exist?.length > 0) {
+      res.json(Exist[0]);
+    } else {
+      const data = await conversationRepo.createConversation(
+        req.body.senderId,
+        req.body.receiverId
+      );
+      res.json(data);
+    }
   };
 
   const getConversation = async (req: Request, res: Response) => {

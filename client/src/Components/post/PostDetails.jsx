@@ -21,6 +21,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
+import { format } from 'timeago.js';
 import axios from '../../Axios/axios';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
 import Comment from './Comment';
@@ -176,17 +177,18 @@ export default function PostDetails() {
               {/* {postDetails
                     && postDetails.createdAt
                     && format(new Date(postDetails.createdAt), 'HH:mm a')} */}
-              2:34
+              {format(post?.date)}
+
             </Typography>
-            <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
+            {/* <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
               .
-            </Typography>
-            <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
+            </Typography> */}
+            {/* <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
               {/* {postDetails
                     && postDetails.createdAt
                     && format(new Date(postDetails.createdAt), 'MMM dd yyyy')} */}
-              sj
-            </Typography>
+            {/* sj */}
+            {/* </Typography>  */}
           </Box>
           <Box display="flex" padding="1rem 0" borderBottom="1px solid #ccc">
             <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
