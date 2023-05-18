@@ -51,17 +51,21 @@ io.on("connection", (socket) => {
     console.log(users);
   });
 
-  socket.on("sendMessage", ({ senderid, receiverid, text }) => {
+  socket.on("sendMessage", ({ senderid, receiverid, text, user }) => {
     const receiver = getUser(receiverid);
     console.log(receiverid);
-    console.log(receiver);
+    console.log(user);
 
     if (receiver) {
       console.log("here");
-
       io.to(receiver?.socketId).emit("getMessage", {
         senderid,
         text,
+      });
+      io.to(receiver?.socketId).emit("sentNotification", {
+        senderid,
+        text,
+        user,
       });
     }
   });

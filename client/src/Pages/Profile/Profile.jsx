@@ -1,24 +1,27 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box } from '@mui/system';
 import {
   Button,
   CircularProgress,
   Grid,
   IconButton,
-  Link,
+  // Link,
   Typography,
   useTheme,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import InsertLinkIcon from '@mui/icons-material/InsertLink';
+// import LocationOnIcon from '@mui/icons-material/LocationOn';
+// import InsertLinkIcon from '@mui/icons-material/InsertLink';
+import { format } from 'timeago.js';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import { Link as RouteLink, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // import format from 'date-fns/format';
+import io from 'socket.io-client';
+import { toast } from 'react-hot-toast';
 import axios from '../../Axios/axios';
 import Post from '../../Components/post/Post';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
@@ -35,6 +38,8 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [refresh, setrefresh] = useState(false);
   const user = useSelector((state) => state.user);
+  const socket = useRef();
+
   useEffect(() => {
     axios.get(`/profile/${username}`, {
       headers: {
@@ -53,6 +58,24 @@ export default function Profile() {
       }
     });
   }, [refresh]);
+  useEffect(() => {
+    socket.current = io('http://localhost:5000');
+    socket.current?.emit('adduser', user.id);
+
+    socket.current.on('sentNotification', (data) => {
+      toast(
+        `${data.text} from ${data.user}`,
+        {
+          icon: '📩',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        },
+      );
+    });
+  }, []);
 
   const handleFollow = () => {
     const follower = {
@@ -128,7 +151,7 @@ export default function Profile() {
           <img
             width="100%"
             height="200px"
-            src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"
+            src="https://images.pexels.com/photos/129539/pexels-photo-129539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt="background"
           />
           <Box
@@ -212,22 +235,22 @@ export default function Profile() {
             padding="6px 0"
             flexWrap="wrap"
           >
-            <Box display="flex">
+            {/* <Box display="flex">
               <LocationOnIcon htmlColor="#555" />
               <Typography sx={{ ml: '6px', color: '#555' }}>
-                {/* {profile.location} */}
+                {profile.location}
                 kochi
               </Typography>
-            </Box>
-            <Box display="flex" marginLeft="1rem">
+            </Box> */}
+            {/* <Box display="flex" marginLeft="1rem">
               <InsertLinkIcon htmlColor="#555" />
               <Link
                 sx={{ textDecoration: 'none', marginLeft: '6px' }}
                 href={'www.google.com ' || 'https:/wasifbaliyan.com'}
               >
-                {/* {profile.website ? profile.website : 'www'} */}
+                {profile.website ? profile.website : 'www'}
               </Link>
-            </Box>
+            </Box> */}
             <Box display="flex" marginLeft="1rem">
               <DateRangeIcon htmlColor="#555" />
               <Typography sx={{ ml: '6px', color: '#555' }}>
@@ -235,7 +258,7 @@ export default function Profile() {
                     && profile.userId
                     && profile.userId.createdAt
                     && format(new Date(profile.userId.createdAt), 'MMM dd yyyy')} */}
-                2:30
+                {format(profile?.date)}
               </Typography>
             </Box>
           </Box>

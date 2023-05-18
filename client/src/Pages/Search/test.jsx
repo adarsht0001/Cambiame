@@ -101,7 +101,13 @@ export default function RightSidebar() {
             </Box>
           )}
           {users.map((data) => (
-            <Box key={user._id} onClick={() => navigate(`/profile/${data}`)}>
+            <Box
+              key={user._id}
+              onClick={() => {
+                setQuery('');
+                navigate(`/profile/${data}`);
+              }}
+            >
               <Link
                 // onClick={() => setQuery('')}
                 style={{ textDecoration: 'none' }}
@@ -133,17 +139,6 @@ export default function RightSidebar() {
                         >
                           {data}
                         </Typography>
-                        <Box display="flex" alignItems="center">
-                          <Typography
-                            sx={{
-                              fontSize: '14px',
-                              mr: '6px',
-                              color: '#555',
-                            }}
-                          >
-                            {user.handle}
-                          </Typography>
-                        </Box>
                       </Grid>
                     </Grid>
                   </Grid>

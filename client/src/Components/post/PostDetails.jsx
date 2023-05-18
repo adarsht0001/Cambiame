@@ -133,7 +133,6 @@ export default function PostDetails() {
               <Grid item>
                 <Link to={`/profile/${post.user}`}>
                   <BackgroundLetterAvatars user={post?.user} />
-
                 </Link>
               </Grid>
               <Grid item flexGrow="1" mx={2}>

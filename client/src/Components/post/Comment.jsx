@@ -1,8 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
-// import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-// import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { format } from 'timeago.js';
 import axios from '../../Axios/axios';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';

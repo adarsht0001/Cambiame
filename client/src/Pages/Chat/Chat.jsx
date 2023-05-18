@@ -68,6 +68,7 @@ function Chat() {
       senderid: user.id,
       receiverid: chat.id,
       text: newMessage,
+      user: user.name,
     });
 
     axios.post('/message', message).then((res) => {
@@ -115,11 +116,11 @@ function Chat() {
                           {chat.name}
                         </Typography>
                       </Box>
-                      <Box>
+                      {/* <Box>
                         <Typography sx={{ fontSize: '15px', color: '#555' }}>
                           22 min ago
                         </Typography>
-                      </Box>
+                      </Box> */}
                     </Grid>
                   </Grid>
                 </Box>

@@ -5,9 +5,13 @@ import {
   AiOutlineHome, AiOutlineLogout, AiOutlineMessage, AiOutlineUser,
 } from 'react-icons/ai';
 import {
-  Button, Grid, Hidden, IconButton, Input,
+  // Button
+  // Grid,
+  Hidden,
+  //  IconButton
+  // Input,
 } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+// import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import cambie from '../../Assets/svg/CAMBIAME.svg';
@@ -24,12 +28,12 @@ export default function LeftSidebar() {
     localStorage.removeItem('access_token');
     navigate('/login');
   };
-  const [openModal, setOpenModal] = React.useState(false);
+  // const [openModal, setOpenModal] = React.useState(false);
 
-  const handleModalOpen = () => {
-    setOpenModal(true);
-  };
-  const [postText, setPostText] = React.useState('');
+  // const handleModalOpen = () => {
+  //   setOpenModal(true);
+  // };
+  // const [postText, setPostText] = React.useState('');
   const redirect = (route) => {
     navigate(route);
   };
@@ -37,8 +41,11 @@ export default function LeftSidebar() {
   return (
     <>
       <Box sx={{ height: '100vh', maxWidth: '100%' }}>
-        <Hidden mdDown>
-          <Box textAlign="center" marginY={7}>
+        <Hidden lgDown>
+          <Box
+            textAlign="center"
+            marginY={7}
+          >
             <Link
               to="/"
               style={{
@@ -67,7 +74,7 @@ export default function LeftSidebar() {
           <SidebarLinks text="Logout" Icon={AiOutlineLogout} callback={handleLogout} />
 
         </List>
-        <Hidden lgDown>
+        {/* <Hidden lgDown>
           <Button
             onClick={handleModalOpen}
             variant="contained"
@@ -81,8 +88,8 @@ export default function LeftSidebar() {
           >
             Post
           </Button>
-        </Hidden>
-        <Hidden lgUp>
+        </Hidden> */}
+        {/* <Hidden lgUp>
           <IconButton
             onClick={handleModalOpen}
             variant="contained"
@@ -96,9 +103,9 @@ export default function LeftSidebar() {
           >
             <AddCircleOutlineIcon />
           </IconButton>
-        </Hidden>
+        </Hidden> */}
       </Box>
-      {openModal && (
+      {/* {openModal && (
       // <Modal
       //   open={openModal}
       //   handleClose={handleModalClose}
@@ -127,7 +134,7 @@ export default function LeftSidebar() {
         </Grid>
       </Box>
       // </Modal>
-      )}
+      )} */}
     </>
   );
 }

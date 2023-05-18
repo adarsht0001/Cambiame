@@ -3,7 +3,7 @@ import {
   Box, Paper, Stack, Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { AiFillHeart, AiOutlineComment, AiOutlineHeart } from 'react-icons/ai';
+import { AiOutlineComment } from 'react-icons/ai';
 import { useNavigate, useParams } from 'react-router-dom';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import Comments from '../../Components/post/Comment';
@@ -18,7 +18,6 @@ function AdminPost() {
 
   useEffect(() => {
     axios.get(`/admin/post/${id}`).then((response) => {
-      console.log(response);
       setPost(response.data);
     }).catch((err) => {
       console.log(err);
@@ -28,7 +27,6 @@ function AdminPost() {
   const changevisibilty = () => {
     setShowComment(!showComment);
   };
-  const liked = true;
   return (
     <Paper
       sx={{
@@ -71,24 +69,6 @@ function AdminPost() {
           display: 'flex', width: '100%', alignItems: 'center',
         }}
       >
-        <Stack
-          direction="row"
-          sx={{
-            width: '50%',
-            justifyContent: 'center',
-            '&:hover': {
-              cursor: 'pointer',
-            },
-          }}
-        >
-          {liked
-            ? <AiFillHeart style={{ color: 'red' }} size={20} />
-            : <AiOutlineHeart size={20} />}
-          {' '}
-          {post.likes}
-          {' '}
-          Likes
-        </Stack>
         <Stack
           direction="row"
           sx={{

@@ -5,8 +5,7 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { format } from 'timeago.js';
-import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
-// import ReactTimeAgo from 'react-time-ago';
+// import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 
 const useStyles = makeStyles({
   chatroot1: {
@@ -70,7 +69,7 @@ function Message({ message, own }) {
           ? stringAvatar('hello')
           : stringAvatar('test')}
       </Avatar> */}
-      <BackgroundLetterAvatars user="hjsksd" />
+      {/* <BackgroundLetterAvatars user="hjsksd" /> */}
     </Stack>
   );
 }

@@ -3,7 +3,7 @@ import { postType } from "../../../../types/postType";
 import Post from "../models/postModel";
 
 export const postRepositoryMongoDB = () => {
-  const getPosts = async () => await Post.find({});
+  const getPosts = async () => await Post.find({}).sort({ date: -1 });
 
   const addPost = async (data: postType) => await Post.create(data);
 
