@@ -1,7 +1,12 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import {
+  Navigate, Outlet, useLocation,
+} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+let path;
 function IsLogged() {
+  const location = useLocation();
+  path = location.pathname;
   const user = useSelector((state) => state.user);
   return (
     user.loggedIn ? <Outlet /> : <Navigate to="/login" />
@@ -10,7 +15,7 @@ function IsLogged() {
 function LoggedIn() {
   const user = useSelector((state) => state.user);
   return (
-    user.loggedIn ? <Navigate to="/" /> : <Outlet />
+    user.loggedIn ? <Navigate to={path || '/'} /> : <Outlet />
   );
 }
 

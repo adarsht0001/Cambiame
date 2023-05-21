@@ -1,11 +1,9 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import {
   Box, Typography, Stack,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { format } from 'timeago.js';
-// import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 
 const useStyles = makeStyles({
   chatroot1: {
@@ -64,12 +62,6 @@ function Message({ message, own }) {
           {format(message?.createdAt)}
         </Typography>
       </Box>
-      {/* <Avatar sx={{ bgcolor: own ? 'blue' : 'green' }}>
-        {own
-          ? stringAvatar('hello')
-          : stringAvatar('test')}
-      </Avatar> */}
-      {/* <BackgroundLetterAvatars user="hjsksd" /> */}
     </Stack>
   );
 }
