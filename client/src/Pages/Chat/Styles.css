@@ -1,0 +1,30 @@
+.chatroot1 {
+    width: 100%;
+    align-items: end;
+    justify-content: end;
+    margin: 1px;
+    height: 80px;
+  }
+  
+  .chatroot2 {
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+    margin: 1px;
+    height: 80px;
+  }
+  
+  .chat1 {
+    word-break: break-all;
+    color: white;
+    background-color: #3b71ca;
+    max-width: 400px;
+  }
+  
+  .chat2 {
+    word-break: break-all;
+    color: black;
+    background-color: white;
+    max-width: 400px;
+  }
+  

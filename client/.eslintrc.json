@@ -14,7 +14,8 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "import"
     ],
     "rules": {
         "import/no-extraneous-dependencies": ["error",  {
@@ -37,8 +38,11 @@
         "react/jsx-props-no-spreading": "off",
         "linebreak-style": 0,
         "import/no-unresolved": [
-            2, 
-            { "caseSensitive": false }
-         ]
+            "error",
+            { 
+              "ignore": [".css$"],
+              "caseSensitive": false
+            }
+          ]
     }
 }

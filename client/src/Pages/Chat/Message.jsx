@@ -2,53 +2,21 @@ import React from 'react';
 import {
   Box, Typography, Stack,
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+// import { makeStyles } from '@mui/styles';
 import { format } from 'timeago.js';
-
-const useStyles = makeStyles({
-  chatroot1: {
-    width: '100%',
-    alignItems: 'end',
-    justifyContent: 'end',
-    m: 1,
-    height: 80,
-  },
-  chatroot2: {
-    width: '100%',
-    alignItems: 'start',
-    justifyContent: 'start',
-    m: 1,
-    height: 80,
-  },
-  chat1: {
-    wordBreak: 'break-all',
-    color: 'white',
-    backgroundColor: '#3b71ca',
-    maxWidth: 400,
-  },
-  chat2: {
-    wordBreak: 'break-all',
-    color: 'black',
-    backgroundColor: 'white',
-    maxWidth: 400,
-  },
-});
+import './Styles.css';
 
 function Message({ message, own }) {
-  const {
-    chat1, chat2, chatroot1, chatroot2,
-  } = useStyles();
-
   return (
     <Stack
       direction={own ? 'row' : 'row-reverse'}
       component="div"
       spacing={1}
-      className={own ? chatroot1 : chatroot2}
+      className={own ? 'chatroot1' : 'chatroot2'}
     >
       <Box>
         <Typography
-          className={own ? chat1 : chat2}
+          className={own ? 'chat1' : 'chat2'}
           p={1}
           borderRadius={2}
           variant="body2"

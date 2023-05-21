@@ -36,7 +36,6 @@ export default function Comment({ postid, refresh }) {
       >
         <Grid container flexWrap="nowrap">
           <Grid item sx={{ paddingRight: '1rem' }}>
-            {/* <img src="/logo.png" alt="lgoog" width="50px" /> */}
             <BackgroundLetterAvatars user={comment.name} />
           </Grid>
           <Grid item flexGrow="1">

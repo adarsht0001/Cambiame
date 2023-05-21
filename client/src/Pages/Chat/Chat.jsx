@@ -51,9 +51,6 @@ function Chat() {
   }, []);
 
   useEffect(() => {
-    // arrivalMessage
-    //   && chat?.members.includes(arrivalMessage.sender)
-    //   &&
     setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage]);
 
