@@ -4,7 +4,7 @@ import {
   Input, Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../../Axios/axios';
 
@@ -12,7 +12,7 @@ export default function RightSidebar() {
   const [query, setQuery] = useState(null);
   const [users, setUser] = useState([]);
 
-  useEffect(() => {
+  useMemo(() => {
     if (query) {
       axios.get(`/search?name=${query}`).then((res) => {
         setUser(res.data);
