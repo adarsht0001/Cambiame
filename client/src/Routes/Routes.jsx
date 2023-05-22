@@ -18,7 +18,6 @@ import AdminPost from '../Pages/adminPost/AdminPost';
 import UserGraph from '../Pages/chart';
 import PostDetails from '../Components/post/PostDetails';
 import Profile from '../Pages/Profile/Profile';
-import Chat from '../Pages/test';
 import Conversation from '../Pages/Chat/Converstaion';
 import Message from '../Pages/Chat/Chat';
 // import UserGraph from '../Pages/adminDashboard/Charts';
@@ -44,7 +43,6 @@ function Router() {
             <Route element={<Search />} exact path="/search" />
             <Route element={<Conversation />} exact path="/chat" />
             <Route element={<Message />} exact path="/chat/:id" />
-            <Route element={<Chat />} path="/testing" />
           </Route>
         </Route>
 

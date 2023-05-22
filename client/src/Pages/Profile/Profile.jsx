@@ -51,7 +51,7 @@ export default function Profile() {
         setfollowing(false);
       }
     });
-  }, [refresh]);
+  }, [refresh, username]);
 
   const handleFollow = () => {
     const follower = {
