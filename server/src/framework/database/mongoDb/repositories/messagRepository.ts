@@ -12,9 +12,17 @@ export const messageRepositoryMongoDb = () => {
     });
   };
 
+  const getLastMessage = async (id: string) => {
+    const LastMessage = await Message.findOne({ convesationId: id }).sort({
+      createdAt: -1,
+    });
+    return LastMessage;
+  };
+
   return {
     addMessage,
     getMessages,
+    getLastMessage,
   };
 };
 

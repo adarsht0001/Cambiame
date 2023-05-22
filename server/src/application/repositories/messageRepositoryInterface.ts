@@ -5,9 +5,13 @@ export const messageRepository = (repository: MessageRepositoryDbReturn) => {
 
   const getMessage = async (id: string) => await repository.getMessages(id);
 
+  const getLastMessage = async (Id: string) =>
+    await repository.getLastMessage(Id);
+
   return {
     addMessage,
     getMessage,
+    getLastMessage,
   };
 };
 export type MessageRepositoryInterface = typeof messageRepository;

@@ -1,6 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable import/no-extraneous-dependencies */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import {
   Grid,
@@ -10,37 +9,17 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link as RouteLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import io from 'socket.io-client';
-import { toast } from 'react-hot-toast';
 import axios from '../../Axios/axios';
-import Users from './Users';
+import Conversations from '../../Components/Chat/Conversations';
 
 function Conversation() {
   const [conversation, setConversation] = useState([]);
   const user = useSelector((state) => state.user);
-  const socket = useRef();
 
   useEffect(() => {
     axios.get(`/conversation/${user.id}`).then((res) => {
+      console.log(res.data);
       setConversation(res.data);
-    });
-  }, []);
-  useEffect(() => {
-    socket.current = io('http://localhost:5000');
-    socket.current?.emit('adduser', user.id);
-
-    socket.current.on('sentNotification', (data) => {
-      toast(
-        `${data.text} from ${data.user}`,
-        {
-          icon: '📩',
-          style: {
-            borderRadius: '10px',
-            background: '#333',
-            color: '#fff',
-          },
-        },
-      );
     });
   }, []);
 
@@ -64,7 +43,7 @@ function Conversation() {
       </Box>
       {
         conversation?.map((c, i) => (
-          <Users key={i} conversation={c} userId={user.id} />
+          <Conversations key={i} conversation={c} userId={user.id} />
         ))
       }
     </Box>

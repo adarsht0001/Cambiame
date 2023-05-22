@@ -1,14 +1,19 @@
 import { Request, Response } from "express";
 import { ConversationRepositoryMongoDB } from "../../framework/database/mongoDb/repositories/conversationRepository";
 import { ConversationRepositoryInterface } from "../../application/repositories/conversationRepositoryInterface";
+import { MessageRepositoryMongoDb } from "../../framework/database/mongoDb/repositories/messagRepository";
+import { MessageRepositoryInterface } from "../../application/repositories/messageRepositoryInterface";
 
 const conversationController = (
   conversationRepositoryImpl: ConversationRepositoryMongoDB,
-  conversationDbrepository: ConversationRepositoryInterface
+  conversationDbrepository: ConversationRepositoryInterface,
+  messageRepositoryImpl: MessageRepositoryMongoDb,
+  messageDbrepository: MessageRepositoryInterface
 ) => {
   const conversationRepo = conversationDbrepository(
     conversationRepositoryImpl()
   );
+  const messageRepo = messageDbrepository(messageRepositoryImpl());
 
   const createConversation = async (req: Request, res: Response) => {
     const Exist = await conversationRepo.getBothMembers(
@@ -27,7 +32,9 @@ const conversationController = (
   };
 
   const getConversation = async (req: Request, res: Response) => {
-    const data = await conversationRepo.getConversation(req.params.userId);
+    const data: any = await conversationRepo.getConversation(req.params.userId);
+    // const message = await messageRepo.getLastMessage(data?._id as string);
+    // data?.set("text", message?.text, { strict: false });
     res.json(data);
   };
   return {

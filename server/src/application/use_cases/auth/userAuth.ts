@@ -106,7 +106,7 @@ export const forgottenPassword = (
         _id: user._id,
       };
       const token = authService.forgottenPassword(payload, secretKey);
-      const link = `http://localhost:3000/verifyemail/${user._id}/${token}`;
+      const link = `http://localhost:3000/resetpassword/${user._id}/${token}`;
       const mailOpt: Mail = {
         from: "Cambiame <Cambiame@gmail.com>",
         to: "adarsht00001@gmail.com",

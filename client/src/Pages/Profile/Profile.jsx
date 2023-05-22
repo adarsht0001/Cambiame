@@ -1,27 +1,22 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import {
   Button,
   CircularProgress,
   Grid,
   IconButton,
-  // Link,
   Typography,
   useTheme,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-// import LocationOnIcon from '@mui/icons-material/LocationOn';
-// import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import { format } from 'timeago.js';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import { Link as RouteLink, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // import format from 'date-fns/format';
-import io from 'socket.io-client';
-import { toast } from 'react-hot-toast';
 import axios from '../../Axios/axios';
 import Post from '../../Components/post/Post';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
@@ -38,7 +33,6 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [refresh, setrefresh] = useState(false);
   const user = useSelector((state) => state.user);
-  const socket = useRef();
 
   useEffect(() => {
     axios.get(`/profile/${username}`, {
@@ -58,24 +52,6 @@ export default function Profile() {
       }
     });
   }, [refresh]);
-  useEffect(() => {
-    socket.current = io('http://localhost:5000');
-    socket.current?.emit('adduser', user.id);
-
-    socket.current.on('sentNotification', (data) => {
-      toast(
-        `${data.text} from ${data.user}`,
-        {
-          icon: '📩',
-          style: {
-            borderRadius: '10px',
-            background: '#333',
-            color: '#fff',
-          },
-        },
-      );
-    });
-  }, []);
 
   const handleFollow = () => {
     const follower = {

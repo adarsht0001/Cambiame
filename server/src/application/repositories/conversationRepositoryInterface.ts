@@ -11,6 +11,7 @@ export const conversationRepository = (
 
   const getBothMembers = async (senderId: string, receiverId: string) =>
     await repository.getBothMembers(senderId, receiverId);
+
   return {
     createConversation,
     getConversation,

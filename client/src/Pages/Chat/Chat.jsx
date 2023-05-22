@@ -17,8 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import axios from '../../Axios/axios';
-import Message from './Message';
 import { ENDCHAT } from '../../Redux';
+import Message from '../../Components/Chat/Message';
 
 function Chat() {
   const { id } = useParams();
@@ -94,7 +94,6 @@ function Chat() {
           <Grid item>
             <Grid container flexWrap="nowrap">
               <Grid item sx={{ paddingRight: '1rem' }}>
-                {/* <img src="/logo.png" alt="lgoog" width="50px" /> */}
                 <BackgroundLetterAvatars user={chat.name} />
               </Grid>
               <Grid item flexGrow="1">
@@ -149,7 +148,7 @@ function Chat() {
           }}
         >
           {messages?.map((item, index) => (
-            <div ref={scrollRef}>
+            <div ref={scrollRef} key={index}>
               <Message key={index} message={item} own={item?.sender === user.id} />
             </div>
           ))}

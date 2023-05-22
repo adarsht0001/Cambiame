@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Box, Typography, Stack,
 } from '@mui/material';
-// import { makeStyles } from '@mui/styles';
 import { format } from 'timeago.js';
 import './Styles.css';
 

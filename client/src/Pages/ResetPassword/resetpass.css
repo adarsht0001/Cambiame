@@ -5,7 +5,6 @@
     /*Adding the shadow*/
     /* box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.18); */
 
-    /* Adding our borders*/
     border-radius: 10px;
     border:1px solid rgba(203, 199, 199, 0.964);
     border-image: linear-gradient(45deg, rgb(237, 232, 237), rgba(84, 83, 81, 0.142)) 1;

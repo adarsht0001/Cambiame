@@ -9,7 +9,7 @@ import {
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from '../../Axios/axios';
 // import SearchResult from './SearchFollow';
 import WhoToFollow from './SearchFollow';
@@ -21,7 +21,6 @@ export default function RightSidebar() {
   const [searched, setSearched] = useState(false);
   const [notfound, setnotFound] = useState(false);
   const user = useSelector((state) => state.user);
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`/search?name=${query}`).then((res) => {
@@ -101,17 +100,11 @@ export default function RightSidebar() {
             </Box>
           )}
           {users.map((data) => (
-            <Box
-              key={user._id}
-              onClick={() => {
-                setQuery('');
-                navigate(`/profile/${data}`);
-              }}
-            >
+            <Box key={user._id}>
               <Link
-                // onClick={() => setQuery('')}
+                onClick={() => setQuery('')}
                 style={{ textDecoration: 'none' }}
-                // to={`/profile/${data}`}
+                to={`/profile/${data}`}
               >
                 <Grid
                   sx={{
