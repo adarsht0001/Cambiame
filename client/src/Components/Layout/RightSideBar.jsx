@@ -1,14 +1,26 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { Search } from '@mui/icons-material';
 import {
+  Grid,
   Input, Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
-// import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from '../../Axios/axios';
 
 export default function RightSidebar() {
-  const [query, setQuery] = React.useState('');
+  const [query, setQuery] = useState(null);
+  const [users, setUser] = useState([]);
+
+  useEffect(() => {
+    if (query) {
+      axios.get(`/search?name=${query}`).then((res) => {
+        setUser(res.data);
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+  }, [query]);
 
   return (
     <Box sx={{ height: '100%' }}>
@@ -31,17 +43,20 @@ export default function RightSidebar() {
             }}
             disableUnderline
             fullWidth
-            placeholder="Search"
+            placeholder="Search For Users"
             startAdornment={(
               <Search
                 sx={{
                   paddingLeft: '20px',
                   color: '#777',
+                  ':hover': {
+                    cursor: 'pointer',
+                  },
                 }}
               />
             )}
           />
-          {query.length !== 0 && (
+          {query?.length !== 0 && query !== null && users?.length === 0 && (
             <Box
               width="100%"
               sx={{
@@ -61,27 +76,47 @@ export default function RightSidebar() {
 
             </Box>
           )}
-        </Box>
-        <Box
-          sx={{
-            background: '#eee',
-            borderRadius: '28px',
-            padding: '10px 20px',
-            margin: '1rem 0',
-          }}
-        >
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            Who to follow
-          </Typography>
-          <Box textAlign="center" marginTop="1rem">
-            {/* {(userStatus === 'loading' || followingStatus === 'loading') && ( */}
-            {/* <CircularProgress size={20} color="primary" /> */}
-            {/* )} */}
-          </Box>
-          {/* {userStatus === 'success' */}
-          {/* && showToFollow() */}
-          {/* .slice(0, 7) */}
-          {/* .map((item) => <WhoToFollow key={item._id} user={item} />)} */}
+          {users?.map((data, i) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <Box key={i}>
+              <Link
+                onClick={() => {
+                  setQuery('');
+                  setUser([]);
+                }}
+                style={{ textDecoration: 'none' }}
+                to={`/profile/${data}`}
+              >
+                <Grid
+                  sx={{
+                    overflow: 'hidden',
+                    padding: '.2rem 1rem',
+                    '&:hover': {
+                      backgroundColor: '#eee',
+                    },
+                  }}
+                  container
+                  alignItems="center"
+                >
+                  <Grid item>
+                    <Grid container alignItems="center">
+                      <Grid item>
+                        <Typography
+                          sx={{
+                            fontSize: '16px',
+                            fontWeight: '500',
+                            color: '#000',
+                          }}
+                        >
+                          {data}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Link>
+            </Box>
+          ))}
         </Box>
       </Box>
     </Box>

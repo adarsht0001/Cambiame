@@ -3,12 +3,11 @@ import Box from '@mui/material/Box';
 import { Grid, Hidden } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { Outlet } from 'react-router-dom';
-// import RightSidebar from '../../../Components/Layout/RightSideBar';
 import { io } from 'socket.io-client';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import LeftSidebar from '../../../Components/Layout/LeftSideBar';
-import RightSidebar from '../../Search/test';
+import RightSidebar from '../../../Components/Layout/RightSideBar';
 
 export default function Layout() {
   const theme = useTheme();
@@ -61,7 +60,6 @@ export default function Layout() {
             <Hidden lgDown>
               <Grid item lg={4} sx={{ height: '100vh' }}>
                 <RightSidebar />
-                {/* <RightSidebar /> */}
               </Grid>
             </Hidden>
           </Grid>

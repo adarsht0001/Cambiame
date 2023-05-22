@@ -7,7 +7,6 @@ import Resetpass from '../Pages/ResetPassword/Resetpass';
 import VerifyEmail from '../Pages/verifyMail/verifyEmail';
 import Home from '../Pages/Home/Home';
 import Layout from '../Pages/Layout/user/Layout';
-import Search from '../Pages/Search/Search';
 import AdminLogin from '../Pages/Login/admin/Adminlogin';
 import SidebarAdmin from '../Pages/Layout/admin/AdminLayout';
 import UserTables from '../Pages/adminUsers/userTable';
@@ -20,8 +19,6 @@ import PostDetails from '../Components/post/PostDetails';
 import Profile from '../Pages/Profile/Profile';
 import Conversation from '../Pages/Chat/Converstaion';
 import Message from '../Pages/Chat/Chat';
-// import UserGraph from '../Pages/adminDashboard/Charts';
-// import LineChart from '../Pages/chart';
 
 function Router() {
   return (
@@ -40,7 +37,6 @@ function Router() {
             <Route element={<Home />} exact path="/" />
             <Route element={<Profile />} exact path="/profile/:username" />
             <Route element={<PostDetails />} exact path="/post/:id" />
-            <Route element={<Search />} exact path="/search" />
             <Route element={<Conversation />} exact path="/chat" />
             <Route element={<Message />} exact path="/chat/:id" />
           </Route>
