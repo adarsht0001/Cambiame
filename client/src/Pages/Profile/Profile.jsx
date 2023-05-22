@@ -12,7 +12,7 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import { format } from 'timeago.js';
+import TimeAgo from 'react-timeago';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import { Link as RouteLink, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -234,7 +234,7 @@ export default function Profile() {
                     && profile.userId
                     && profile.userId.createdAt
                     && format(new Date(profile.userId.createdAt), 'MMM dd yyyy')} */}
-                {format(profile?.date)}
+                <TimeAgo date={profile?.date} />
               </Typography>
             </Box>
           </Box>

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Box, Typography, Stack,
 } from '@mui/material';
-import { format } from 'timeago.js';
+import TimeAgo from 'react-timeago';
 import './Styles.css';
 
 function Message({ message, own }) {
@@ -26,7 +26,7 @@ function Message({ message, own }) {
           sx={{ float: own ? 'right' : 'left' }}
           variant="caption"
         >
-          {format(message?.createdAt)}
+          <TimeAgo date={message?.createdAt} />
         </Typography>
       </Box>
     </Stack>

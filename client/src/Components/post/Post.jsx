@@ -3,13 +3,9 @@ import {
   Grid,
   IconButton,
   Input,
-  //   Paper,
   Typography,
-  //   Menu,
-  //   MenuItem,
 } from '@mui/material';
 import { Box } from '@mui/system';
-// import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import React, { useEffect, useState } from 'react';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -18,7 +14,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
-import { format } from 'timeago.js';
+import TimeAgo from 'react-timeago';
 import axios from '../../Axios/axios';
 import Modal from './Modal';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
@@ -122,9 +118,7 @@ export default function Post({ data, callback }) {
                 >
                   <Grid item>
                     <Box display="flex">
-                      <Typography
-                        sx={{ fontSize: '16px', fontWeight: 500, mr: '6px' }}
-                      >
+                      <Typography sx={{ fontSize: '16px', fontWeight: 500, mr: '6px' }}>
                         {post.user}
                       </Typography>
                       {/* <Typography
@@ -134,8 +128,7 @@ export default function Post({ data, callback }) {
                       <Typography
                         sx={{ fontSize: '15px', mr: '6px', color: '#555' }}
                       >
-                        {format(post?.date)}
-                        {/* {formatDistanceToNow(new Date(post.createdAt))} */}
+                        <TimeAgo date={post?.date} />
                       </Typography>
                     </Box>
                     <Box>

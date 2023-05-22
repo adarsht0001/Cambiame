@@ -21,7 +21,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
-import { format } from 'timeago.js';
+import TimeAgo from 'react-timeago';
 import axios from '../../Axios/axios';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
 import Comment from './Comment';
@@ -173,11 +173,7 @@ export default function PostDetails() {
           )}
           <Box display="flex" padding="1rem 0" borderBottom="1px solid #ccc">
             <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
-              {/* {postDetails
-                    && postDetails.createdAt
-                    && format(new Date(postDetails.createdAt), 'HH:mm a')} */}
-              {format(post?.date)}
-
+              <TimeAgo date={post?.date} />
             </Typography>
             {/* <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
               .

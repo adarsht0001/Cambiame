@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
-import { format } from 'timeago.js';
+import TimeAgo from 'react-timeago';
 import axios from '../../Axios/axios';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
 
@@ -61,7 +61,7 @@ export default function Comment({ postid, refresh }) {
                     <Typography
                       sx={{ fontSize: '15px', mr: '6px', color: '#555' }}
                     >
-                      {format(comment?.Date)}
+                      <TimeAgo date={comment?.date} />
                     </Typography>
                   </Box>
                   <Box>

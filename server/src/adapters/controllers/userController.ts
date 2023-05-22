@@ -34,6 +34,8 @@ const userController = (
 
   const searchUsername = (req: Request, res: Response) => {
     const { name } = req.query;
+    console.log("here");
+
     getUsernames(name, userRepo).then((data) => {
       res.json(data);
     });
