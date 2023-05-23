@@ -1,8 +1,7 @@
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import Inputfield from '../../Components/input/Inputfield';
 import Buttons from '../../Components/button/Button';
 import axios from '../../Axios/axios';
 
@@ -62,10 +61,58 @@ function Form() {
         justify="center"
         paddingTop={2}
       >
-        <Inputfield variant="outlined" label="Username" type="text" value={name} size="small" callback={(e) => setName(e.target.value)} err={!!error.name} helper={error.name ? error.msg : null} />
-        <Inputfield variant="outlined" label="Email" type="email" value={email} size="small" callback={(e) => setEmail(e.target.value)} err={!!error.email} helper={error.email ? error.msg : null} />
-        <Inputfield variant="outlined" label="Password" type="password" value={password} size="small" callback={(e) => setPassword(e.target.value)} err={!!error.password} helper={error.password ? error.msg : null} />
-        <Inputfield variant="outlined" label="Re-Password" type="password" value={repassword} size="small" callback={(e) => setRepassword(e.target.value)} err={!!error.respassword} helper={error.respassword ? error.msg : null} />
+        <TextField
+          variant="outlined"
+          label="Username"
+          type="text"
+          value={name}
+          size="small"
+          onChange={(e) => setName(e.target.value)}
+          error={!!error.name}
+          helperText={error.name ? error.msg : null}
+          sx={{ marginLeft: '3px' }}
+          style={{ marginBlock: '1rem' }}
+          color="warning"
+        />
+        <TextField
+          variant="outlined"
+          label="Email"
+          type="email"
+          value={email}
+          size="small"
+          onChange={(e) => setEmail(e.target.value)}
+          error={!!error.email}
+          helperText={error.email ? error.msg : null}
+          sx={{ marginLeft: '3px' }}
+          style={{ marginBlock: '1rem' }}
+          color="warning"
+        />
+        <TextField
+          variant="outlined"
+          label="Password"
+          type="password"
+          value={password}
+          size="small"
+          onChange={(e) => setPassword(e.target.value)}
+          error={!!error.password}
+          helperText={error.password ? error.msg : null}
+          sx={{ marginLeft: '3px' }}
+          style={{ marginBlock: '1rem' }}
+          color="warning"
+        />
+        <TextField
+          variant="outlined"
+          label="Re-Password"
+          type="password"
+          value={repassword}
+          size="small"
+          onChange={(e) => setRepassword(e.target.value)}
+          error={!!error.respassword}
+          helperText={error.respassword ? error.msg : null}
+          sx={{ marginLeft: '3px' }}
+          style={{ marginBlock: '1rem' }}
+          color="warning"
+        />
         <Buttons size="large" variant="contained" color="primary" type="submit" Text="Signup" />
       </Grid>
     </form>

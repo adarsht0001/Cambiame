@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Inputfield from '../../Components/input/Inputfield';
 import Buttons from '../../Components/button/Button';
 import axios from '../../Axios/axios';
 
@@ -37,8 +36,28 @@ function Form(props) {
         justify="center"
         paddingTop={2}
       >
-        <Inputfield variant="outlined" label="Password" type="text" value={pass} callback={(e) => setPass(e.target.value)} />
-        <Inputfield variant="outlined" label="Re-Password" type="password" value={rePass} callback={(e) => setrePass(e.target.value)} err={err} helper={err ? 'Re-pass Doesnt Match Password' : ''} />
+        <TextField
+          variant="outlined"
+          label="Password"
+          type="password"
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+          sx={{ marginLeft: '3px' }}
+          style={{ marginBlock: '1rem' }}
+          color="warning"
+        />
+        <TextField
+          variant="outlined"
+          label="Re-Password"
+          type="password"
+          value={rePass}
+          onChange={(e) => setrePass(e.target.value)}
+          error={err}
+          helperText={err ? 'Re-pass Doesnt Match Password' : ''}
+          sx={{ marginLeft: '3px' }}
+          style={{ marginBlock: '1rem' }}
+          color="warning"
+        />
         <Buttons size="large" variant="contained" color="primary" type="submit" Text="RESET PASSWORD" />
       </Grid>
     </form>

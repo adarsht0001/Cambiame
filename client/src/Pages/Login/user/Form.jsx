@@ -1,9 +1,8 @@
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
-import Inputfield from '../../../Components/input/Inputfield';
 import Buttons from '../../../Components/button/Button';
 import axios from '../../../Axios/axios';
 import { Login } from '../../../Redux';
@@ -45,8 +44,30 @@ function Form() {
         justify="center"
         paddingTop={2}
       >
-        <Inputfield variant="outlined" label="Email" type="email" value={email} callback={(e) => setEmail(e.target.value)} err={!!error.email} helper={error.email ? error.msg : null} />
-        <Inputfield variant="outlined" label="Password" type="password" value={password} callback={(e) => setPassword(e.target.value)} err={!!error.password} helper={error.password ? error.msg : null} />
+        <TextField
+          variant="outlined"
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          error={!!error.email}
+          helperText={error.email ? error.msg : null}
+          sx={{ marginLeft: '3px' }}
+          style={{ marginBlock: '1rem' }}
+          color="warning"
+        />
+        <TextField
+          variant="outlined"
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          error={!!error.password}
+          helperText={error.password ? error.msg : null}
+          sx={{ marginLeft: '3px' }}
+          style={{ marginBlock: '1rem' }}
+          color="warning"
+        />
         <Buttons size="large" variant="contained" color="primary" type="submit" Text="Login" />
       </Grid>
     </form>

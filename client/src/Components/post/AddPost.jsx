@@ -5,10 +5,9 @@ import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import SendIcon from '@mui/icons-material/Send';
 import { useSelector } from 'react-redux';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, TextField } from '@mui/material';
 import { toast } from 'react-hot-toast';
 import axios from '../../Axios/axios';
-import Inputfield from '../input/Inputfield';
 
 function AddPost({ callback }) {
   const [text, setText] = useState('');
@@ -40,11 +39,14 @@ function AddPost({ callback }) {
   };
   return (
     <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-      <Inputfield
+      <TextField
         variant="outlined"
         label="Whats on Your Mind"
         value={text}
-        callback={(e) => setText(e.target.value)}
+        onChange={(e) => setText(e.target.value)}
+        sx={{ marginLeft: '3px' }}
+        style={{ marginBlock: '1rem' }}
+        color="warning"
         InputProps={{
           endAdornment: (
             <>
