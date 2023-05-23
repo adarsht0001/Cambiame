@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Grid } from '@mui/material';
+import { Grid, TextField } from '@mui/material';
 import Buttons from '../button/Button';
-import Inputfield from '../input/Inputfield';
 import axios from '../../Axios/axios';
 
 const style = {
@@ -27,9 +26,9 @@ function Modals() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('/forgot-password', { email }).then((res) => {
-      setMsg(res.data.msg);
+      setMsg(res?.data.msg);
     }).catch((err) => {
-      setErr(err.response.data);
+      setErr(err.response?.data);
     });
   };
   return (
@@ -60,7 +59,18 @@ function Modals() {
               Forgotten Password
             </Typography>
             {msg && <h4>{msg}</h4>}
-            <Inputfield variant="outlined" label="email" type="email" value={email} callback={(e) => setEmail(e.target.value)} err={!!error.email} helper={error.email ? error.msg : null} />
+            <TextField
+              variant="outlined"
+              label="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={!!error.email}
+              helperText={error.email ? error.msg : null}
+              sx={{ marginLeft: '3px' }}
+              style={{ marginBlock: '1rem' }}
+              color="warning"
+            />
             <Buttons size="large" variant="contained" color="primary" type="submit" Text="Login" />
           </Grid>
         </form>
