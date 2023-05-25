@@ -7,11 +7,11 @@ import conversationRoute from "./conversation";
 import messageRoute from "./message";
 
 const router = (app: Application) => {
-  app.use("/", authRoute(), userRoute());
-  app.use("/admin", AdminRoute());
-  app.use("/post", PostRoute());
-  app.use("/conversation", conversationRoute());
-  app.use("/message", messageRoute());
+  app.use("/api/", authRoute(), userRoute());
+  app.use("/api/admin", AdminRoute());
+  app.use("/api/post", PostRoute());
+  app.use("/api/conversation", conversationRoute());
+  app.use("/api/message", messageRoute());
 };
 
 export default router;
