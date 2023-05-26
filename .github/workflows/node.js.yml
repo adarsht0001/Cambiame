@@ -20,10 +20,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Install server dependencies
-      run: cd Cambiame/server && npm ci
+      run: cd ./server && npm ci
     - name: Install client dependencies
-      run: cd Cambiame/client && npm ci
+      run: cd ./client && npm ci
     - name: Build server
-      run: cd Cambiame/server && npm run build --if-present
+      run: cd ./server && npm run build --if-present
     - name: Build client
-      run: cd Cambiame/client && npm run build --if-present
+      run: cd ./client && npm run build --if-present
