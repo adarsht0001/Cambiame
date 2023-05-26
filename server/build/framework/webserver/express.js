@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
+const express_mongo_sanitize_1 = __importDefault(require("express-mongo-sanitize"));
 const expressConfig = (app) => {
     // Development logging
     // if (configKeys.nodeEnv == 'development') {
@@ -17,6 +18,6 @@ const expressConfig = (app) => {
     app.use(express_1.default.urlencoded({ extended: true }));
     // app.use(cookieParser());
     // app.use(helmet({xssFilter:true}))
-    // app.use(mongoSanitize())
+    app.use((0, express_mongo_sanitize_1.default)());
 };
 exports.default = expressConfig;
