@@ -21,15 +21,15 @@ jobs:
     - name: Install server dependencies
       run: npm ci
       working-directory: /home/runner/work/Cambiame/Cambiame/server
-    - name: Install client dependencies
-      run: npm install
-      working-directory: /home/runner/work/Cambiame/Cambiame/client
+    # - name: Install client dependencies
+    #   run: npm install
+    #   working-directory: /home/runner/work/Cambiame/Cambiame/client
     - name: Build server
       run: npm run build --if-present
       working-directory: /home/runner/work/Cambiame/Cambiame/server
-    - name: Build client
-      run: npm run build --if-present
-      working-directory: /home/runner/work/Cambiame/Cambiame/client
+    # - name: Build client
+    #   run: npm run build --if-present
+    #   working-directory: /home/runner/work/Cambiame/Cambiame/client
     - name: copy file via ssh password
       uses: appleboy/scp-action@v0.1.4
       with:
