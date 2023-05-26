@@ -1,40 +1,35 @@
-name: Node.js CI
+name: Node CI
 
 on:
   push:
     branches: [ "main" ]
 
+defaults:
+  run:
+    working-directory: ./server
+
 jobs:
   build:
-    runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [ 19.x ]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Install Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
-    - name: Install server dependencies
-      run: npm ci
-      working-directory: /home/runner/work/Cambiame/Cambiame/server
-    # - name: Install client dependencies
-    #   run: npm install
-    #   working-directory: /home/runner/work/Cambiame/Cambiame/client
-    - name: Build server
+        node-version: '19.x'
+    - name: Install npm dependencies
+      run: npm install
+    - name: Run build task
       run: npm run build --if-present
-      working-directory: /home/runner/work/Cambiame/Cambiame/server
-    # - name: Build client
-    #   run: npm run build --if-present
-    #   working-directory: /home/runner/work/Cambiame/Cambiame/client
-    - name: copy file via ssh password
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        source: "/home/runner/work/Cambiame/Cambiame/server/build/,/home/runner/work/Cambiame/Cambiame/client/build/"
-        target: "/home/adarsh/test/"
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@main
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "build/"
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          # TARGET: ${{ secrets.REMOTE_TARGET }}
+          EXCLUDE: "/dist/, /node_modules/"
