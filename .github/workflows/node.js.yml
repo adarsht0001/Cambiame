@@ -30,4 +30,11 @@ jobs:
     - name: Build client
       run: npm run build --if-present
       working-directory: /home/runner/work/Cambiame/Cambiame/client
-
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        source: "/home/runner/work/Cambiame/Cambiame/server/build/,/home/runner/work/Cambiame/Cambiame/client/build/"
+        target: "/home/adarsh/test/"
