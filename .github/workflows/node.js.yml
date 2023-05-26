@@ -14,20 +14,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js adarsh
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Install server dependencies
-      run: pwd
-      working-directory: ./server
+      run: cd Cambiame/server && npm ci
     - name: Install client dependencies
-      run: npm ci
-      working-directory: ./client
+      run: cd Cambiame/client && npm ci
     - name: Build server
-      run: npm run build --if-present
-      working-directory: ./server
+      run: cd Cambiame/server && npm run build --if-present
     - name: Build client
-      run: npm run build --if-present
-      working-directory: ./client
+      run: cd Cambiame/client && npm run build --if-present
