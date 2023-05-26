@@ -21,13 +21,13 @@ jobs:
         cache: 'npm'
     - name: Install server dependencies
       run: npm ci
-      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/server
+      working-directory: ./server
     - name: Install client dependencies
       run: npm ci
-      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/client
+      working-directory: ./client
     - name: Build server
       run: npm run build --if-present
-      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/server
+      working-directory: ./server
     - name: Build client
       run: npm run build --if-present
-      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/client
+      working-directory: ./client
