@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import configKeys from "../../config";
 import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
 
 const expressConfig = (app: Application) => {
   // Development logging
@@ -17,7 +18,7 @@ const expressConfig = (app: Application) => {
   // app.use(cookieParser());
   // app.use(helmet({xssFilter:true}))
 
-  // app.use(mongoSanitize())
+  app.use(mongoSanitize());
 };
 
 export default expressConfig;
