@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -20,13 +20,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install server dependencies
       run: npm ci
-      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/server
+      working-directory: /home/ubuntu/SocialMedia/Cambiame/server
     - name: Install client dependencies
       run: npm ci
-      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/client
+      working-directory: /home/ubuntu/SocialMedia/Cambiame/client
     - name: Build server
       run: npm run build --if-present
-      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/server
+      working-directory: /home/ubuntu/SocialMedia/Cambiame/Cambiame/server
     - name: Build client
       run: npm run build --if-present
-      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/client
+      working-directory: /home/ubuntu/SocialMedia/Cambiame/Cambiame/client
