@@ -28,8 +28,8 @@ jobs:
       env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "-rlgoDzvc -i --delete"
-          SOURCE: "/"
+          SOURCE: "server/"
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: "/home/ubuntu/Cambiame/server"
+          TARGET: "/home/ubuntu/server"
           EXCLUDE: "/dist/, /node_modules/"
