@@ -18,12 +18,15 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
     - name: Install server dependencies
-      run: npm ci --prefix Cambiame/server
+      run: npm ci
+      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/server
     - name: Install client dependencies
-      run: npm ci --prefix Cambiame/client
+      run: npm ci
+      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/client
     - name: Build server
-      run: npm run build --if-present --prefix Cambiame/server
+      run: npm run build --if-present
+      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/server
     - name: Build client
-      run: npm run build --if-present --prefix Cambiame/client
+      run: npm run build --if-present
+      working-directory: /home/ubuntu/actions-runner/_work/Cambiame/Cambiame/client
