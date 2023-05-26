@@ -20,14 +20,14 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Install server dependencies
-      run: npm ci
-      working-directory: ./Cambiame/server
+      run: pwd
+      working-directory: ./server
     - name: Install client dependencies
       run: npm ci
-      working-directory: ./Cambiame/client
+      working-directory: ./client
     - name: Build server
       run: npm run build --if-present
-      working-directory: ./Cambiame/server
+      working-directory: ./server
     - name: Build client
       run: npm run build --if-present
-      working-directory: ./Cambiame/client
+      working-directory: ./client
