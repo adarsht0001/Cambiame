@@ -75,4 +75,6 @@ app.all("*", (req, res, next: NextFunction) => {
 });
 app.use(errorHandlingMiddleware);
 
+console.log("hello");
+
 serverConfig(server).startServer();
