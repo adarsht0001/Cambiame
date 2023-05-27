@@ -4,7 +4,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import cambie from '../../Assets/svg/CAMBIAME.svg';
-// import imgs from '../../Assets/Images/and-machines-8gqqtZstztc-unsplash.jpg';
 import './Signup.css';
 import Form from './Form';
 
