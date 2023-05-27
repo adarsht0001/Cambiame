@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import {
+  Badge,
   Button,
   CircularProgress,
   Grid,
   IconButton,
+  TextField,
   Typography,
   useTheme,
 } from '@mui/material';
@@ -16,11 +18,12 @@ import TimeAgo from 'react-timeago';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import { Link as RouteLink, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import format from 'date-fns/format';
+import { PhotoCamera } from '@mui/icons-material';
 import axios from '../../Axios/axios';
 import Post from '../../Components/post/Post';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import { CHAT } from '../../Redux';
+import Editprofile from './Editprofile';
 
 export default function Profile() {
   const theme = useTheme();
@@ -33,6 +36,14 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [refresh, setrefresh] = useState(false);
   const user = useSelector((state) => state.user);
+  const [openModal, setOpenModal] = React.useState(false);
+  const handleModalClose = () => {
+    setOpenModal(false);
+  };
+
+  const handleModalOpen = () => {
+    setOpenModal(true);
+  };
 
   useEffect(() => {
     axios.get(`/profile/${username}`, {
@@ -42,6 +53,7 @@ export default function Profile() {
       },
     }).then((response) => {
       setProfile(response.data.user);
+      console.log(response.data.user);
       setPosts(response.data.posts);
       setLoading(false);
       const isfollowing = response.data?.user.followers.some((obj) => obj.id === user.id);
@@ -88,18 +100,19 @@ export default function Profile() {
   }
 
   return (
-    <Box>
-      <Box borderBottom="1px solid #ccc" padding="8px 20px">
-        <Grid container alignItems="center">
-          <Grid item sx={{ mr: '10px' }}>
-            <RouteLink to="/">
-              <IconButton>
-                <ArrowBackIcon />
-              </IconButton>
-            </RouteLink>
-          </Grid>
+    <>
+      <Box>
+        <Box borderBottom="1px solid #ccc" padding="8px 20px">
+          <Grid container alignItems="center">
+            <Grid item sx={{ mr: '10px' }}>
+              <RouteLink to="/">
+                <IconButton>
+                  <ArrowBackIcon />
+                </IconButton>
+              </RouteLink>
+            </Grid>
 
-          {!loading && (
+            {!loading && (
             <Grid item>
               <Typography variant="h6">
                 {profile.username}
@@ -111,114 +124,114 @@ export default function Profile() {
               </Typography>
               {' '}
             </Grid>
-          )}
-        </Grid>
-      </Box>
-      <Box textAlign="center">
-        {loading && (
+            )}
+          </Grid>
+        </Box>
+        <Box textAlign="center">
+          {loading && (
           <Box marginTop="1rem">
             <CircularProgress size={20} color="primary" />
           </Box>
-        )}
-      </Box>
-      {!loading && (
-      <Box height="90vh" sx={{ overflowY: 'scroll' }}>
-        <Box position="relative">
-          <img
-            width="100%"
-            height="200px"
-            src="https://images.pexels.com/photos/129539/pexels-photo-129539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            alt="background"
-          />
-          <Box
-            sx={{
-              position: 'absolute',
-              top: 120,
-              left: 15,
-              background: '#eee',
-              borderRadius: '50%',
-            }}
-          >
-            <BackgroundLetterAvatars width="140px" height="140px" user={profile.username} />
-          </Box>
-        </Box>
-        <Box textAlign="right" padding="10px 20px">
-
-          {isUser() ? (
-            <IconButton>
-              <ManageAccountsIcon />
-            </IconButton>
-          ) : (
-            <>
-              {following && (
-              <IconButton>
-                <MailOutlineIcon onClick={() => handleMessage()} />
-              </IconButton>
-              )}
-              {following
-                ? (
-                  <Button
-                    onClick={handleFollow}
-                    size="small"
-                    sx={{
-                      borderRadius: theme.shape.borderRadius,
-                      textTransform: 'capitalize',
-                      padding: '6px 20px',
-                      background: 'black',
-                      '&:hover': {
-                        background: '#333',
-                      },
-                    }}
-                    variant="contained"
-                  >
-                    Unfollow
-                  </Button>
-
-                ) : (
-                  <Button
-                    onClick={handleFollow}
-                    size="small"
-                    sx={{
-                      borderRadius: theme.shape.borderRadius,
-                      textTransform: 'capitalize',
-                      padding: '6px 20px',
-                      background: 'black',
-                      '&:hover': {
-                        background: '#333',
-                      },
-                    }}
-                    variant="contained"
-                  >
-                    Follow
-                  </Button>
-                )}
-            </>
           )}
-
         </Box>
+        {!loading && (
+        <Box height="90vh" sx={{ overflowY: 'scroll' }}>
+          <Box position="relative">
+            <img
+              width="100%"
+              height="200px"
+              src="https://images.pexels.com/photos/129539/pexels-photo-129539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              alt="background"
+            />
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 120,
+                left: 15,
+                background: '#eee',
+                borderRadius: '50%',
+              }}
+            >
+              <BackgroundLetterAvatars width="140px" height="140px" user={profile.username} />
+            </Box>
+          </Box>
+          <Box textAlign="right" padding="10px 20px">
 
-        <Box padding="10px 20px">
-          <Typography variant="h6" sx={{ fontWeight: '500' }}>
-            {profile.username}
-          </Typography>
-          {/* <Typography fontSize="16px" color="#333" padding="10px 0">
+            {isUser() ? (
+              <IconButton>
+                <ManageAccountsIcon onClick={() => handleModalOpen()} />
+              </IconButton>
+            ) : (
+              <>
+                {following && (
+                <IconButton>
+                  <MailOutlineIcon onClick={() => handleMessage()} />
+                </IconButton>
+                )}
+                {following
+                  ? (
+                    <Button
+                      onClick={handleFollow}
+                      size="small"
+                      sx={{
+                        borderRadius: theme.shape.borderRadius,
+                        textTransform: 'capitalize',
+                        padding: '6px 20px',
+                        background: 'black',
+                        '&:hover': {
+                          background: '#333',
+                        },
+                      }}
+                      variant="contained"
+                    >
+                      Unfollow
+                    </Button>
+
+                  ) : (
+                    <Button
+                      onClick={handleFollow}
+                      size="small"
+                      sx={{
+                        borderRadius: theme.shape.borderRadius,
+                        textTransform: 'capitalize',
+                        padding: '6px 20px',
+                        background: 'black',
+                        '&:hover': {
+                          background: '#333',
+                        },
+                      }}
+                      variant="contained"
+                    >
+                      Follow
+                    </Button>
+                  )}
+              </>
+            )}
+
+          </Box>
+
+          <Box padding="10px 20px">
+            <Typography variant="h6" sx={{ fontWeight: '500' }}>
+              {profile.username}
+            </Typography>
+            {/* <Typography fontSize="16px" color="#333" padding="10px 0">
             {profile.bio}
             test
           </Typography> */}
-          <Box
-            display="flex"
-            alignItems="center"
-            padding="6px 0"
-            flexWrap="wrap"
-          >
-            {/* <Box display="flex">
+            <Box
+              display="flex"
+              alignItems="center"
+              padding="6px 0"
+              flexWrap="wrap"
+            >
+              {/* <Box display="flex">
               <LocationOnIcon htmlColor="#555" />
               <Typography sx={{ ml: '6px', color: '#555' }}>
                 {profile.location}
                 kochi
               </Typography>
             </Box> */}
-            {/* <Box display="flex" marginLeft="1rem">
+              {/* <Box display="flex" marginLeft="1rem">
               <InsertLinkIcon htmlColor="#555" />
               <Link
                 sx={{ textDecoration: 'none', marginLeft: '6px' }}
@@ -227,49 +240,118 @@ export default function Profile() {
                 {profile.website ? profile.website : 'www'}
               </Link>
             </Box> */}
-            <Box display="flex" marginLeft="1rem">
-              <DateRangeIcon htmlColor="#555" />
-              <Typography sx={{ ml: '6px', color: '#555' }}>
-                {/* {profile.userId
+              <Box display="flex" marginLeft="1rem">
+                <DateRangeIcon htmlColor="#555" />
+                <Typography sx={{ ml: '6px', color: '#555' }}>
+                  {/* {profile.userId
                     && profile.userId
                     && profile.userId.createdAt
                     && format(new Date(profile.userId.createdAt), 'MMM dd yyyy')} */}
-                <TimeAgo date={profile?.date} />
+                  <TimeAgo date={profile?.date} />
+                </Typography>
+              </Box>
+            </Box>
+            <Box display="flex">
+              <Typography color="#555" marginRight="1rem">
+                <strong style={{ color: 'black' }}>
+                  {profile.following?.length}
+                </strong>
+                Following
+              </Typography>
+              <Typography color="#555" marginRight="1rem">
+                <strong style={{ color: 'black' }} />
+                {profile.followers?.length}
+                Followers
               </Typography>
             </Box>
           </Box>
-          <Box display="flex">
-            <Typography color="#555" marginRight="1rem">
-              <strong style={{ color: 'black' }}>
-                {profile.following?.length}
-              </strong>
-              Following
-            </Typography>
-            <Typography color="#555" marginRight="1rem">
-              <strong style={{ color: 'black' }} />
-              {profile.followers?.length}
-              Followers
+          <Box borderBottom="1px solid #ccc">
+            <Typography
+              display="inline-block"
+              variant="caption"
+              fontSize="16px"
+              marginX="1rem"
+              padding="6px 0"
+              fontWeight="500"
+              borderBottom={`4px solid ${theme.palette.primary.main}`}
+            >
+              Posts
             </Typography>
           </Box>
+          {posts.map((post) => (
+            <Post data={post} key={post._id} callback={() => setrefresh(!refresh)} />
+          ))}
         </Box>
-        <Box borderBottom="1px solid #ccc">
-          <Typography
-            display="inline-block"
-            variant="caption"
-            fontSize="16px"
-            marginX="1rem"
-            padding="6px 0"
-            fontWeight="500"
-            borderBottom={`4px solid ${theme.palette.primary.main}`}
-          >
-            Posts
-          </Typography>
-        </Box>
-        {posts.map((post) => (
-          <Post data={post} key={post._id} callback={() => setrefresh(!refresh)} />
-        ))}
+        )}
       </Box>
+      {openModal && (
+      <Editprofile
+        open={openModal}
+        handleClose={handleModalClose}
+        saveText="Edit"
+        handleSave={alert('hi')}
+      >
+        <Box>
+          <Grid container alignItems="center">
+            <Grid width="100%" py={4} textAlign="center">
+              <Badge
+                overlap="circular"
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                badgeContent={(
+                  <IconButton color="primary" aria-label="upload picture" component="label">
+                    <input
+                      required
+                      hidden
+                      accept="image/*"
+                      type="file"
+                      name="img"
+                    />
+                    <PhotoCamera />
+                  </IconButton>
+              )}
+              >
+                <BackgroundLetterAvatars user={profile.username || ''} width="140px" height="140px" />
+                {/* <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" /> */}
+              </Badge>
+            </Grid>
+            <Grid width="50%" p={4}>
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                label="username"
+                size="small"
+                defaultValue={profile.username}
+                type="text"
+              />
+            </Grid>
+            <Grid width="50%" p={4}>
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                type="text"
+                label="email"
+                size="small"
+                defaultValue={profile.email}
+              />
+            </Grid>
+            <Grid width="100%" textAlign="center">
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                type="file"
+                size="small"
+                focused
+                label="cover photo"
+                inputProps={{
+                  multiple: false,
+                }}
+              />
+            </Grid>
+
+          </Grid>
+        </Box>
+      </Editprofile>
       )}
-    </Box>
+    </>
   );
 }

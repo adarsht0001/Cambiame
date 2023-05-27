@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { IconButton, Paper } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, useTheme } from '@mui/system';
+import { Box } from '@mui/system';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Draggable from 'react-draggable';
 
@@ -21,7 +21,7 @@ function PaperComponent(props) {
   );
 }
 
-export default function Modal({
+export default function Editprofile({
   children,
   open,
   handleClose,
@@ -29,7 +29,6 @@ export default function Modal({
   saveText,
   len,
 }) {
-  const theme = useTheme();
   const handleClick = () => {
     handleSave();
     handleClose();
@@ -45,7 +44,7 @@ export default function Modal({
     >
       <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
         <Box display="flex" justifyContent="space-between" textAlign="right" borderBottom="1px solid #ccc">
-          <Box>Add Comment</Box>
+          <Box>Edit Profile</Box>
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
@@ -58,13 +57,18 @@ export default function Modal({
           variant="contained"
           color="primary"
           size="small"
-          sx={{
-            borderRadius: theme.shape.borderRadius,
-            fontSize: '12px',
-          }}
           onClick={handleClick}
         >
           {saveText}
+        </Button>
+        <Button
+          disabled={len === 0}
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={handleClose}
+        >
+          cancel
         </Button>
       </DialogActions>
     </Dialog>
