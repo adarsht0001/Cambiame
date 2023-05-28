@@ -175,15 +175,6 @@ export default function PostDetails() {
             <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
               <TimeAgo date={post?.date} />
             </Typography>
-            {/* <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
-              .
-            </Typography> */}
-            {/* <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
-              {/* {postDetails
-                    && postDetails.createdAt
-                    && format(new Date(postDetails.createdAt), 'MMM dd yyyy')} */}
-            {/* sj */}
-            {/* </Typography>  */}
           </Box>
           <Box display="flex" padding="1rem 0" borderBottom="1px solid #ccc">
             <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>

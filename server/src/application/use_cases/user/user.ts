@@ -2,6 +2,7 @@ import { response } from "express";
 import { PostRepositoryInterface } from "../../repositories/postRepositoryInterface";
 import { UserRepositoryInterFace } from "../../repositories/userRepositoryInterface";
 import { Follow } from "../../../types/userTypes";
+import { S3serviceInterface } from "../../services/s3serviceInterface";
 
 export const getUserById = (
   name: string,
@@ -106,5 +107,72 @@ export const followUser = (
         resolve({ msg: `un-following` });
       }
     });
+  });
+};
+
+export const editUser = (
+  id: string,
+  data: any,
+  file: Express.Multer.File[] | undefined | any,
+  s3Services: ReturnType<S3serviceInterface>,
+  userRepository: ReturnType<UserRepositoryInterFace>
+) => {
+  return new Promise<any>(async (resolve, reject) => {
+    const user = await userRepository.getById(id);
+    const emailExist = await userRepository.getByEmail(data.email);
+
+    if (emailExist && data.email !== user?.email) {
+      reject({
+        msg: "email already exists",
+        email: true,
+      });
+      return;
+    }
+
+    const userExist = await userRepository.getByName(data.name);
+    if (userExist && data.name !== user?.username) {
+      reject({
+        msg: "username already exists",
+        name: true,
+      });
+      return;
+    }
+    if (file.length === 0) {
+      await userRepository.updateOne(
+        { username: user?.username },
+        { $set: { username: data.name, email: data.email } }
+      );
+      resolve({
+        msg: "profile updated",
+        username: data.name,
+        email: data.email,
+      });
+    }
+    const links: any = await Promise.all(
+      file?.map(async (file: Express.Multer.File) => {
+        const link = await s3Services.uploadtoS3(
+          file.buffer,
+          file.fieldname,
+          file.mimetype
+        );
+        return { type: file.fieldname, link };
+      })
+    );
+    await userRepository.updateOne(
+      { username: user?.username },
+      {
+        $set: {
+          username: data.name,
+          email: data.email,
+          profilePhoto:
+            links.find((link: any) => link.type === "profile")?.link ||
+            user?.profilePhoto,
+          coverPhoto:
+            links.find((link: any) => link.type === "cover")?.link ||
+            user?.coverPhoto,
+        },
+      }
+    );
+    resolve({ msg: "profile updated", username: data.name, email: data.email });
   });
 };

@@ -4,6 +4,11 @@ import { userRepositoryMongoDB } from "../../database/mongoDb/repositories/userR
 import { userRepository } from "../../../application/repositories/userRepositoryInterface";
 import { postRepositoryMongoDB } from "../../database/mongoDb/repositories/postRepository";
 import { postRepository } from "../../../application/repositories/postRepositoryInterface";
+import multer from "multer";
+import { s3Service } from "../../services/s3Service";
+import { s3ServiceInterface } from "../../../application/services/s3serviceInterface";
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const userRoute = () => {
   const router = express.Router();
@@ -12,7 +17,9 @@ const userRoute = () => {
     userRepositoryMongoDB,
     userRepository,
     postRepositoryMongoDB,
-    postRepository
+    postRepository,
+    s3Service,
+    s3ServiceInterface
   );
 
   router.get("/profile/:name", controller.getProfile);
@@ -20,6 +27,7 @@ const userRoute = () => {
   router.get("/search-user/:name/:user", controller.searchResult);
   router.put("/follow/:name", controller.follow);
   router.get("/user/:id", controller.getUser);
+  router.post("/edit-profile", upload.any(), controller.editProfile);
   return router;
 };
 

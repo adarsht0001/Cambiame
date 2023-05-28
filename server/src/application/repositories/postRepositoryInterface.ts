@@ -16,6 +16,9 @@ export const postRepository = (repository: PostRepositoryDbReturn) => {
   const getbyUser = async (name: string | undefined) =>
     await repository.getbyUser(name);
 
+  const getbyUserId = async (name: string | undefined) =>
+    await repository.getbyUser(name);
+
   const getPostcount = async () => await repository.getPostcount();
 
   const getCountof = async (filter: object) =>
@@ -35,6 +38,7 @@ export const postRepository = (repository: PostRepositoryDbReturn) => {
     getPostcount,
     getCountof,
     postByfilter,
+    getbyUserId,
   };
 };
 export type PostRepositoryInterface = typeof postRepository;

@@ -19,11 +19,15 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import { Link as RouteLink, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { PhotoCamera } from '@mui/icons-material';
+import { toast } from 'react-hot-toast';
 import axios from '../../Axios/axios';
 import Post from '../../Components/post/Post';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
-import { CHAT } from '../../Redux';
-import Editprofile from './Editprofile';
+import { CHAT, EditProfile } from '../../Redux';
+import Editprofile from '../../Components/profile/Editprofile';
+import PictureAvatar from '../../Components/avatar/PictureAvatar';
+// import EditImage from '../../Components/profile/EditImage';
+// import Cropper from '../../Components/profile/Cropper';
 
 export default function Profile() {
   const theme = useTheme();
@@ -31,19 +35,34 @@ export default function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [profile, setProfile] = useState({});
+  const [editform, seteditform] = useState({});
   const [posts, setPosts] = useState([]);
   const [following, setfollowing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [refresh, setrefresh] = useState(false);
   const user = useSelector((state) => state.user);
   const [openModal, setOpenModal] = React.useState(false);
+  // const [openCrop, setOpenCrop] = React.useState(false);
+  const [selectedFile, setSelectedFile] = useState();
+  const [coverphoto, setCoverphoto] = useState();
+  const [preview, setPreview] = useState();
+
   const handleModalClose = () => {
+    seteditform({});
     setOpenModal(false);
   };
+
+  // const handleCropperClose = () => {
+  //   setOpenCrop(false);
+  // };
 
   const handleModalOpen = () => {
     setOpenModal(true);
   };
+
+  // const handleCropperlOpen = () => {
+  //   setOpenCrop(true);
+  // };
 
   useEffect(() => {
     axios.get(`/profile/${username}`, {
@@ -53,7 +72,6 @@ export default function Profile() {
       },
     }).then((response) => {
       setProfile(response.data.user);
-      console.log(response.data.user);
       setPosts(response.data.posts);
       setLoading(false);
       const isfollowing = response.data?.user.followers.some((obj) => obj.id === user.id);
@@ -62,8 +80,10 @@ export default function Profile() {
       } else {
         setfollowing(false);
       }
+    }).catch((err) => {
+      console.log(err);
     });
-  }, [refresh, username]);
+  }, [refresh, username, user.name]);
 
   const handleFollow = () => {
     const follower = {
@@ -92,13 +112,55 @@ export default function Profile() {
     });
   };
 
+  const editProfile = () => {
+    const formData = new FormData();
+    formData.append('id', profile._id);
+    formData.append('name', editform.username || profile.username);
+    formData.append('email', editform.email || profile.email);
+    formData.append('cover', coverphoto);
+    formData.append('profile', selectedFile);
+    axios.post('/edit-profile', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((res) => {
+      navigate(`/profile/${res.data.username}`);
+      dispatch(EditProfile(res?.data));
+      handleModalClose();
+      toast.success(res.data.msg);
+    }).catch((err) => {
+      toast.error(err.response?.data.msg);
+    });
+  };
+
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreview(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPreview(objectUrl);
+
+    // eslint-disable-next-line consistent-return
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
   function isUser() {
     if (user.id === profile._id) {
       return true;
     }
     return false;
   }
-
+  const setProfilImage = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+  const setCover = (e) => {
+    setCoverphoto(e.target.files[0]);
+  };
+  const handleInput = (e) => {
+    seteditform({ ...editform, [e.target.name]: e.target.value });
+  };
   return (
     <>
       <Box>
@@ -214,39 +276,15 @@ export default function Profile() {
             <Typography variant="h6" sx={{ fontWeight: '500' }}>
               {profile.username}
             </Typography>
-            {/* <Typography fontSize="16px" color="#333" padding="10px 0">
-            {profile.bio}
-            test
-          </Typography> */}
             <Box
               display="flex"
               alignItems="center"
               padding="6px 0"
               flexWrap="wrap"
             >
-              {/* <Box display="flex">
-              <LocationOnIcon htmlColor="#555" />
-              <Typography sx={{ ml: '6px', color: '#555' }}>
-                {profile.location}
-                kochi
-              </Typography>
-            </Box> */}
-              {/* <Box display="flex" marginLeft="1rem">
-              <InsertLinkIcon htmlColor="#555" />
-              <Link
-                sx={{ textDecoration: 'none', marginLeft: '6px' }}
-                href={'www.google.com ' || 'https:/wasifbaliyan.com'}
-              >
-                {profile.website ? profile.website : 'www'}
-              </Link>
-            </Box> */}
               <Box display="flex" marginLeft="1rem">
                 <DateRangeIcon htmlColor="#555" />
                 <Typography sx={{ ml: '6px', color: '#555' }}>
-                  {/* {profile.userId
-                    && profile.userId
-                    && profile.userId.createdAt
-                    && format(new Date(profile.userId.createdAt), 'MMM dd yyyy')} */}
                   <TimeAgo date={profile?.date} />
                 </Typography>
               </Box>
@@ -289,7 +327,7 @@ export default function Profile() {
         open={openModal}
         handleClose={handleModalClose}
         saveText="Edit"
-        handleSave={alert('hi')}
+        handleSave={editProfile}
       >
         <Box>
           <Grid container alignItems="center">
@@ -305,32 +343,41 @@ export default function Profile() {
                       accept="image/*"
                       type="file"
                       name="img"
+                      onChange={(e) => {
+                        setProfilImage(e);
+                        // handleCropperlOpen();
+                      }}
                     />
                     <PhotoCamera />
                   </IconButton>
               )}
               >
-                <BackgroundLetterAvatars user={profile.username || ''} width="140px" height="140px" />
-                {/* <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" /> */}
+                {preview
+                  ? <PictureAvatar user={profile.username || ''} image={preview} width="140px" height="140px" />
+                  : <BackgroundLetterAvatars user={profile.username || ''} width="140px" height="140px" />}
               </Badge>
             </Grid>
-            <Grid width="50%" p={4}>
+            <Grid width="50%" p={2}>
               <TextField
                 id="outlined-basic"
                 variant="outlined"
                 label="username"
                 size="small"
+                name="username"
+                onChange={handleInput}
                 defaultValue={profile.username}
                 type="text"
               />
             </Grid>
-            <Grid width="50%" p={4}>
+            <Grid width="50%" p={2}>
               <TextField
                 id="outlined-basic"
                 variant="outlined"
                 type="text"
                 label="email"
                 size="small"
+                onChange={handleInput}
+                name="email"
                 defaultValue={profile.email}
               />
             </Grid>
@@ -345,13 +392,26 @@ export default function Profile() {
                 inputProps={{
                   multiple: false,
                 }}
+                onChange={(e) => {
+                  setCover(e);
+                  // handleCropperlOpen();
+                }}
               />
             </Grid>
-
           </Grid>
         </Box>
       </Editprofile>
       )}
+      {/* {openCrop && (
+      <EditImage
+        open={openCrop}
+        handleClose={handleCropperClose}
+        saveText="Edit"
+        handleSave={alert('hi')}
+      >
+        <Cropper handleClose={handleCropperClose} image={preview} />
+      </EditImage>
+      )} */}
     </>
   );
 }

@@ -11,7 +11,7 @@ import Login from '../Pages/Login/user/Login';
 import Signup from '../Pages/Signup/Signup';
 import Resetpass from '../Pages/ResetPassword/Resetpass';
 import VerifyEmail from '../Pages/verifyMail/verifyEmail';
-import DraggableDialog from '../Pages/Profile/Editprofile';
+import Test from '../Pages/Test';
 
 function UserRoutes() {
   return (
@@ -19,7 +19,7 @@ function UserRoutes() {
       <Route element={<IsLogged />}>
         <Route element={<Layout />}>
           <Route element={<Home />} exact path="/" />
-          <Route element={<DraggableDialog />} exact path="/test" />
+          <Route element={<Test />} exact path="/test" />
           <Route element={<Profile />} exact path="/profile/:username" />
           <Route element={<PostDetails />} exact path="/post/:id" />
           <Route element={<Conversation />} exact path="/chat" />

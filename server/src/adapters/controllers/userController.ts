@@ -5,21 +5,27 @@ import { UserRepositoryMongoDB } from "../../framework/database/mongoDb/reposito
 import { NextFunction, Request, Response } from "express";
 
 import {
+  editUser,
   followUser,
   getUserById,
   getUsernames,
   searchUsers,
 } from "../../application/use_cases/user/user";
 import { Follow } from "../../types/userTypes";
+import { S3service } from "../../framework/services/s3Service";
+import { S3serviceInterface } from "../../application/services/s3serviceInterface";
 
 const userController = (
   useRepositoryImpl: UserRepositoryMongoDB,
   userDbrepository: UserRepositoryInterFace,
   postRepositortyImpl: PostRepositoryMongoDB,
-  postRepository: PostRepositoryInterface
+  postRepository: PostRepositoryInterface,
+  s3ServiceImpl: S3service,
+  s3Service: S3serviceInterface
 ) => {
   const userRepo = userDbrepository(useRepositoryImpl());
   const postRepo = postRepository(postRepositortyImpl());
+  const s3Services = s3Service(s3ServiceImpl());
 
   const getProfile = (req: Request, res: Response) => {
     const { name } = req.params;
@@ -34,7 +40,6 @@ const userController = (
 
   const searchUsername = (req: Request, res: Response) => {
     const { name } = req.query;
-    console.log("here");
 
     getUsernames(name, userRepo).then((data) => {
       res.json(data);
@@ -69,7 +74,24 @@ const userController = (
     res.json(user);
   };
 
-  return { getProfile, searchUsername, searchResult, follow, getUser };
+  const editProfile = async (req: Request, res: Response) => {
+    editUser(req.body.id as string, req.body, req.files, s3Services, userRepo)
+      .then((response) => {
+        res.status(202).json(response);
+      })
+      .catch((err) => {
+        res.status(401).json(err);
+      });
+  };
+
+  return {
+    getProfile,
+    searchUsername,
+    searchResult,
+    follow,
+    getUser,
+    editProfile,
+  };
 };
 
 export default userController;
