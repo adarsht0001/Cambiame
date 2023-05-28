@@ -22,6 +22,7 @@ function AddPost({ callback }) {
     data.append('text', text);
     data.append('file', img);
     data.append('name', user.name);
+    data.append('userId', user.id);
     axios.post('/post', data, {
       headers: {
         'Content-Type': 'multipart/form-data',

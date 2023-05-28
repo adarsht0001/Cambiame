@@ -17,6 +17,9 @@ export const postRepositoryMongoDB = () => {
   const getbyUser = async (name: string | undefined) =>
     await Post.find({ user: name });
 
+  const getpostbyUserId = async (id: string | undefined) =>
+    await Post.find({ userId: id });
+
   const getPostcount = async () => {
     return await Post.countDocuments();
   };
@@ -34,6 +37,7 @@ export const postRepositoryMongoDB = () => {
     deleteById,
     updateById,
     getbyUser,
+    getpostbyUserId,
     getPostcount,
     getCountof,
     postByfilter,

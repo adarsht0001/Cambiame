@@ -44,6 +44,10 @@ const userShema = new mongoose_1.Schema({
         type: String,
         required: false,
     },
+    coverPhoto: {
+        type: String,
+        required: false,
+    },
     date: {
         type: Date,
     },

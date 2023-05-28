@@ -1,5 +1,6 @@
 export interface postType {
   user: string;
+  userId: string;
   caption: string;
   image?: string;
   date: number;

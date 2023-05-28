@@ -29,8 +29,12 @@ const postController = (
   const s3Services = s3Service(s3ServiceImpl());
 
   const createPost = async (req: Request, res: Response) => {
-    const { name, text }: { name: string; text: string } = req.body;
-    addPost(name, text, req.file, postRepo, s3Services)
+    const {
+      name,
+      text,
+      userId,
+    }: { name: string; text: string; userId: string } = req.body;
+    addPost(name, text, userId, req.file, postRepo, s3Services)
       .then((response) => {
         return res.status(201).json({ status: true, ...response });
       })

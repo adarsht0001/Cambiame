@@ -10,6 +10,10 @@ const postSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    userId: {
+        type: String,
+        required: false,
+    },
     Date: {
         type: Date,
         required: false,
@@ -46,7 +50,7 @@ const postSchema = new mongoose_1.Schema({
     comments: {
         type: Array,
         default: [],
-    }
+    },
 });
 const Post = (0, mongoose_1.model)("posts", postSchema, "posts");
 exports.default = Post;

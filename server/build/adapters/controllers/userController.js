@@ -10,12 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../../application/use_cases/user/user");
-const userController = (useRepositoryImpl, userDbrepository, postRepositortyImpl, postRepository) => {
+const userController = (useRepositoryImpl, userDbrepository, postRepositortyImpl, postRepository, s3ServiceImpl, s3Service) => {
     const userRepo = userDbrepository(useRepositoryImpl());
     const postRepo = postRepository(postRepositortyImpl());
+    const s3Services = s3Service(s3ServiceImpl());
     const getProfile = (req, res) => {
         const { name } = req.params;
-        (0, user_1.getUserById)(name, userRepo, postRepo)
+        (0, user_1.getUserById)(name, userRepo, postRepo, s3Services)
             .then((data) => {
             res.json(data);
         })
@@ -25,7 +26,6 @@ const userController = (useRepositoryImpl, userDbrepository, postRepositortyImpl
     };
     const searchUsername = (req, res) => {
         const { name } = req.query;
-        console.log("here");
         (0, user_1.getUsernames)(name, userRepo).then((data) => {
             res.json(data);
         });
@@ -55,6 +55,22 @@ const userController = (useRepositoryImpl, userDbrepository, postRepositortyImpl
         const user = yield userRepo.getById(req.params.id);
         res.json(user);
     });
-    return { getProfile, searchUsername, searchResult, follow, getUser };
+    const editProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        (0, user_1.editUser)(req.body.id, req.body, req.files, s3Services, userRepo)
+            .then((response) => {
+            res.status(202).json(response);
+        })
+            .catch((err) => {
+            res.status(401).json(err);
+        });
+    });
+    return {
+        getProfile,
+        searchUsername,
+        searchResult,
+        follow,
+        getUser,
+        editProfile,
+    };
 };
 exports.default = userController;

@@ -65,6 +65,7 @@ export default function Profile() {
   // };
 
   useEffect(() => {
+    console.log(username);
     axios.get(`/profile/${username}`, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -202,7 +203,7 @@ export default function Profile() {
             <img
               width="100%"
               height="200px"
-              src="https://images.pexels.com/photos/129539/pexels-photo-129539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              src={profile.cover ? profile.cover : 'https://images.pexels.com/photos/129539/pexels-photo-129539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
               alt="background"
             />
             <Box
@@ -214,7 +215,11 @@ export default function Profile() {
                 borderRadius: '50%',
               }}
             >
-              <BackgroundLetterAvatars width="140px" height="140px" user={profile.username} />
+              {
+                profile.profile
+                  ? <PictureAvatar user={profile.username || ''} image={profile.profile} width="140px" height="140px" />
+                  : <BackgroundLetterAvatars width="140px" height="140px" user={profile.username} />
+              }
             </Box>
           </Box>
           <Box textAlign="right" padding="10px 20px">

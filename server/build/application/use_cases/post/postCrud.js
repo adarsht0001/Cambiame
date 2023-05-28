@@ -10,10 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getComments = exports.addComents = exports.reportaPost = exports.likeaPost = exports.removePost = exports.getPosts = exports.addPost = void 0;
-const addPost = (name, caption, file, postRepository, s3Services) => {
+const addPost = (name, caption, userId, file, postRepository, s3Services) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         const post = {
             user: name,
+            userId,
             caption: caption,
             date: Date.now(),
         };

@@ -6,6 +6,7 @@ import { S3serviceInterface } from "../../services/s3serviceInterface";
 export const addPost = (
   name: string,
   caption: string,
+  userId: string,
   file: Express.Multer.File | undefined,
   postRepository: ReturnType<PostRepositoryInterface>,
   s3Services: ReturnType<S3serviceInterface>
@@ -13,9 +14,11 @@ export const addPost = (
   return new Promise<object>(async (resolve, reject) => {
     const post: postType = {
       user: name,
+      userId,
       caption: caption,
       date: Date.now(),
     };
+
     if (file) {
       const path = await s3Services.uploadtoS3(
         file.buffer,

@@ -29,7 +29,9 @@ const userController = (
 
   const getProfile = (req: Request, res: Response) => {
     const { name } = req.params;
-    getUserById(name, userRepo, postRepo)
+    console.log(name);
+
+    getUserById(name, userRepo, postRepo, s3Services)
       .then((data) => {
         res.json(data);
       })

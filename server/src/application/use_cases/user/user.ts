@@ -7,12 +7,28 @@ import { S3serviceInterface } from "../../services/s3serviceInterface";
 export const getUserById = (
   name: string,
   userRepository: ReturnType<UserRepositoryInterFace>,
-  postRepository: ReturnType<PostRepositoryInterface>
+  postRepository: ReturnType<PostRepositoryInterface>,
+  s3Services: ReturnType<S3serviceInterface>
 ) => {
   return new Promise<object>((resolve, reject) => {
-    userRepository.getByName(name).then((user) => {
+    userRepository.getByName(name).then(async (user) => {
       if (user) {
-        postRepository.getbyUser(user?.username).then((posts) => {
+        if (user.profilePhoto) {
+          let url = await s3Services.getObjectSignedUrl(user.profilePhoto);
+          user.set("profile", url, { strict: false });
+        }
+        if (user.coverPhoto) {
+          let url = await s3Services.getObjectSignedUrl(user.coverPhoto);
+          user.set("cover", url, { strict: false });
+        }
+        const objectIdString: string = user._id.toString();
+        postRepository.getpostbyUserId(objectIdString).then(async (posts) => {
+          for (let post of posts) {
+            if (post.image) {
+              let url = await s3Services.getObjectSignedUrl(post.image);
+              post.set("link", url, { strict: false });
+            }
+          }
           const profile = {
             user,
             posts,

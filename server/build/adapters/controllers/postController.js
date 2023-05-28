@@ -16,8 +16,8 @@ const postController = (postRepositortyImpl, postRepository, useRepositoryImpl, 
     const dbRepositortUser = userDbrepository(useRepositoryImpl());
     const s3Services = s3Service(s3ServiceImpl());
     const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const { name, text } = req.body;
-        (0, postCrud_1.addPost)(name, text, req.file, postRepo, s3Services)
+        const { name, text, userId, } = req.body;
+        (0, postCrud_1.addPost)(name, text, userId, req.file, postRepo, s3Services)
             .then((response) => {
             return res.status(201).json(Object.assign({ status: true }, response));
         })
