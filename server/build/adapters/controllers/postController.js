@@ -26,7 +26,7 @@ const postController = (postRepositortyImpl, postRepository, useRepositoryImpl, 
         });
     });
     const getPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        (0, postCrud_1.getPosts)(postRepo, s3Services).then((data) => {
+        (0, postCrud_1.getPosts)(postRepo, s3Services, dbRepositortUser).then((data) => {
             return res.status(200).json(data);
         });
     });
@@ -73,7 +73,7 @@ const postController = (postRepositortyImpl, postRepository, useRepositoryImpl, 
     };
     const getSinglepost = (req, res) => {
         const { id } = req.params;
-        (0, admin_1.singlePost)(postRepo, s3Services, id)
+        (0, admin_1.singlePost)(postRepo, s3Services, id, dbRepositortUser)
             .then((data) => {
             res.json(data);
         })

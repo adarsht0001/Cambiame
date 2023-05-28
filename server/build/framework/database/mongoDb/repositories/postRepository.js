@@ -21,6 +21,7 @@ const postRepositoryMongoDB = () => {
     const deleteById = (id) => __awaiter(void 0, void 0, void 0, function* () { return yield postModel_1.default.findByIdAndDelete(id); });
     const updateById = (id, update) => __awaiter(void 0, void 0, void 0, function* () { return yield postModel_1.default.findByIdAndUpdate(id, update); });
     const getbyUser = (name) => __awaiter(void 0, void 0, void 0, function* () { return yield postModel_1.default.find({ user: name }); });
+    const getpostbyUserId = (id) => __awaiter(void 0, void 0, void 0, function* () { return yield postModel_1.default.find({ userId: id }); });
     const getPostcount = () => __awaiter(void 0, void 0, void 0, function* () {
         return yield postModel_1.default.countDocuments();
     });
@@ -35,6 +36,7 @@ const postRepositoryMongoDB = () => {
         deleteById,
         updateById,
         getbyUser,
+        getpostbyUserId,
         getPostcount,
         getCountof,
         postByfilter,

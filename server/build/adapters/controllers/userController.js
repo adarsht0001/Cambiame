@@ -16,6 +16,7 @@ const userController = (useRepositoryImpl, userDbrepository, postRepositortyImpl
     const s3Services = s3Service(s3ServiceImpl());
     const getProfile = (req, res) => {
         const { name } = req.params;
+        console.log(name);
         (0, user_1.getUserById)(name, userRepo, postRepo, s3Services)
             .then((data) => {
             res.json(data);

@@ -26,6 +26,7 @@ import axios from '../../Axios/axios';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
 import Comment from './Comment';
 import PostActions from './PostAction';
+import PictureAvatar from '../avatar/PictureAvatar';
 
 export default function PostDetails() {
   const { id } = useParams();
@@ -132,7 +133,11 @@ export default function PostDetails() {
             <Grid container alignItems="center">
               <Grid item>
                 <Link to={`/profile/${post.user}`}>
-                  <BackgroundLetterAvatars user={post?.user} />
+                  {
+                  post.userProfile
+                    ? <PictureAvatar user={post.username || ''} image={post.userProfile} />
+                    : <BackgroundLetterAvatars user={post?.user} />
+                }
                 </Link>
               </Grid>
               <Grid item flexGrow="1" mx={2}>

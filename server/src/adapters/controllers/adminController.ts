@@ -82,7 +82,7 @@ const adminController = (
 
   const getSinglepost = (req: Request, res: Response) => {
     const { id } = req.params;
-    singlePost(postRepo, s3Services, id)
+    singlePost(postRepo, s3Services, id, userRepo)
       .then((data) => {
         res.json(data);
       })

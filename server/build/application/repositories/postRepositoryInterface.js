@@ -18,6 +18,7 @@ const postRepository = (repository) => {
     const updateById = (id, update) => __awaiter(void 0, void 0, void 0, function* () { return yield repository.updateById(id, update); });
     const getbyUser = (name) => __awaiter(void 0, void 0, void 0, function* () { return yield repository.getbyUser(name); });
     const getbyUserId = (name) => __awaiter(void 0, void 0, void 0, function* () { return yield repository.getbyUser(name); });
+    const getpostbyUserId = (id) => __awaiter(void 0, void 0, void 0, function* () { return yield repository.getpostbyUserId(id); });
     const getPostcount = () => __awaiter(void 0, void 0, void 0, function* () { return yield repository.getPostcount(); });
     const getCountof = (filter) => __awaiter(void 0, void 0, void 0, function* () { return yield repository.getCountof(filter); });
     const postByfilter = (filter) => __awaiter(void 0, void 0, void 0, function* () {
@@ -30,6 +31,7 @@ const postRepository = (repository) => {
         deleteById,
         updateById,
         getbyUser,
+        getpostbyUserId,
         getPostcount,
         getCountof,
         postByfilter,

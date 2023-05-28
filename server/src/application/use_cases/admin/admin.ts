@@ -81,11 +81,17 @@ export const reportedPosts = (
 export const singlePost = (
   postRepository: ReturnType<PostRepositoryInterface>,
   s3Services: ReturnType<S3serviceInterface>,
-  postId: string
+  postId: string,
+  userRepository: ReturnType<UserRepositoryInterFace>
 ) => {
   return new Promise<any>(async (resolve, reject) => {
     try {
       const post = await postRepository.getById(postId);
+      const user = await userRepository.getById(post?.userId as string);
+      if (user?.profilePhoto) {
+        let url = await s3Services.getObjectSignedUrl(user.profilePhoto);
+        post?.set("userProfile", url, { strict: false });
+      }
       if (post?.image) {
         let url = await s3Services.getObjectSignedUrl(post.image);
         post.set("link", url, { strict: false });

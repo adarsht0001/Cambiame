@@ -55,7 +55,7 @@ const adminController = (useRepositoryImpl, userDbrepository, postRepositortyImp
     };
     const getSinglepost = (req, res) => {
         const { id } = req.params;
-        (0, admin_1.singlePost)(postRepo, s3Services, id)
+        (0, admin_1.singlePost)(postRepo, s3Services, id, userRepo)
             .then((data) => {
             res.json(data);
         })

@@ -68,10 +68,15 @@ const reportedPosts = (postRepository) => {
     }));
 };
 exports.reportedPosts = reportedPosts;
-const singlePost = (postRepository, s3Services, postId) => {
+const singlePost = (postRepository, s3Services, postId, userRepository) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const post = yield postRepository.getById(postId);
+            const user = yield userRepository.getById(post === null || post === void 0 ? void 0 : post.userId);
+            if (user === null || user === void 0 ? void 0 : user.profilePhoto) {
+                let url = yield s3Services.getObjectSignedUrl(user.profilePhoto);
+                post === null || post === void 0 ? void 0 : post.set("userProfile", url, { strict: false });
+            }
             if (post === null || post === void 0 ? void 0 : post.image) {
                 let url = yield s3Services.getObjectSignedUrl(post.image);
                 post.set("link", url, { strict: false });

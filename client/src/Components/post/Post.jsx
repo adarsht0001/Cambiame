@@ -19,6 +19,7 @@ import axios from '../../Axios/axios';
 import Modal from './Modal';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
 import PostActions from './PostAction';
+import PictureAvatar from '../avatar/PictureAvatar';
 
 export default function Post({ data, callback }) {
   const [post, setPosts] = useState(data);
@@ -27,6 +28,7 @@ export default function Post({ data, callback }) {
   const [isUser, setisUser] = useState(false);
   const [commentText, setCommentText] = useState('');
   useEffect(() => {
+    console.log(post);
     if (post.user === user.name) {
       setisUser(true);
     }
@@ -105,7 +107,11 @@ export default function Post({ data, callback }) {
           <Grid container flexWrap="nowrap">
             <Grid item sx={{ paddingRight: '1rem' }}>
               <Link to={`/profile/${post.user}`}>
-                <BackgroundLetterAvatars user={post?.user} />
+                {
+                  post.userProfile
+                    ? <PictureAvatar user={post.username || ''} image={post.userProfile} />
+                    : <BackgroundLetterAvatars user={post?.user} />
+                }
               </Link>
             </Grid>
             <Grid item flexGrow="1">
@@ -121,10 +127,6 @@ export default function Post({ data, callback }) {
                       <Typography sx={{ fontSize: '16px', fontWeight: 500, mr: '6px' }}>
                         {post.user}
                       </Typography>
-                      {/* <Typography
-                        sx={{ fontSize: '15px', mr: '6px', color: '#555' }}
-                      >
-                      </Typography> */}
                       <Typography
                         sx={{ fontSize: '15px', mr: '6px', color: '#555' }}
                       >

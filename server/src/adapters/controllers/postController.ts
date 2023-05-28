@@ -44,7 +44,7 @@ const postController = (
   };
 
   const getPost = async (req: Request, res: Response) => {
-    getPosts(postRepo, s3Services).then((data) => {
+    getPosts(postRepo, s3Services, dbRepositortUser).then((data) => {
       return res.status(200).json(data);
     });
   };
@@ -98,7 +98,7 @@ const postController = (
 
   const getSinglepost = (req: Request, res: Response) => {
     const { id } = req.params;
-    singlePost(postRepo, s3Services, id)
+    singlePost(postRepo, s3Services, id, dbRepositortUser)
       .then((data) => {
         res.json(data);
       })

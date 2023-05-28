@@ -14,7 +14,6 @@ const getUserById = (name, userRepository, postRepository, s3Services) => {
     return new Promise((resolve, reject) => {
         userRepository.getByName(name).then((user) => __awaiter(void 0, void 0, void 0, function* () {
             if (user) {
-                console.log(user);
                 if (user.profilePhoto) {
                     let url = yield s3Services.getObjectSignedUrl(user.profilePhoto);
                     user.set("profile", url, { strict: false });
@@ -23,7 +22,8 @@ const getUserById = (name, userRepository, postRepository, s3Services) => {
                     let url = yield s3Services.getObjectSignedUrl(user.coverPhoto);
                     user.set("cover", url, { strict: false });
                 }
-                postRepository.getbyUser(user === null || user === void 0 ? void 0 : user.username).then((posts) => __awaiter(void 0, void 0, void 0, function* () {
+                const objectIdString = user._id.toString();
+                postRepository.getpostbyUserId(objectIdString).then((posts) => __awaiter(void 0, void 0, void 0, function* () {
                     for (let post of posts) {
                         if (post.image) {
                             let url = yield s3Services.getObjectSignedUrl(post.image);

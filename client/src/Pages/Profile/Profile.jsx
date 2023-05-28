@@ -65,7 +65,6 @@ export default function Profile() {
   // };
 
   useEffect(() => {
-    console.log(username);
     axios.get(`/profile/${username}`, {
       headers: {
         'Content-Type': 'multipart/form-data',
