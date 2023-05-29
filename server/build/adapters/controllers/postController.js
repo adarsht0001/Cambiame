@@ -8,9 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const postCrud_1 = require("../../application/use_cases/post/postCrud");
 const admin_1 = require("../../application/use_cases/admin/admin");
+const paginatePost_1 = require("../../application/use_cases/post/paginatePost");
+const postModel_1 = __importDefault(require("../../framework/database/mongoDb/models/postModel"));
 const postController = (postRepositortyImpl, postRepository, useRepositoryImpl, userDbrepository, s3ServiceImpl, s3Service) => {
     const postRepo = postRepository(postRepositortyImpl());
     const dbRepositortUser = userDbrepository(useRepositoryImpl());
@@ -26,8 +31,12 @@ const postController = (postRepositortyImpl, postRepository, useRepositoryImpl, 
         });
     });
     const getPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        (0, postCrud_1.getPosts)(postRepo, s3Services, dbRepositortUser).then((data) => {
-            return res.status(200).json(data);
+        const { page } = req.query;
+        (0, paginatePost_1.paginatePost)(postModel_1.default, page).then((data) => {
+            (0, postCrud_1.getPosts)(data.results, postRepo, s3Services, dbRepositortUser).then((post) => {
+                data.results = post;
+                return res.status(200).json(data);
+            });
         });
     });
     const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -44,25 +44,24 @@ export const addPost = (
 };
 
 export const getPosts = (
+  posts: any,
   postRepository: ReturnType<PostRepositoryInterface>,
   s3Services: ReturnType<S3serviceInterface>,
   userRepository: ReturnType<UserRepositoryInterFace>
 ) => {
-  return new Promise<object[]>((resolve, reject) => {
-    postRepository.getPosts().then(async (posts) => {
-      for (let post of posts) {
-        const user = await userRepository.getById(post?.userId as string);
-        if (user?.profilePhoto) {
-          let url = await s3Services.getObjectSignedUrl(user.profilePhoto);
-          post.set("userProfile", url, { strict: false });
-        }
-        if (post.image) {
-          let url = await s3Services.getObjectSignedUrl(post.image);
-          post.set("link", url, { strict: false });
-        }
+  return new Promise<object[]>(async (resolve, reject) => {
+    for (let post of posts) {
+      const user = await userRepository.getById(post?.userId as string);
+      if (user?.profilePhoto) {
+        let url = await s3Services.getObjectSignedUrl(user.profilePhoto);
+        post.set("userProfile", url, { strict: false });
       }
-      resolve(posts);
-    });
+      if (post.image) {
+        let url = await s3Services.getObjectSignedUrl(post.image);
+        post.set("link", url, { strict: false });
+      }
+    }
+    resolve(posts);
   });
 };
 

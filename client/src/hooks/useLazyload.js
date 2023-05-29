@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable consistent-return */
 import { useEffect, useReducer, useCallback } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import debounce from 'lodash/debounce';
 
 const INTERSECTION_THRESHOLD = 5;
@@ -21,6 +20,14 @@ const reducer = (state, action) => {
         loading: false,
         data: [...state.data, ...action.payload.data],
         currentPage: state.currentPage + 1,
+      };
+    }
+    case 'refetch': {
+      return {
+        ...state,
+        loading: true,
+        currentPage: 1,
+        data: [],
       };
     }
     default:
@@ -58,6 +65,12 @@ const useLazyLoad = ({ triggerRef, onGrabData, options }) => {
     [handleEntry],
   );
 
+  const refetch = async () => {
+    dispatch({ type: 'refetch' });
+    const data = await onGrabData(1);
+    dispatch({ type: 'onGrabData', payload: { data } });
+  };
+
   useEffect(() => {
     if (triggerRef.current) {
       const container = triggerRef.current;
@@ -71,7 +84,7 @@ const useLazyLoad = ({ triggerRef, onGrabData, options }) => {
     }
   }, [triggerRef, onIntersect, options]);
 
-  return state;
+  return { ...state, refetch };
 };
 
 export default useLazyLoad;

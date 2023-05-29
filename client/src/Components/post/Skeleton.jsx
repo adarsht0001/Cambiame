@@ -6,29 +6,37 @@ import Skeleton from '@mui/material/Skeleton';
 
 function LoadingPost() {
   return (
-    <Card sx={{ maxWidth: 345, m: 2 }}>
-      <CardHeader
-        avatar={
-          <Skeleton animation="wave" variant="circular" width={40} height={40} />
+    [1, 2, 3, 4, 5, 6].map((e) => (
+      <Card
+        sx={{ padding: '2rem' }}
+        key={e}
+      >
+        <CardHeader
+          avatar={
+            <Skeleton animation="wave" variant="circular" width={40} height={40} />
       }
-        title={(
-          <Skeleton
-            animation="wave"
-            height={10}
-            width="50%"
-            style={{ marginBottom: 6 }}
-          />
+          title={(
+            <Skeleton
+              animation="wave"
+              height={10}
+              width="50%"
+              style={{ marginBottom: 6 }}
+            />
         )}
-        subheader={
-          <Skeleton animation="wave" height={10} width="40%" />
+          subheader={
+            <Skeleton animation="wave" height={10} width="40%" />
       }
-      />
-      <CardContent>
-        <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />
-        <Skeleton animation="wave" height={10} width="80%" />
-      </CardContent>
-      <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
-    </Card>
+        />
+        <CardContent>
+          <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />
+        </CardContent>
+        {
+          e % 2 === 0
+          && <Skeleton sx={{ height: 150 }} animation="wave" variant="rectangular" />
+        }
+      </Card>
+    ))
+
   );
 }
 

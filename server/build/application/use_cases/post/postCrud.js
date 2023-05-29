@@ -39,23 +39,21 @@ const addPost = (name, caption, userId, file, postRepository, s3Services) => {
     }));
 };
 exports.addPost = addPost;
-const getPosts = (postRepository, s3Services, userRepository) => {
-    return new Promise((resolve, reject) => {
-        postRepository.getPosts().then((posts) => __awaiter(void 0, void 0, void 0, function* () {
-            for (let post of posts) {
-                const user = yield userRepository.getById(post === null || post === void 0 ? void 0 : post.userId);
-                if (user === null || user === void 0 ? void 0 : user.profilePhoto) {
-                    let url = yield s3Services.getObjectSignedUrl(user.profilePhoto);
-                    post.set("userProfile", url, { strict: false });
-                }
-                if (post.image) {
-                    let url = yield s3Services.getObjectSignedUrl(post.image);
-                    post.set("link", url, { strict: false });
-                }
+const getPosts = (posts, postRepository, s3Services, userRepository) => {
+    return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+        for (let post of posts) {
+            const user = yield userRepository.getById(post === null || post === void 0 ? void 0 : post.userId);
+            if (user === null || user === void 0 ? void 0 : user.profilePhoto) {
+                let url = yield s3Services.getObjectSignedUrl(user.profilePhoto);
+                post.set("userProfile", url, { strict: false });
             }
-            resolve(posts);
-        }));
-    });
+            if (post.image) {
+                let url = yield s3Services.getObjectSignedUrl(post.image);
+                post.set("link", url, { strict: false });
+            }
+        }
+        resolve(posts);
+    }));
 };
 exports.getPosts = getPosts;
 const removePost = (id, postRepository, s3Services) => {
