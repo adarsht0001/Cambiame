@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,6 +13,7 @@ import {
 import { GoVerified, GoX } from 'react-icons/go';
 import { MdArrowForwardIos } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { io } from 'socket.io-client';
 import axios from '../../Axios/axios';
 
 export default function UserTables() {
@@ -20,8 +21,12 @@ export default function UserTables() {
   const [user, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({});
-
   const navigate = useNavigate();
+  const socket = useRef();
+
+  useEffect(() => {
+    socket.current = io('http://localhost:5000');
+  }, []);
   useEffect(() => {
     axios.get(`/admin/users?page=${page}`).then((res) => {
       setUsers(res.data.results);
@@ -31,9 +36,14 @@ export default function UserTables() {
     });
   }, [paginate]);
 
-  const blockUser = (email) => {
-    axios.put('/admin/block-user', { email }).then(() => {
-      alert('blocked');
+  const blockUser = (email, id) => {
+    axios.put('/admin/block-user', { email }).then((res) => {
+      if (res.data.msg === 'blocked user') {
+        alert('blocked');
+        socket.current.emit('blockUser', {
+          user: id,
+        });
+      }
     }).catch((err) => {
       console.log(err);
     });
@@ -70,7 +80,12 @@ export default function UserTables() {
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">
-                  <Switch defaultChecked={row.status} onChange={() => blockUser(row.email)} />
+                  <Switch
+                    defaultChecked={row.status}
+                    onChange={() => {
+                      blockUser(row.email, row.id);
+                    }}
+                  />
                 </TableCell>
                 <TableCell align="left">
                   {row.verified ? <GoVerified /> : <GoX />}

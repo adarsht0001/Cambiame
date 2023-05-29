@@ -42,7 +42,12 @@ const blockUnblock = (email, userRepository) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield userRepository.getByEmail(email);
         yield userRepository.updateOne({ email }, { blocked: !(user === null || user === void 0 ? void 0 : user.blocked) });
-        resolve();
+        if (user === null || user === void 0 ? void 0 : user.blocked) {
+            resolve({ msg: "unblocked user" });
+        }
+        else {
+            resolve({ msg: "blocked user" });
+        }
     }));
 };
 exports.blockUnblock = blockUnblock;
