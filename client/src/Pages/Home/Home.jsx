@@ -20,7 +20,7 @@ export default function Home() {
 
   // eslint-disable-next-line no-unused-vars
   const onGrabData = (currentPage) => new Promise((resolve, reject) => {
-    if (limit === currentPage) {
+    if (limit >= currentPage) {
       setEnded(true);
     }
     axios.get(`/post?page=${currentPage}`).then((response) => {
