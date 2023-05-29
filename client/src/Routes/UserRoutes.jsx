@@ -11,6 +11,7 @@ import Login from '../Pages/Login/user/Login';
 import Signup from '../Pages/Signup/Signup';
 import Resetpass from '../Pages/ResetPassword/Resetpass';
 import VerifyEmail from '../Pages/verifyMail/verifyEmail';
+import LoadingPost from '../Components/post/Skeleton';
 
 function UserRoutes() {
   return (
@@ -22,6 +23,7 @@ function UserRoutes() {
           <Route element={<PostDetails />} exact path="/post/:id" />
           <Route element={<Conversation />} exact path="/chat" />
           <Route element={<Message />} exact path="/chat/:id" />
+          <Route element={<LoadingPost />} exact path="/cd" />
         </Route>
       </Route>
       <Route element={<LoggedIn />}>

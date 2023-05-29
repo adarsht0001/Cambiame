@@ -7,6 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { IconButton, Paper } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/system';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import Draggable from 'react-draggable';
 
 function PaperComponent(props) {
@@ -26,8 +27,11 @@ export default function Editprofile({
   handleClose,
   handleSave,
   saveText,
+  loading,
+  setLoading,
 }) {
   const handleClick = () => {
+    setLoading(true);
     handleSave();
   };
   return (
@@ -50,6 +54,7 @@ export default function Editprofile({
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button
+          disabled={loading}
           variant="contained"
           color="primary"
           size="small"
@@ -58,6 +63,7 @@ export default function Editprofile({
           {saveText}
         </Button>
         <Button
+          disabled={loading}
           variant="contained"
           color="warning"
           size="small"

@@ -16,6 +16,8 @@ import {
 } from "../../application/use_cases/post/postCrud";
 import { CommentType } from "../../types/postType";
 import { singlePost } from "../../application/use_cases/admin/admin";
+import { paginatePost } from "../../application/use_cases/post/paginatePost";
+import Post from "../../framework/database/mongoDb/models/postModel";
 const postController = (
   postRepositortyImpl: PostRepositoryMongoDB,
   postRepository: PostRepositoryInterface,
@@ -44,8 +46,14 @@ const postController = (
   };
 
   const getPost = async (req: Request, res: Response) => {
-    getPosts(postRepo, s3Services, dbRepositortUser).then((data) => {
-      return res.status(200).json(data);
+    const { page } = req.query;
+    paginatePost(Post, page as string).then((data) => {
+      getPosts(data.results, postRepo, s3Services, dbRepositortUser).then(
+        (post) => {
+          data.results = post;
+          return res.status(200).json(data);
+        }
+      );
     });
   };
 

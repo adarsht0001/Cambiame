@@ -170,7 +170,7 @@ export default function PostDetails() {
             <img
               src={post.link}
               width="100%"
-              height="30%"
+              height="600rem"
               alt=""
               srcSet=""
             />

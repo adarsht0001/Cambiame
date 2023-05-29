@@ -28,7 +28,6 @@ export default function Post({ data, callback }) {
   const [isUser, setisUser] = useState(false);
   const [commentText, setCommentText] = useState('');
   useEffect(() => {
-    console.log(post);
     if (post.user === user.name) {
       setisUser(true);
     }
@@ -154,7 +153,7 @@ export default function Post({ data, callback }) {
                   <img
                     src={post.link}
                     width="100%"
-                    height="30%"
+                    height="400rem"
                     alt=""
                     srcSet=""
                   />
