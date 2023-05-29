@@ -63,8 +63,8 @@ const adminController = (
 
   const blockUser = (req: Request, res: Response) => {
     const { email }: { email: string } = req.body;
-    blockUnblock(email, userRepo).then(() => {
-      res.sendStatus(200);
+    blockUnblock(email, userRepo).then((data) => {
+      res.status(200).json(data);
     });
   };
 

@@ -44,6 +44,12 @@ io.on("connection", (socket) => {
         // io.emit("getuser", users);
         console.log(users);
     });
+    socket.on("blockUser", ({ user }) => {
+        const receiver = getUser(user);
+        if (receiver) {
+            io.to(receiver === null || receiver === void 0 ? void 0 : receiver.socketId).emit("blocked");
+        }
+    });
     socket.on("sendMessage", ({ senderid, receiverid, text, user }) => {
         const receiver = getUser(receiverid);
         if (receiver) {

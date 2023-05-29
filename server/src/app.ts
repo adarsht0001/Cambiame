@@ -51,6 +51,14 @@ io.on("connection", (socket) => {
     console.log(users);
   });
 
+  socket.on("blockUser", ({ user }) => {
+    console.log("blocked");
+
+    const receiver = getUser(user);
+    if (receiver) {
+      io.to(receiver?.socketId).emit("blocked");
+    }
+  });
   socket.on("sendMessage", ({ senderid, receiverid, text, user }) => {
     const receiver = getUser(receiverid);
 

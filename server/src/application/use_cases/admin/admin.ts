@@ -42,10 +42,14 @@ export const blockUnblock = (
   email: string,
   userRepository: ReturnType<UserRepositoryInterFace>
 ) => {
-  return new Promise<void>(async (resolve, reject) => {
+  return new Promise<object>(async (resolve, reject) => {
     const user = await userRepository.getByEmail(email);
     await userRepository.updateOne({ email }, { blocked: !user?.blocked });
-    resolve();
+    if (user?.blocked) {
+      resolve({ msg: "unblocked user" });
+    } else {
+      resolve({ msg: "blocked user" });
+    }
   });
 };
 

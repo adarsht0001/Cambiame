@@ -39,8 +39,8 @@ const adminController = (useRepositoryImpl, userDbrepository, postRepositortyImp
     };
     const blockUser = (req, res) => {
         const { email } = req.body;
-        (0, admin_1.blockUnblock)(email, userRepo).then(() => {
-            res.sendStatus(200);
+        (0, admin_1.blockUnblock)(email, userRepo).then((data) => {
+            res.status(200).json(data);
         });
     };
     const getDashboard = (req, res) => {
