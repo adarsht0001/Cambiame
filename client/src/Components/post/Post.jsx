@@ -154,7 +154,7 @@ export default function Post({ data, callback }) {
                   <img
                     src={post.link}
                     width="100%"
-                    height="30%"
+                    height="400rem"
                     alt=""
                     srcSet=""
                   />

@@ -46,6 +46,7 @@ export default function Profile() {
   const [selectedFile, setSelectedFile] = useState();
   const [coverphoto, setCoverphoto] = useState();
   const [preview, setPreview] = useState();
+  const [editing, setEditing] = useState(false);
 
   const handleModalClose = () => {
     seteditform({});
@@ -128,6 +129,7 @@ export default function Profile() {
       navigate(`/profile/${res.data.username}`);
       dispatch(EditProfile(res?.data));
       handleModalClose();
+      setEditing(false);
       toast.success(res.data.msg);
     }).catch((err) => {
       toast.error(err.response?.data.msg);
@@ -332,6 +334,8 @@ export default function Profile() {
         handleClose={handleModalClose}
         saveText="Edit"
         handleSave={editProfile}
+        loading={editing}
+        setLoading={setEditing}
       >
         <Box>
           <Grid container alignItems="center">
