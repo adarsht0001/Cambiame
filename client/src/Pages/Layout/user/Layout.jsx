@@ -20,7 +20,7 @@ export default function Layout() {
     socket.current = io('http://localhost:5000');
     socket.current?.emit('adduser', user.id);
 
-    socket.current.on('sentNotification', (data) => {
+    socket.current?.on('sentNotification', (data) => {
       toast(
         `${data.text} from ${data.user}`,
         {
@@ -33,7 +33,7 @@ export default function Layout() {
         },
       );
     });
-    socket.current.on('blocked', () => {
+    socket.current?.on('blocked', () => {
       setOpenModal(true);
     });
   }, []);
