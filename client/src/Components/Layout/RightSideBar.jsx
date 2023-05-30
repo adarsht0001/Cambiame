@@ -9,11 +9,11 @@ import { Link } from 'react-router-dom';
 import axios from '../../Axios/axios';
 
 export default function RightSidebar() {
-  const [query, setQuery] = useState(null);
+  const [query, setQuery] = useState('');
   const [users, setUser] = useState([]);
 
   useMemo(() => {
-    if (query) {
+    if (query.length > 0) {
       axios.get(`/search?name=${query}`).then((res) => {
         setUser(res.data);
       }).catch((err) => {
