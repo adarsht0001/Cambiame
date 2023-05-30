@@ -14,6 +14,7 @@ import Conversations from '../../Components/Chat/Conversations';
 
 function Conversation() {
   const [conversation, setConversation] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ function Conversation() {
 
   return (
     <Box>
-      <Box borderBottom="1px solid #ccc" padding="8px 20px" mt="5px">
+      <Box borderBottom="1px solid #ccc" padding="8px 20px">
         <Grid container alignItems="center">
           <Grid item sx={{ mr: '10px' }}>
             <RouteLink to="/">

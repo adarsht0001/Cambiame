@@ -26,8 +26,6 @@ import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import { CHAT, EditProfile } from '../../Redux';
 import Editprofile from '../../Components/profile/Editprofile';
 import PictureAvatar from '../../Components/avatar/PictureAvatar';
-// import EditImage from '../../Components/profile/EditImage';
-// import Cropper from '../../Components/profile/Cropper';
 
 export default function Profile() {
   const theme = useTheme();
@@ -42,7 +40,6 @@ export default function Profile() {
   const [refresh, setrefresh] = useState(false);
   const user = useSelector((state) => state.user);
   const [openModal, setOpenModal] = React.useState(false);
-  // const [openCrop, setOpenCrop] = React.useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [coverphoto, setCoverphoto] = useState();
   const [preview, setPreview] = useState();
@@ -199,7 +196,15 @@ export default function Profile() {
           )}
         </Box>
         {!loading && (
-        <Box height="90vh" sx={{ overflowY: 'scroll' }}>
+        <Box
+          height="90vh"
+          sx={{
+            overflowY: 'scroll',
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+          }}
+        >
           <Box position="relative">
             <img
               width="100%"
@@ -218,7 +223,7 @@ export default function Profile() {
             >
               {
                 profile.profile
-                  ? <PictureAvatar user={profile.username || ''} image={profile.profile} width="140px" height="140px" />
+                  ? <PictureAvatar name={profile.username || ''} image={profile.profile} width="140px" height="140px" />
                   : <BackgroundLetterAvatars width="140px" height="140px" user={profile.username} />
               }
             </Box>
@@ -361,7 +366,7 @@ export default function Profile() {
               )}
               >
                 {preview
-                  ? <PictureAvatar user={profile.username || ''} image={preview} width="140px" height="140px" />
+                  ? <PictureAvatar name={profile.username || ''} image={preview} width="140px" height="140px" />
                   : <BackgroundLetterAvatars user={profile.username || ''} width="140px" height="140px" />}
               </Badge>
             </Grid>

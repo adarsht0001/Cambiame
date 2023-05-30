@@ -24,7 +24,7 @@ export default function RightSidebar() {
 
   return (
     <Box sx={{ height: '100%' }}>
-      <Box paddingTop="10px">
+      <Box paddingY="10px">
         <Box
           width="100%"
           borderRadius="28px"

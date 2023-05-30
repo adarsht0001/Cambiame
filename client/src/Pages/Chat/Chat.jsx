@@ -2,11 +2,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Stack } from '@mui/system';
+import { Box } from '@mui/system';
 import {
-  Button,
+  // Button,
   Grid,
   IconButton,
+  InputAdornment,
   TextField,
   Typography,
 } from '@mui/material';
@@ -81,7 +82,7 @@ function Chat() {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   return (
-    <Box>
+    <Box position="fixed" width="33%">
       <Box borderBottom="1px solid #ccc" padding="8px 20px" mt="5px">
         <Grid container alignItems="center">
           <Grid item sx={{ mr: '10px' }}>
@@ -129,6 +130,7 @@ function Chat() {
         <Box
           sx={{
             height: '77vh',
+            // height: '7vh',
             bgcolor: '#ccd5cc',
             overflowX: 'hidden',
             padding: 5,
@@ -153,24 +155,35 @@ function Chat() {
             </div>
           ))}
         </Box>
-        <Stack direction="row">
-          <TextField
-            id="outlined-multiline-flexible"
-            multiline
-            maxRows={4}
-            fullWidth
-            size="small"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Sent a message"
-          />
-          <Button
-            variant="contained"
-            sx={{ bgcolor: '#3b71ca' }}
-            endIcon={<SendIcon />}
-            onClick={handleSubmit}
-          />
-        </Stack>
+        {/* <Stack direction="row"> */}
+        <TextField
+          variant="outlined"
+          id="outlined-multiline-flexible"
+          multiline
+          value={newMessage}
+          maxRows={2}
+          fullWidth
+          size="small"
+          placeholder="Sent a message"
+          onChange={(e) => setNewMessage(e.target.value)}
+          color="warning"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+
+                <SendIcon
+                  onClick={handleSubmit}
+                      // eslint-disable-next-line no-return-assign
+                  onMouseOver={(e) => e.target.style.cursor = 'pointer'}
+                />
+              </InputAdornment>
+            ),
+            style: {
+              borderRadius: '40px',
+            },
+          }}
+        />
+        {/* </Stack> */}
       </>
     </Box>
   );

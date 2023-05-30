@@ -108,7 +108,7 @@ export default function Post({ data, callback }) {
               <Link to={`/profile/${post.user}`}>
                 {
                   post.userProfile
-                    ? <PictureAvatar user={post.username || ''} image={post.userProfile} />
+                    ? <PictureAvatar name={post.username || ''} image={post.userProfile} />
                     : <BackgroundLetterAvatars user={post?.user} />
                 }
               </Link>
@@ -215,7 +215,7 @@ export default function Post({ data, callback }) {
             <Grid item>
               {
                 user.profile
-                  ? <PictureAvatar user={user?.name || ''} image={user.profile} />
+                  ? <PictureAvatar name={user?.name || ''} image={user.profile} />
                   : <BackgroundLetterAvatars user={user.username} />
               }
             </Grid>
