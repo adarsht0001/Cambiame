@@ -78,7 +78,7 @@ export default function Post({ data, callback }) {
   };
 
   const copyClipboard = async () => {
-    navigator.clipboard.writeText(`http://localhost:3000/post/${post._id}`);
+    navigator.clipboard.writeText(`https://cambiame.site/post/${post._id}`);
     toast('Copied To ClipBoard!', {
       icon: '📋',
     });
@@ -216,7 +216,7 @@ export default function Post({ data, callback }) {
               {
                 user.profile
                   ? <PictureAvatar name={user?.name || ''} image={user.profile} />
-                  : <BackgroundLetterAvatars user={user.username} />
+                  : <BackgroundLetterAvatars user={user.name} />
               }
             </Grid>
             <Grid item flexGrow="1" mx={2}>

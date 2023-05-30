@@ -102,7 +102,7 @@ export default function PostDetails() {
     });
   };
   const copyClipboard = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/post/${id}`);
+    navigator.clipboard.writeText(`https://cambiame.site/post/${id}`);
     toast('Copied To ClipBoard!', {
       icon: '📋',
     });
@@ -223,7 +223,7 @@ export default function PostDetails() {
                 {
                 user.profile
                   ? <PictureAvatar name={user?.name || ''} image={user.profile} />
-                  : <BackgroundLetterAvatars user={user.username || ''} />
+                  : <BackgroundLetterAvatars user={user?.name || ''} />
               }
               </Grid>
               <Grid item flexGrow="1" mx={2}>
