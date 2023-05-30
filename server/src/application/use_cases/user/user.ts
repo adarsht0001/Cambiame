@@ -191,21 +191,28 @@ export const editUser = (
         return { type: file.fieldname, link };
       })
     );
+    const userprofilphoto =
+      links.find((link: any) => link.type === "profile")?.link ||
+      user?.profilePhoto;
     await userRepository.updateOne(
       { username: user?.username },
       {
         $set: {
           username: data.name,
           email: data.email,
-          profilePhoto:
-            links.find((link: any) => link.type === "profile")?.link ||
-            user?.profilePhoto,
+          profilePhoto: userprofilphoto,
           coverPhoto:
             links.find((link: any) => link.type === "cover")?.link ||
             user?.coverPhoto,
         },
       }
     );
-    resolve({ msg: "profile updated", username: data.name, email: data.email });
+    let url = await s3Services.getObjectSignedUrl(userprofilphoto);
+    resolve({
+      msg: "profile updated",
+      username: data.name,
+      email: data.email,
+      profile: url,
+    });
   });
 };

@@ -365,8 +365,8 @@ export default function Profile() {
                   </IconButton>
               )}
               >
-                {preview
-                  ? <PictureAvatar name={profile.username || ''} image={preview} width="140px" height="140px" />
+                {user.profile || preview
+                  ? <PictureAvatar name={profile.username || ''} image={preview || user.profile} width="140px" height="140px" />
                   : <BackgroundLetterAvatars user={profile.username || ''} width="140px" height="140px" />}
               </Badge>
             </Grid>
