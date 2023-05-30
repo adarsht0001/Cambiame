@@ -32,6 +32,6 @@ function stringAvatar(name) {
 export default function BackgroundLetterAvatars(props) {
   const { user, width, height } = props;
   return (
-    <Avatar {...stringAvatar(user)} sx={{ width, height }} />
+    <Avatar {...stringAvatar(user || 'user')} sx={{ width, height }} />
   );
 }
