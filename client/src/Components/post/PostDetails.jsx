@@ -223,7 +223,7 @@ export default function PostDetails() {
                 {
                 user.profile
                   ? <PictureAvatar name={user?.name || ''} image={user.profile} />
-                  : <BackgroundLetterAvatars user={user.username} />
+                  : <BackgroundLetterAvatars user={user.username || ''} />
               }
               </Grid>
               <Grid item flexGrow="1" mx={2}>
