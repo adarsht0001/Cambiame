@@ -47,6 +47,7 @@ export default function Home() {
       <Box height="92vh" sx={{ overflowY: 'scroll', px: 4, overflowX: 'hidden' }}>
         <AddPost callback={() => {
           refetch();
+          setEnded(false);
         }}
         />
         {data?.map((post) => (
@@ -55,6 +56,7 @@ export default function Home() {
             data={post}
             callback={() => {
               refetch();
+              setEnded(false);
             }}
           />
         ))}

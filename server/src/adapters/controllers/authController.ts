@@ -13,6 +13,8 @@ import {
 } from "../../application/use_cases/auth/userAuth";
 import { MailService } from "../../framework/services/mailServices";
 import { MailServiceInterface } from "../../application/services/mailServicesInterface";
+import { S3service } from "../../framework/services/s3Service";
+import { S3serviceInterface } from "../../application/services/s3serviceInterface";
 
 const authController = (
   useRepositoryImpl: UserRepositoryMongoDB,
@@ -20,15 +22,18 @@ const authController = (
   authServiceImpl: AuthService,
   authService: AuthServiceInterface,
   mailServiceimpl: MailService,
-  mailService: MailServiceInterface
+  mailService: MailServiceInterface,
+  s3ServiceImpl: S3service,
+  s3Service: S3serviceInterface
 ) => {
   const dbRepositortUser = userDbrepository(useRepositoryImpl());
   const authservice = authService(authServiceImpl());
   const mailServices = mailService(mailServiceimpl());
+  const s3Services = s3Service(s3ServiceImpl());
 
   const login = expressAsyncHandler(async (req: Request, res: Response) => {
     const { email, password }: { email: string; password: string } = req.body;
-    userLogin(email, password, dbRepositortUser, authservice)
+    userLogin(email, password, dbRepositortUser, authservice, s3Services)
       .then((user) => {
         return res.status(201).json({ status: true, user });
       })

@@ -14,13 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const userAuth_1 = require("../../application/use_cases/auth/userAuth");
-const authController = (useRepositoryImpl, userDbrepository, authServiceImpl, authService, mailServiceimpl, mailService) => {
+const authController = (useRepositoryImpl, userDbrepository, authServiceImpl, authService, mailServiceimpl, mailService, s3ServiceImpl, s3Service) => {
     const dbRepositortUser = userDbrepository(useRepositoryImpl());
     const authservice = authService(authServiceImpl());
     const mailServices = mailService(mailServiceimpl());
+    const s3Services = s3Service(s3ServiceImpl());
     const login = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password } = req.body;
-        (0, userAuth_1.userLogin)(email, password, dbRepositortUser, authservice)
+        (0, userAuth_1.userLogin)(email, password, dbRepositortUser, authservice, s3Services)
             .then((user) => {
             return res.status(201).json({ status: true, user });
         })

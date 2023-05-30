@@ -3,12 +3,14 @@ import { AuthServiceInterface } from "../../services/authServiceInterface";
 import { Signup, User, Verificationpayload } from "../../../types/userTypes";
 import { MailServiceInterface } from "../../services/mailServicesInterface";
 import { Mail } from "../../../types/mailOption";
+import { S3serviceInterface } from "../../services/s3serviceInterface";
 
 export const userLogin = (
   email: string,
   password: string,
   userRepository: ReturnType<UserRepositoryInterFace>,
-  authService: ReturnType<AuthServiceInterface>
+  authService: ReturnType<AuthServiceInterface>,
+  s3Services: ReturnType<S3serviceInterface>
 ) => {
   return new Promise<User>(async (resolve, reject) => {
     const user = await userRepository.getByEmail(email);
@@ -30,6 +32,10 @@ export const userLogin = (
         email: user.email,
         username: user.username,
       };
+      let url = await s3Services.getObjectSignedUrl(
+        user.profilePhoto as string
+      );
+      payload.profile = url;
       const token = authService.createToken(payload);
       payload.id = user._id;
       payload.token = token;
@@ -72,7 +78,7 @@ export const userSignup = (
         _id: inserted._id,
       };
       const token = authService.onetimeLink(payload, secretKey);
-      const link = `http://localhost:3000/verifyemail/${inserted._id}/${token}`;
+      const link = `https://cambiame.site/verifyemail/${inserted._id}/${token}`;
       const mailOpt: Mail = {
         from: "Cambiame <Cambiame@gmail.com>",
         to: "adarsht00001@gmail.com",
@@ -106,7 +112,7 @@ export const forgottenPassword = (
         _id: user._id,
       };
       const token = authService.forgottenPassword(payload, secretKey);
-      const link = `http://localhost:3000/resetpassword/${user._id}/${token}`;
+      const link = `https://cambiame.site/resetpassword/${user._id}/${token}`;
       const mailOpt: Mail = {
         from: "Cambiame <Cambiame@gmail.com>",
         to: "adarsht00001@gmail.com",

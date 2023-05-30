@@ -6,6 +6,8 @@ import { authService } from "../../services/authServices";
 import { authServiceInterface } from "../../../application/services/authServiceInterface";
 import { mailService } from "../../services/mailServices";
 import { mailServiceInterface } from "../../../application/services/mailServicesInterface";
+import { s3ServiceInterface } from "../../../application/services/s3serviceInterface";
+import { s3Service } from "../../services/s3Service";
 
 const authRoute = () => {
   const router = express.Router();
@@ -16,7 +18,9 @@ const authRoute = () => {
     authService,
     authServiceInterface,
     mailService,
-    mailServiceInterface
+    mailServiceInterface,
+    s3Service,
+    s3ServiceInterface
   );
   router.post("/login", controller.login);
   router.post("/signup", controller.signup);
