@@ -32,7 +32,7 @@ export default function LeftSidebar() {
   };
 
   return (
-    <Box sx={{ height: '100vh', maxWidth: '100%' }}>
+    <Box sx={{ maxWidth: '100%' }}>
       <Hidden lgDown>
         <Box
           textAlign="center"

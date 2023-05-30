@@ -43,6 +43,9 @@ function AddPost({ callback }) {
       <TextField
         variant="outlined"
         label="Whats on Your Mind"
+        id="outlined-multiline-flexible"
+        multiline
+        maxRows={2}
         value={text}
         onChange={(e) => setText(e.target.value)}
         sx={{ marginLeft: '3px' }}
@@ -85,6 +88,9 @@ function AddPost({ callback }) {
               </InputAdornment>
             </>
           ),
+          style: {
+            borderRadius: '40px',
+          },
         }}
       />
     </FormControl>

@@ -46,7 +46,7 @@ export default function Layout() {
         }}
       >
         <Grid container>
-          <Grid item xs={1} lg={2}>
+          <Grid item xs={1} lg={2} maxHeight="80vh">
             <LeftSidebar />
           </Grid>
           <Grid item xs={11} lg={10}>
@@ -64,7 +64,7 @@ export default function Layout() {
                 </Box>
               </Grid>
               <Hidden lgDown>
-                <Grid item lg={4} sx={{ height: '100vh' }}>
+                <Grid item lg={4} sx={{ height: '100vh' }} maxHeight="80vh">
                   <RightSidebar />
                 </Grid>
               </Hidden>

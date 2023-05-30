@@ -31,7 +31,7 @@ export default function Home() {
   const { data, loading, refetch } = useLazyLoad({ triggerRef, onGrabData });
 
   return (
-    <Box m={2}>
+    <Box>
       <Box borderBottom="1px solid #ccc" padding="8px 18px">
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
@@ -44,7 +44,17 @@ export default function Home() {
           </Grid>
         </Grid>
       </Box>
-      <Box height="92vh" sx={{ overflowY: 'scroll', px: 4, overflowX: 'hidden' }}>
+      <Box
+        height="92vh"
+        sx={{
+          overflowY: 'scroll',
+          px: 4,
+          overflowX: 'hidden',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
+      >
         <AddPost callback={() => {
           refetch();
           setEnded(false);
