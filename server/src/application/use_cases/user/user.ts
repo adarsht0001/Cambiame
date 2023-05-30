@@ -13,28 +13,45 @@ export const getUserById = (
   return new Promise<object>((resolve, reject) => {
     userRepository.getByName(name).then(async (user) => {
       if (user) {
-        if (user.profilePhoto) {
-          let url = await s3Services.getObjectSignedUrl(user.profilePhoto);
-          user.set("profile", url, { strict: false });
-        }
         if (user.coverPhoto) {
           let url = await s3Services.getObjectSignedUrl(user.coverPhoto);
           user.set("cover", url, { strict: false });
         }
         const objectIdString: string = user._id.toString();
-        postRepository.getpostbyUserId(objectIdString).then(async (posts) => {
-          for (let post of posts) {
-            if (post.image) {
-              let url = await s3Services.getObjectSignedUrl(post.image);
-              post.set("link", url, { strict: false });
+        if (user.profilePhoto) {
+          let userProfile = await s3Services.getObjectSignedUrl(
+            user.profilePhoto
+          );
+          user.set("profile", userProfile, { strict: false });
+          postRepository.getpostbyUserId(objectIdString).then(async (posts) => {
+            for (let post of posts) {
+              if (post.image) {
+                let url = await s3Services.getObjectSignedUrl(post.image);
+                post.set("link", url, { strict: false });
+              }
+              post.set("userProfile", userProfile, { strict: false });
             }
-          }
-          const profile = {
-            user,
-            posts,
-          };
-          resolve(profile);
-        });
+            const profile = {
+              user,
+              posts,
+            };
+            resolve(profile);
+          });
+        } else {
+          postRepository.getpostbyUserId(objectIdString).then(async (posts) => {
+            for (let post of posts) {
+              if (post.image) {
+                let url = await s3Services.getObjectSignedUrl(post.image);
+                post.set("link", url, { strict: false });
+              }
+            }
+            const profile = {
+              user,
+              posts,
+            };
+            resolve(profile);
+          });
+        }
       } else {
         reject({ msg: "user not found" });
       }
@@ -174,21 +191,28 @@ export const editUser = (
         return { type: file.fieldname, link };
       })
     );
+    const userprofilphoto =
+      links.find((link: any) => link.type === "profile")?.link ||
+      user?.profilePhoto;
     await userRepository.updateOne(
       { username: user?.username },
       {
         $set: {
           username: data.name,
           email: data.email,
-          profilePhoto:
-            links.find((link: any) => link.type === "profile")?.link ||
-            user?.profilePhoto,
+          profilePhoto: userprofilphoto,
           coverPhoto:
             links.find((link: any) => link.type === "cover")?.link ||
             user?.coverPhoto,
         },
       }
     );
-    resolve({ msg: "profile updated", username: data.name, email: data.email });
+    let url = await s3Services.getObjectSignedUrl(userprofilphoto);
+    resolve({
+      msg: "profile updated",
+      username: data.name,
+      email: data.email,
+      profile: url,
+    });
   });
 };

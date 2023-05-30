@@ -32,13 +32,16 @@ export const userLogin = (
         email: user.email,
         username: user.username,
       };
-      let url = await s3Services.getObjectSignedUrl(
-        user.profilePhoto as string
-      );
-      payload.profile = url;
       const token = authService.createToken(payload);
       payload.id = user._id;
       payload.token = token;
+      if (user.profilePhoto) {
+        let url = await s3Services.getObjectSignedUrl(
+          user.profilePhoto as string
+        );
+        payload.profile = url;
+        resolve(payload);
+      }
       resolve(payload);
     } else {
       reject({ msg: "Invalid User", email: true });

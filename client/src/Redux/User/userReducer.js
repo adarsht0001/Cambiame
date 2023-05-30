@@ -6,6 +6,7 @@ const initialState = {
   email: '',
   access_Token: '',
   id: '',
+  profile: '',
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -28,6 +29,7 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         name: payload.username,
         email: payload.email,
+        profile: payload.profile,
       };
 
     default:
