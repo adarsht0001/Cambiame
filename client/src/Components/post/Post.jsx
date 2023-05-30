@@ -213,8 +213,11 @@ export default function Post({ data, callback }) {
         <Box>
           <Grid container>
             <Grid item>
-              {/* <img src="" alt="logo" width="60px" /> */}
-              <BackgroundLetterAvatars user={post.user} />
+              {
+                user.profile
+                  ? <PictureAvatar user={user?.name || ''} image={user.profile} />
+                  : <BackgroundLetterAvatars user={user.username} />
+              }
             </Grid>
             <Grid item flexGrow="1" mx={2}>
               <Box padding=".5rem 0">

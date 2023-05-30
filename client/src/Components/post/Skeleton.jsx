@@ -8,7 +8,7 @@ function LoadingPost() {
   return (
     [1, 2, 3, 4, 5, 6].map((e) => (
       <Card
-        sx={{ padding: '2rem' }}
+        sx={{ padding: '2rem', bgcolor: '#D3D3D3', m: '5px' }}
         key={e}
       >
         <CardHeader

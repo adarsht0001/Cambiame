@@ -17,6 +17,7 @@ const reducer = (state = initialState, { type, payload }) => {
         email: payload.email,
         access_Token: payload.token,
         id: payload.id,
+        profile: payload.profile || null,
       };
 
     case USER_LOGOUT:
@@ -28,9 +29,7 @@ const reducer = (state = initialState, { type, payload }) => {
         name: payload.username,
         email: payload.email,
       };
-      // return {
-      //   name:pay
-      // }
+
     default:
       return state;
   }

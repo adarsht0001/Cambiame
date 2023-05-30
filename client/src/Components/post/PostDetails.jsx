@@ -220,7 +220,11 @@ export default function PostDetails() {
           <Box>
             <Grid container mt={2}>
               <Grid item>
-                <BackgroundLetterAvatars user={post.user} />
+                {
+                user.profile
+                  ? <PictureAvatar user={user?.name || ''} image={user.profile} />
+                  : <BackgroundLetterAvatars user={user.username} />
+              }
               </Grid>
               <Grid item flexGrow="1" mx={2}>
                 <Box padding=".5rem 0">

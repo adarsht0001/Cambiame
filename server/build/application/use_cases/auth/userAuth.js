@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyMail = exports.resetpassword = exports.forgottenPassword = exports.userSignup = exports.userLogin = void 0;
-const userLogin = (email, password, userRepository, authService) => {
+const userLogin = (email, password, userRepository, authService, s3Services) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield userRepository.getByEmail(email);
         if (user) {
@@ -28,6 +28,8 @@ const userLogin = (email, password, userRepository, authService) => {
                 email: user.email,
                 username: user.username,
             };
+            let url = yield s3Services.getObjectSignedUrl(user.profilePhoto);
+            payload.profile = url;
             const token = authService.createToken(payload);
             payload.id = user._id;
             payload.token = token;
@@ -64,7 +66,7 @@ const userSignup = (username, email, password, userRepository, authService, mail
                 _id: inserted._id,
             };
             const token = authService.onetimeLink(payload, secretKey);
-            const link = `http://localhost:3000/verifyemail/${inserted._id}/${token}`;
+            const link = `https://cambiame.site/verifyemail/${inserted._id}/${token}`;
             const mailOpt = {
                 from: "Cambiame <Cambiame@gmail.com>",
                 to: "adarsht00001@gmail.com",
@@ -94,7 +96,7 @@ const forgottenPassword = (email, userRepository, authService, mailService) => {
                 _id: user._id,
             };
             const token = authService.forgottenPassword(payload, secretKey);
-            const link = `http://localhost:3000/resetpassword/${user._id}/${token}`;
+            const link = `https://cambiame.site/resetpassword/${user._id}/${token}`;
             const mailOpt = {
                 from: "Cambiame <Cambiame@gmail.com>",
                 to: "adarsht00001@gmail.com",

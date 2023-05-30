@@ -3,6 +3,7 @@ export interface User {
   email: string;
   username: string;
   token?: string;
+  profile?: string;
 }
 
 export interface Signup {
