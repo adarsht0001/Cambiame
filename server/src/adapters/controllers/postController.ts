@@ -99,7 +99,7 @@ const postController = (
 
   const getAllcomments = (req: Request, res: Response) => {
     const { postId } = req.params;
-    getComments(postId, postRepo).then((data) => {
+    getComments(postId, postRepo, dbRepositortUser, s3Services).then((data) => {
       res.json(data);
     });
   };
