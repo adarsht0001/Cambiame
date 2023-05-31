@@ -16,12 +16,19 @@ const server = http.createServer(app);
 connectDB();
 
 const io = new Server(server, {
+  path: "/socket.io/",
   cors: {
     origin: "http://localhost:3000",
     // origin: "https://cambiame.site",
     methods: ["GET", "POST"],
   },
 });
+// const io = require("socket.io")(server,{path:'/server/socket.io/'},{
+//   cors: {
+//     origin: "http://localhost:3000",
+//     methods:["GET","POST","OPTIONS"]
+//   },
+// });
 
 let users: any = [];
 
