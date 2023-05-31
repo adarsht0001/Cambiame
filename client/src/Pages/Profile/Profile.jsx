@@ -90,7 +90,11 @@ export default function Profile() {
       email: user.email,
       profle: user.profile || null,
     };
-    axios.put(`/follow/${profile.username}`, follower).then((res) => {
+    axios.put(`/follow/${profile.username}`, follower, {
+      headers: {
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((res) => {
       console.log(res);
       setfollowing(true);
       setrefresh(!refresh);
@@ -104,7 +108,11 @@ export default function Profile() {
       senderId: user.id,
       receiverId: profile._id,
     };
-    axios.post('/conversation', data).then((res) => {
+    axios.post('/conversation', data, {
+      headers: {
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((res) => {
       dispatch(CHAT(profile));
       navigate(`/chat/${res.data._id}`);
     });
@@ -237,8 +245,8 @@ export default function Profile() {
             ) : (
               <>
                 {following && (
-                <IconButton>
-                  <MailOutlineIcon onClick={() => handleMessage()} />
+                <IconButton onClick={() => handleMessage()}>
+                  <MailOutlineIcon />
                 </IconButton>
                 )}
                 {following
@@ -415,16 +423,6 @@ export default function Profile() {
         </Box>
       </Editprofile>
       )}
-      {/* {openCrop && (
-      <EditImage
-        open={openCrop}
-        handleClose={handleCropperClose}
-        saveText="Edit"
-        handleSave={alert('hi')}
-      >
-        <Cropper handleClose={handleCropperClose} image={preview} />
-      </EditImage>
-      )} */}
     </>
   );
 }

@@ -18,6 +18,7 @@ import UserTables from '../Pages/adminUsers/userTable';
 import Dashboard from '../Pages/adminDashboard/Dashboard';
 import ReportPost from '../Pages/adminReport/ReportPost';
 import AdminPost from '../Pages/adminPost/AdminPost';
+import { AdminIsLogged, AdminLoggedOut } from '../Auth/adminAuth';
 
 function Router() {
   return (
@@ -38,12 +39,16 @@ function Router() {
           <Route element={<Signup />} exact path="/signup" />
           <Route element={<Login />} exact path="/login" />
         </Route>
-        <Route element={<AdminLogin />} path="/admin" />
-        <Route element={<SidebarAdmin />}>
-          <Route element={<UserTables />} path="/admin/user" />
-          <Route element={<Dashboard />} path="/admin/dashboard" />
-          <Route element={<ReportPost />} path="/admin/post" />
-          <Route element={<AdminPost />} path="/admin/post/:id" />
+        <Route element={<AdminLoggedOut />}>
+          <Route element={<AdminLogin />} path="/admin" />
+        </Route>
+        <Route element={<AdminIsLogged />}>
+          <Route element={<SidebarAdmin />}>
+            <Route element={<UserTables />} path="/admin/user" />
+            <Route element={<Dashboard />} path="/admin/dashboard" />
+            <Route element={<ReportPost />} path="/admin/post" />
+            <Route element={<AdminPost />} path="/admin/post/:id" />
+          </Route>
         </Route>
         <Route path="*" exact element={<Error />} />
       </Routes>

@@ -23,7 +23,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
+// require("../src/framework/websocket/SocketManager")(io);
 let users: any = [];
 
 const addUser = (userId: any, socketId: any) => {

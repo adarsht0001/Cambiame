@@ -7,9 +7,9 @@ import { postRepository } from "../../../application/repositories/postRepository
 import multer from "multer";
 import { s3Service } from "../../services/s3Service";
 import { s3ServiceInterface } from "../../../application/services/s3serviceInterface";
+import authenticateToken from "../middleware/jwtMiddleware";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
 const userRoute = () => {
   const router = express.Router();
 
@@ -22,12 +22,21 @@ const userRoute = () => {
     s3ServiceInterface
   );
 
-  router.get("/profile/:name", controller.getProfile);
-  router.get("/search", controller.searchUsername);
-  router.get("/search-user/:name/:user", controller.searchResult);
-  router.put("/follow/:name", controller.follow);
-  router.get("/user/:id", controller.getUser);
-  router.post("/edit-profile", upload.any(), controller.editProfile);
+  router.get("/profile/:name", authenticateToken, controller.getProfile);
+  router.get("/search", authenticateToken, controller.searchUsername);
+  router.get(
+    "/search-user/:name/:user",
+    authenticateToken,
+    controller.searchResult
+  );
+  router.put("/follow/:name", authenticateToken, controller.follow);
+  router.get("/user/:id", authenticateToken, controller.getUser);
+  router.post(
+    "/edit-profile",
+    authenticateToken,
+    upload.any(),
+    controller.editProfile
+  );
   return router;
 };
 

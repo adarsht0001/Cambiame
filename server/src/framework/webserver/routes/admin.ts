@@ -8,6 +8,7 @@ import { authService } from "../../services/authServices";
 import { authServiceInterface } from "../../../application/services/authServiceInterface";
 import { s3Service } from "../../services/s3Service";
 import { s3ServiceInterface } from "../../../application/services/s3serviceInterface";
+import authenticateToken from "../middleware/jwtMiddleware";
 
 const AdminRoute = () => {
   const router = express.Router();
@@ -24,13 +25,13 @@ const AdminRoute = () => {
   );
 
   router.post("/login", controller.login);
-  router.get("/users", controller.getAllUsers);
-  router.put("/block-user", controller.blockUser);
-  router.get("/user-dashboard", controller.getDashboard);
+  router.get("/users", authenticateToken, controller.getAllUsers);
+  router.put("/block-user", authenticateToken, controller.blockUser);
+  router.get("/user-dashboard", authenticateToken, controller.getDashboard);
   router.get("/reported-post", controller.getReportedPost);
   router.get("/post/:id", controller.getSinglepost);
-  router.get("/chart", controller.userChart);
-  router.get("/postchart", controller.postChart);
+  router.get("/chart", authenticateToken, controller.userChart);
+  router.get("/postchart", authenticateToken, controller.postChart);
 
   return router;
 };

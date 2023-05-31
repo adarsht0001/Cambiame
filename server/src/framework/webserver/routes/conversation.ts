@@ -4,6 +4,7 @@ import { conversationRepositoryMongoDb } from "../../database/mongoDb/repositori
 import { conversationRepository } from "../../../application/repositories/conversationRepositoryInterface";
 import { messageRepositoryMongoDb } from "../../database/mongoDb/repositories/messagRepository";
 import { messageRepository } from "../../../application/repositories/messageRepositoryInterface";
+import authenticateToken from "../middleware/jwtMiddleware";
 
 const conversationRoute = () => {
   const router = express.Router();
@@ -15,8 +16,8 @@ const conversationRoute = () => {
     messageRepository
   );
 
-  router.post("/", controller.createConversation);
-  router.get("/:userId", controller.getConversation);
+  router.post("/", authenticateToken, controller.createConversation);
+  router.get("/:userId", authenticateToken, controller.getConversation);
 
   return router;
 };

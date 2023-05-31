@@ -41,7 +41,11 @@ export default function PostDetails() {
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    axios.get(`/post/get-post/${id}`).then((response) => {
+    axios.get(`/post/get-post/${id}`, {
+      headers: {
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((response) => {
       const { data } = response;
       if (data?.user === user.name) {
         setisUser(true);
@@ -61,7 +65,6 @@ export default function PostDetails() {
   const like = (values) => {
     axios.put(`/post/like/${user.id}/${values._id}`, {}, {
       headers: {
-        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${user.access_Token}`,
       },
     }).then((res) => {
@@ -91,7 +94,11 @@ export default function PostDetails() {
       postid: post._id,
       comment: commentText,
     };
-    axios.post('/post/add-comment', commentData).then(() => {
+    axios.post('/post/add-comment', commentData, {
+      headers: {
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then(() => {
       setCommentText('');
       toast.success('Comment Added');
       // setLoading(false);

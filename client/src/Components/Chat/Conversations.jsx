@@ -4,7 +4,7 @@ import { Grid, Skeleton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TimeAgo from 'react-timeago';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
 import axios from '../../Axios/axios';
@@ -16,9 +16,16 @@ function Conversations({ conversation, userId }) {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState('');
   const dispatch = useDispatch();
+  const data = useSelector((state) => state.user);
+
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== userId);
-    axios.get(`/user/${friendId}`).then((res) => {
+    axios.get(`/user/${friendId}`, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${data.access_Token}`,
+      },
+    }).then((res) => {
       setUser(res.data);
       console.log(loading);
       setLoading(false);

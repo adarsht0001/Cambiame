@@ -7,6 +7,7 @@ import { s3Service } from "../../services/s3Service";
 import { userRepositoryMongoDB } from "../../database/mongoDb/repositories/userRepository";
 import { userRepository } from "../../../application/repositories/userRepositoryInterface";
 import multer from "multer";
+import authenticateToken from "../middleware/jwtMiddleware";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -22,14 +23,23 @@ const PostRoute = () => {
     s3ServiceInterface
   );
 
-  router.get("/", controller.getPost);
-  router.post("/", upload.single("file"), controller.createPost);
-  router.delete("/delete-post/:id", controller.deletePost);
-  router.put("/like/:id/:postId", controller.likePost);
-  router.put("/report/:id/:postId", controller.reportPost);
-  router.post("/add-comment", controller.addComent);
-  router.get("/get-comments/:postId", controller.getAllcomments);
-  router.get("/get-post/:id", controller.getSinglepost);
+  router.get("/", authenticateToken, controller.getPost);
+  router.post(
+    "/",
+    authenticateToken,
+    upload.single("file"),
+    controller.createPost
+  );
+  router.delete("/delete-post/:id", authenticateToken, controller.deletePost);
+  router.put("/like/:id/:postId", authenticateToken, controller.likePost);
+  router.put("/report/:id/:postId", authenticateToken, controller.reportPost);
+  router.post("/add-comment", authenticateToken, controller.addComent);
+  router.get("/get-post/:id", authenticateToken, controller.getSinglepost);
+  router.get(
+    "/get-comments/:postId",
+    authenticateToken,
+    controller.getAllcomments
+  );
 
   return router;
 };

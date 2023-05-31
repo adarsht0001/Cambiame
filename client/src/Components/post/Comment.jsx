@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import TimeAgo from 'react-timeago';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from '../../Axios/axios';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
 import PictureAvatar from '../avatar/PictureAvatar';
@@ -11,9 +12,14 @@ export default function Comment({ postid, refresh }) {
   const [comments, setComments] = useState([]);
   const [Loading, setLoading] = useState(true);
   const naigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    axios.get(`/post/get-comments/${postid}`).then((response) => {
+    axios.get(`/post/get-comments/${postid}`, {
+      headers: {
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((response) => {
       setComments(response.data);
       setLoading(false);
     }).catch((err) => {

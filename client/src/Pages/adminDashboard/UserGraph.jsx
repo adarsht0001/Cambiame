@@ -10,12 +10,18 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { useSelector } from 'react-redux';
 import axios from '../../Axios/axios';
 
 function UserGraph() {
   const [userCount, setUserCount] = useState([]);
+  const admin = useSelector((state) => state.admin);
   useEffect(() => {
-    axios.get('/admin/chart')
+    axios.get('/admin/chart', {
+      headers: {
+        Authorization: `Bearer ${admin.access_Token}`,
+      },
+    })
       .then((res) => {
         const counts = {};
         res.data?.forEach((user) => {

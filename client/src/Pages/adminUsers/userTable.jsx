@@ -14,6 +14,7 @@ import { GoVerified, GoX } from 'react-icons/go';
 import { MdArrowForwardIos } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
+import { useSelector } from 'react-redux';
 import axios from '../../Axios/axios';
 
 export default function UserTables() {
@@ -23,12 +24,17 @@ export default function UserTables() {
   const [pageInfo, setPageInfo] = useState({});
   const navigate = useNavigate();
   const socket = useRef();
+  const admin = useSelector((state) => state.admin);
 
   useEffect(() => {
     socket.current = io('https://cambiame.site', { path: '/api/socket.io/' });
   }, []);
   useEffect(() => {
-    axios.get(`/admin/users?page=${page}`).then((res) => {
+    axios.get(`/admin/users?page=${page}`, {
+      headers: {
+        Authorization: `Bearer ${admin.access_Token}`,
+      },
+    }).then((res) => {
       setUsers(res.data.results);
       setPageInfo({ count: res.data.totalPages });
     }).catch((err) => {
@@ -37,7 +43,11 @@ export default function UserTables() {
   }, [paginate]);
 
   const blockUser = (email, id) => {
-    axios.put('/admin/block-user', { email }).then((res) => {
+    axios.put('/admin/block-user', { email }, {
+      headers: {
+        Authorization: `Bearer ${admin.access_Token}`,
+      },
+    }).then((res) => {
       if (res.data.msg === 'blocked user') {
         alert('blocked');
         socket.current.emit('blockUser', {
