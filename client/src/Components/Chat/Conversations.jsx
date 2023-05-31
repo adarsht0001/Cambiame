@@ -1,5 +1,6 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
-import { Grid, Typography } from '@mui/material';
+import { Grid, Skeleton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -40,11 +41,10 @@ function Conversations({ conversation, userId }) {
     >
       <Grid container flexWrap="nowrap" onClick={handleNavigate}>
         <Grid item sx={{ paddingRight: '1rem' }}>
-          {
-                user.profile
-                  ? <PictureAvatar name={user?.name || ''} image={user.profile} />
-                  : <BackgroundLetterAvatars user={user.username || ''} />
-              }
+          { loading ? (<Skeleton animation="wave" variant="circular" width={40} height={40} />)
+            : (user.profile
+              ? <PictureAvatar name={user?.name || ''} image={user.profile} />
+              : <BackgroundLetterAvatars user={user.username || ''} />)}
         </Grid>
         <Grid item flexGrow="1">
           <Box>
@@ -56,16 +56,30 @@ function Conversations({ conversation, userId }) {
             >
               <Grid item>
                 <Box display="flex">
-                  <Typography
-                    sx={{ fontSize: '16px', fontWeight: 500, mr: '6px' }}
-                  >
-                    {user.username}
-                  </Typography>
+                  {
+                    loading ? (
+                      <Skeleton animation="wave" height={10} width="40%" />
+                    )
+                      : (
+                        <Typography
+                          sx={{ fontSize: '16px', fontWeight: 500, mr: '6px' }}
+                        >
+                          {user.username}
+                        </Typography>
+                      )
+                  }
                 </Box>
                 <Box>
-                  <Typography sx={{ fontSize: '15px', color: '#555' }}>
-                    {conversation?.message?.text ? conversation.message.text : 'start a coversation'}
-                  </Typography>
+                  {
+                    loading ? (
+                      <Skeleton animation="wave" height={10} width="20%" />
+                    )
+                      : (
+                        <Typography sx={{ fontSize: '15px', color: '#555' }}>
+                          {conversation?.message?.text ? conversation.message.text : 'start a coversation'}
+                        </Typography>
+                      )
+                  }
                 </Box>
               </Grid>
             </Grid>
