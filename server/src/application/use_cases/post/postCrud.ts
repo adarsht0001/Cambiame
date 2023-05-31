@@ -149,11 +149,24 @@ export const addComents = (
 
 export const getComments = (
   postId: string,
-  postRepository: ReturnType<PostRepositoryInterface>
+  postRepository: ReturnType<PostRepositoryInterface>,
+  userRepository: ReturnType<UserRepositoryInterFace>,
+  s3Services: ReturnType<S3serviceInterface>
 ) => {
   return new Promise((resolve, reject) => {
-    postRepository.getById(postId).then((post) => {
+    postRepository.getById(postId).then(async (post) => {
       const comments = post?.comments.sort((a, b) => b.Date - a.Date);
+
+      if (comments) {
+        for (let comment of comments) {
+          const user = await userRepository.getById(comment.id);
+          if (user?.profilePhoto) {
+            let url = await s3Services.getObjectSignedUrl(user.profilePhoto);
+            comment.userProfile = url;
+          }
+        }
+        return resolve(comments);
+      }
       resolve(comments);
     });
   });

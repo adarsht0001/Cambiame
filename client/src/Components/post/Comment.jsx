@@ -2,13 +2,15 @@ import { CircularProgress, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import TimeAgo from 'react-timeago';
+import { useNavigate } from 'react-router-dom';
 import axios from '../../Axios/axios';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
+import PictureAvatar from '../avatar/PictureAvatar';
 
 export default function Comment({ postid, refresh }) {
   const [comments, setComments] = useState([]);
-
   const [Loading, setLoading] = useState(true);
+  const naigate = useNavigate();
 
   useEffect(() => {
     axios.get(`/post/get-comments/${postid}`).then((response) => {
@@ -37,8 +39,12 @@ export default function Comment({ postid, refresh }) {
           }}
         >
           <Grid container flexWrap="nowrap">
-            <Grid item sx={{ paddingRight: '1rem' }}>
-              <BackgroundLetterAvatars user={comment.name} />
+            <Grid item sx={{ paddingRight: '1rem' }} onClick={() => naigate(`/profile/${comment.name}`)}>
+              {
+                comment.userProfile
+                  ? <PictureAvatar name={comment.name || ''} image={comment.userProfile} />
+                  : <BackgroundLetterAvatars user={comment?.name || ''} />
+              }
             </Grid>
             <Grid item flexGrow="1">
               <Box>
