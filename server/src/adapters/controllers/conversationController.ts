@@ -32,10 +32,16 @@ const conversationController = (
   };
 
   const getConversation = async (req: Request, res: Response) => {
-    const data: any = await conversationRepo.getConversation(req.params.userId);
-    // const message = await messageRepo.getLastMessage(data?._id as string);
-    // data?.set("text", message?.text, { strict: false });
-    res.json(data);
+    const conversations: any = await conversationRepo.getConversation(
+      req.params.userId
+    );
+    for (let conversation of conversations) {
+      const message = await messageRepo.getLastMessage(
+        conversation?._id as string
+      );
+      conversation.set("message", message, { strict: false });
+    }
+    res.json(conversations);
   };
   return {
     createConversation,

@@ -14,28 +14,44 @@ const getUserById = (name, userRepository, postRepository, s3Services) => {
     return new Promise((resolve, reject) => {
         userRepository.getByName(name).then((user) => __awaiter(void 0, void 0, void 0, function* () {
             if (user) {
-                if (user.profilePhoto) {
-                    let url = yield s3Services.getObjectSignedUrl(user.profilePhoto);
-                    user.set("profile", url, { strict: false });
-                }
                 if (user.coverPhoto) {
                     let url = yield s3Services.getObjectSignedUrl(user.coverPhoto);
                     user.set("cover", url, { strict: false });
                 }
                 const objectIdString = user._id.toString();
-                postRepository.getpostbyUserId(objectIdString).then((posts) => __awaiter(void 0, void 0, void 0, function* () {
-                    for (let post of posts) {
-                        if (post.image) {
-                            let url = yield s3Services.getObjectSignedUrl(post.image);
-                            post.set("link", url, { strict: false });
+                if (user.profilePhoto) {
+                    let userProfile = yield s3Services.getObjectSignedUrl(user.profilePhoto);
+                    user.set("profile", userProfile, { strict: false });
+                    postRepository.getpostbyUserId(objectIdString).then((posts) => __awaiter(void 0, void 0, void 0, function* () {
+                        for (let post of posts) {
+                            if (post.image) {
+                                let url = yield s3Services.getObjectSignedUrl(post.image);
+                                post.set("link", url, { strict: false });
+                            }
+                            post.set("userProfile", userProfile, { strict: false });
                         }
-                    }
-                    const profile = {
-                        user,
-                        posts,
-                    };
-                    resolve(profile);
-                }));
+                        const profile = {
+                            user,
+                            posts,
+                        };
+                        resolve(profile);
+                    }));
+                }
+                else {
+                    postRepository.getpostbyUserId(objectIdString).then((posts) => __awaiter(void 0, void 0, void 0, function* () {
+                        for (let post of posts) {
+                            if (post.image) {
+                                let url = yield s3Services.getObjectSignedUrl(post.image);
+                                post.set("link", url, { strict: false });
+                            }
+                        }
+                        const profile = {
+                            user,
+                            posts,
+                        };
+                        resolve(profile);
+                    }));
+                }
             }
             else {
                 reject({ msg: "user not found" });
@@ -138,17 +154,24 @@ const editUser = (id, data, file, s3Services, userRepository) => {
             const link = yield s3Services.uploadtoS3(file.buffer, file.fieldname, file.mimetype);
             return { type: file.fieldname, link };
         })));
+        const userprofilphoto = ((_a = links.find((link) => link.type === "profile")) === null || _a === void 0 ? void 0 : _a.link) ||
+            (user === null || user === void 0 ? void 0 : user.profilePhoto);
         yield userRepository.updateOne({ username: user === null || user === void 0 ? void 0 : user.username }, {
             $set: {
                 username: data.name,
                 email: data.email,
-                profilePhoto: ((_a = links.find((link) => link.type === "profile")) === null || _a === void 0 ? void 0 : _a.link) ||
-                    (user === null || user === void 0 ? void 0 : user.profilePhoto),
+                profilePhoto: userprofilphoto,
                 coverPhoto: ((_b = links.find((link) => link.type === "cover")) === null || _b === void 0 ? void 0 : _b.link) ||
                     (user === null || user === void 0 ? void 0 : user.coverPhoto),
             },
         });
-        resolve({ msg: "profile updated", username: data.name, email: data.email });
+        let url = yield s3Services.getObjectSignedUrl(userprofilphoto);
+        resolve({
+            msg: "profile updated",
+            username: data.name,
+            email: data.email,
+            profile: url,
+        });
     }));
 };
 exports.editUser = editUser;

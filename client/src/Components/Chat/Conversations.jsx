@@ -4,18 +4,23 @@ import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import TimeAgo from 'react-timeago';
 import BackgroundLetterAvatars from '../avatar/StringAvatar';
 import axios from '../../Axios/axios';
 import { CHAT } from '../../Redux';
+import PictureAvatar from '../avatar/PictureAvatar';
 
 function Conversations({ conversation, userId }) {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState('');
   const dispatch = useDispatch();
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== userId);
     axios.get(`/user/${friendId}`).then((res) => {
       setUser(res.data);
+      console.log(loading);
+      setLoading(false);
     });
   }, []);
 
@@ -35,7 +40,11 @@ function Conversations({ conversation, userId }) {
     >
       <Grid container flexWrap="nowrap" onClick={handleNavigate}>
         <Grid item sx={{ paddingRight: '1rem' }}>
-          <BackgroundLetterAvatars user={user?.username || ''} />
+          {
+                user.profile
+                  ? <PictureAvatar name={user?.name || ''} image={user.profile} />
+                  : <BackgroundLetterAvatars user={user.username || ''} />
+              }
         </Grid>
         <Grid item flexGrow="1">
           <Box>
@@ -54,23 +63,23 @@ function Conversations({ conversation, userId }) {
                   </Typography>
                 </Box>
                 <Box>
-                  {/* <Typography sx={{ fontSize: '15px', color: '#555' }}>
-                    dhsajs
-                    {' '}
-
-                  </Typography> */}
+                  <Typography sx={{ fontSize: '15px', color: '#555' }}>
+                    {conversation?.message?.text ? conversation.message.text : 'start a coversation'}
+                  </Typography>
                 </Box>
               </Grid>
             </Grid>
           </Box>
         </Grid>
-        {/* <Typography
+        <Typography
           sx={{
             fontSize: '15px', ml: 'auto', color: '#555',
           }}
         >
-          2:34
-        </Typography> */}
+          <TimeAgo date={conversation?.message?.text
+            ? conversation.message.createdAt : conversation.createdAt}
+          />
+        </Typography>
       </Grid>
     </Box>
   );

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import {
+  CircularProgress,
   Grid,
   IconButton,
   Typography,
@@ -14,13 +15,19 @@ import Conversations from '../../Components/Chat/Conversations';
 
 function Conversation() {
   const [conversation, setConversation] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
     axios.get(`/conversation/${user.id}`).then((res) => {
-      console.log(res.data);
-      setConversation(res.data);
+      const result = res?.data;
+      result.sort((a, b) => {
+        const createdAtA = a.message ? new Date(a.message.createdAt).getTime() : 0;
+        const createdAtB = b.message ? new Date(b.message.createdAt).getTime() : 0;
+        return createdAtB - createdAtA;
+      });
+      setConversation(result);
+      setLoading(false);
     });
   }, []);
 
@@ -42,11 +49,34 @@ function Conversation() {
           </Grid>
         </Grid>
       </Box>
-      {
-        conversation?.map((c, i) => (
-          <Conversations key={i} conversation={c} userId={user.id} />
-        ))
-      }
+      <Box
+        padding="8px 20px"
+        sx={{
+          overflowX: 'hidden',
+          overflowY: 'auto',
+          scrollbarWidth: 'thin',
+          scrollBehavior: 'smooth',
+          '&::-webkit-scrollbar': {
+            width: '10px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: 'gray',
+            borderRadius: '10px',
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            background: 'darkgray',
+          },
+        }}
+      >
+        { loading ? (
+          <Box marginTop="1rem" textAlign="center">
+            <CircularProgress size={20} color="primary" />
+          </Box>
+        ) : (
+          conversation?.map((c, i) => (
+            <Conversations key={i} conversation={c} userId={user.id} />
+          )))}
+      </Box>
     </Box>
   );
 }

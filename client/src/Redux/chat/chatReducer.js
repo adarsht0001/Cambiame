@@ -16,6 +16,7 @@ const chatReducer = (state = initialState, { type, payload }) => {
         id: payload._id,
         lastMessage: payload.lastMessage,
         lastLogged: payload.lastLogged,
+        profile: payload.profile,
       };
     case END_CHAT:
       return { initialState };

@@ -16,7 +16,6 @@ const userController = (useRepositoryImpl, userDbrepository, postRepositortyImpl
     const s3Services = s3Service(s3ServiceImpl());
     const getProfile = (req, res) => {
         const { name } = req.params;
-        console.log(name);
         (0, user_1.getUserById)(name, userRepo, postRepo, s3Services)
             .then((data) => {
             res.json(data);
@@ -54,6 +53,11 @@ const userController = (useRepositoryImpl, userDbrepository, postRepositortyImpl
     };
     const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield userRepo.getById(req.params.id);
+        if (user === null || user === void 0 ? void 0 : user.profilePhoto) {
+            let userProfile = yield s3Services.getObjectSignedUrl(user.profilePhoto);
+            user.set("profile", userProfile, { strict: false });
+            return res.json(user);
+        }
         res.json(user);
     });
     const editProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

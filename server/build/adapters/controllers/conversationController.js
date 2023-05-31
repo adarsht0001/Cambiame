@@ -23,10 +23,12 @@ const conversationController = (conversationRepositoryImpl, conversationDbreposi
         }
     });
     const getConversation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield conversationRepo.getConversation(req.params.userId);
-        // const message = await messageRepo.getLastMessage(data?._id as string);
-        // data?.set("text", message?.text, { strict: false });
-        res.json(data);
+        const conversations = yield conversationRepo.getConversation(req.params.userId);
+        for (let conversation of conversations) {
+            const message = yield messageRepo.getLastMessage(conversation === null || conversation === void 0 ? void 0 : conversation._id);
+            conversation.set("message", message, { strict: false });
+        }
+        res.json(conversations);
     });
     return {
         createConversation,

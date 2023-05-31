@@ -25,9 +25,10 @@ const messageRepositoryMongoDb = () => {
         });
     });
     const getLastMessage = (id) => __awaiter(void 0, void 0, void 0, function* () {
-        const LastMessage = yield Message_1.default.findOne({ convesationId: id }).sort({
+        const LastMessage = yield Message_1.default.findOne({ conversationId: id }).sort({
             createdAt: -1,
         });
+        console.log(LastMessage);
         return LastMessage;
     });
     return {

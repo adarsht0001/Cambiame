@@ -19,6 +19,29 @@ export const conversationRepositoryMongoDb = () => {
     const data = await Conversation.find({
       members: { $all: [senderId, receiverId] },
     });
+
+    return data;
+  };
+
+  const getSort = async (userId: string) => {
+    const data = await Conversation.aggregate([
+      {
+        $match: {
+          members: { $in: [userId] },
+        },
+      },
+      {
+        $lookup: {
+          from: "Message", // Name of the Message collection
+          localField: "_id",
+          foreignField: "conversationId",
+          as: "message",
+        },
+      },
+      {
+        $sort: { "messageData.createdAt": -1 },
+      },
+    ]);
     return data;
   };
 
@@ -26,6 +49,7 @@ export const conversationRepositoryMongoDb = () => {
     createConversation,
     getConversation,
     getBothMembers,
+    getSort,
   };
 };
 

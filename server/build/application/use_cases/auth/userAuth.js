@@ -28,11 +28,14 @@ const userLogin = (email, password, userRepository, authService, s3Services) => 
                 email: user.email,
                 username: user.username,
             };
-            let url = yield s3Services.getObjectSignedUrl(user.profilePhoto);
-            payload.profile = url;
             const token = authService.createToken(payload);
             payload.id = user._id;
             payload.token = token;
+            if (user.profilePhoto) {
+                let url = yield s3Services.getObjectSignedUrl(user.profilePhoto);
+                payload.profile = url;
+                resolve(payload);
+            }
             resolve(payload);
         }
         else {
