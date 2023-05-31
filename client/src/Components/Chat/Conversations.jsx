@@ -72,7 +72,7 @@ function Conversations({ conversation, userId }) {
                 <Box>
                   {
                     loading ? (
-                      <Skeleton animation="wave" height={10} width="20%" />
+                      <Skeleton animation="wave" height={10} width="60%" />
                     )
                       : (
                         <Typography sx={{ fontSize: '15px', color: '#555' }}>

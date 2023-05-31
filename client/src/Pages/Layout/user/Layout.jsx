@@ -17,7 +17,8 @@ export default function Layout() {
   const [openModal, setOpenModal] = React.useState(false);
 
   useEffect(() => {
-    socket.current = io('http://localhost:5000');
+    // socket.current = io('http://localhost:5000');
+    socket.current = io('/api');
     socket.current?.emit('adduser', user.id);
 
     socket.current?.on('sentNotification', (data) => {
