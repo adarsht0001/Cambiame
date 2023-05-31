@@ -18,7 +18,7 @@ export default function Layout() {
 
   useEffect(() => {
     // socket.current = io('http://localhost:5000');
-    socket.current = io('https://cambiame.site/api');
+    socket.current = io('https://cambiame.site', { path: '/api/socket.io/' });
     socket.current?.emit('adduser', user.id);
 
     socket.current?.on('sentNotification', (data) => {
