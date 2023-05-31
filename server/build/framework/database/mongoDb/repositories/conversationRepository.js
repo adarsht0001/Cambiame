@@ -33,10 +33,32 @@ const conversationRepositoryMongoDb = () => {
         });
         return data;
     });
+    const getSort = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+        const data = yield Conversation_1.default.aggregate([
+            {
+                $match: {
+                    members: { $in: [userId] },
+                },
+            },
+            {
+                $lookup: {
+                    from: "Message",
+                    localField: "_id",
+                    foreignField: "conversationId",
+                    as: "message",
+                },
+            },
+            {
+                $sort: { "messageData.createdAt": -1 },
+            },
+        ]);
+        return data;
+    });
     return {
         createConversation,
         getConversation,
         getBothMembers,
+        getSort,
     };
 };
 exports.conversationRepositoryMongoDb = conversationRepositoryMongoDb;

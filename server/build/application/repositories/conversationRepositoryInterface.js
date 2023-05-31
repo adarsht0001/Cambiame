@@ -13,11 +13,13 @@ exports.conversationRepository = void 0;
 const conversationRepository = (repository) => {
     const createConversation = (senderId, receiverId) => __awaiter(void 0, void 0, void 0, function* () { return yield repository.createConversation(senderId, receiverId); });
     const getConversation = (userId) => __awaiter(void 0, void 0, void 0, function* () { return yield repository.getConversation(userId); });
+    const getSort = (userId) => __awaiter(void 0, void 0, void 0, function* () { return yield repository.getSort(userId); });
     const getBothMembers = (senderId, receiverId) => __awaiter(void 0, void 0, void 0, function* () { return yield repository.getBothMembers(senderId, receiverId); });
     return {
         createConversation,
         getConversation,
         getBothMembers,
+        getSort,
     };
 };
 exports.conversationRepository = conversationRepository;

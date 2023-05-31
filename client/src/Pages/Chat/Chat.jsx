@@ -20,6 +20,7 @@ import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import axios from '../../Axios/axios';
 import { ENDCHAT } from '../../Redux';
 import Message from '../../Components/Chat/Message';
+import PictureAvatar from '../../Components/avatar/PictureAvatar';
 
 function Chat() {
   const { id } = useParams();
@@ -95,7 +96,11 @@ function Chat() {
           <Grid item>
             <Grid container flexWrap="nowrap">
               <Grid item sx={{ paddingRight: '1rem' }}>
-                <BackgroundLetterAvatars user={chat.name} />
+                {
+                chat.profile
+                  ? <PictureAvatar name={chat?.name || ''} image={chat.profile} />
+                  : <BackgroundLetterAvatars user={chat.name || ''} />
+              }
               </Grid>
               <Grid item flexGrow="1">
                 <Box>

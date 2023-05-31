@@ -29,8 +29,6 @@ const userController = (
 
   const getProfile = (req: Request, res: Response) => {
     const { name } = req.params;
-    console.log(name);
-
     getUserById(name, userRepo, postRepo, s3Services)
       .then((data) => {
         res.json(data);
@@ -72,7 +70,12 @@ const userController = (
   };
 
   const getUser = async (req: Request, res: Response) => {
-    const user = await userRepo.getById(req.params.id);
+    const user: any = await userRepo.getById(req.params.id);
+    if (user?.profilePhoto) {
+      let userProfile = await s3Services.getObjectSignedUrl(user.profilePhoto);
+      user.set("profile", userProfile, { strict: false });
+      return res.json(user);
+    }
     res.json(user);
   };
 
