@@ -156,7 +156,6 @@ export const getComments = (
   return new Promise((resolve, reject) => {
     postRepository.getById(postId).then(async (post) => {
       const comments = post?.comments.sort((a, b) => b.Date - a.Date);
-
       if (comments) {
         for (let comment of comments) {
           const user = await userRepository.getById(comment.id);

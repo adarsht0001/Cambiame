@@ -104,7 +104,7 @@ export const followUser = (
   userRepository: ReturnType<UserRepositoryInterFace>
 ) => {
   return new Promise<object>((resolve, reject) => {
-    userRepository.getByName(name).then((data: any) => {
+    userRepository.getByName(name).then(async (data: any) => {
       if (data?.username === user.name) {
         reject({ msg: "cannot follow yourself" });
       }
@@ -119,21 +119,21 @@ export const followUser = (
           (followers: any) => followers?.id == user?.id
         ) < 0
       ) {
-        userRepository.updateOne(
+        await userRepository.updateOne(
           { username: name },
           { $push: { followers: user } }
         );
-        userRepository.updateOne(
+        await userRepository.updateOne(
           { username: user.name },
           { $push: { following: toFollow } }
         );
         resolve({ msg: `following` });
       } else {
-        userRepository.updateOne(
+        await userRepository.updateOne(
           { username: name },
           { $pull: { followers: { id: user.id } } }
         );
-        userRepository.updateOne(
+        await userRepository.updateOne(
           { username: user.name },
           { $pull: { following: { id: toFollow.id } } }
         );
@@ -207,12 +207,15 @@ export const editUser = (
         },
       }
     );
-    let url = await s3Services.getObjectSignedUrl(userprofilphoto);
+    let profilelink = "";
+    if (userprofilphoto) {
+      profilelink = await s3Services.getObjectSignedUrl(userprofilphoto);
+    }
     resolve({
       msg: "profile updated",
       username: data.name,
       email: data.email,
-      profile: url,
+      profile: profilelink,
     });
   });
 };

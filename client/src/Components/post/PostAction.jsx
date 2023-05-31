@@ -23,7 +23,6 @@ export default function PostActions({ postid, isUser, callback }) {
     setLoading(true);
     axios.put(`/post/report/${user.id}/${postid}`, {}, {
       headers: {
-        'Content-Type': 'multipart/form-data',
         authorization: `Bearer ${user.access_Token}`,
       },
     }).then((response) => {
@@ -45,7 +44,6 @@ export default function PostActions({ postid, isUser, callback }) {
     e.preventDefault();
     axios.delete(`/post/delete-post/${postid}`, {
       headers: {
-        'Content-Type': 'multipart/form-data',
         authorization: `Bearer ${user.access_Token}`,
       },
     }).then(() => {
@@ -80,16 +78,28 @@ export default function PostActions({ postid, isUser, callback }) {
       >
         {isUser
           ? (
-            <MenuItem onClick={handleDelete}>
-              {loading ? (
-                <CircularProgress
-                  color="secondary"
-                  size={20}
-                  thickness={4}
-                  value={100}
-                />
-              ) : 'Delete'}
-            </MenuItem>
+            <>
+              <MenuItem onClick={handleDelete}>
+                {loading ? (
+                  <CircularProgress
+                    color="secondary"
+                    size={20}
+                    thickness={4}
+                    value={100}
+                  />
+                ) : 'Delete'}
+              </MenuItem>
+              <MenuItem onClick={handleDelete}>
+                {loading ? (
+                  <CircularProgress
+                    color="secondary"
+                    size={20}
+                    thickness={4}
+                    value={100}
+                  />
+                ) : 'Edit'}
+              </MenuItem>
+            </>
           ) : (
             <MenuItem onClick={handleReport}>
               {loading ? (

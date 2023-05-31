@@ -3,13 +3,20 @@ import React, { useEffect, useState } from 'react';
 import { FiUsers } from 'react-icons/fi';
 import { FaUsersSlash } from 'react-icons/fa';
 import { MdVerified, MdOutlinePostAdd } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import axios from '../../Axios/axios';
 import Charts from './Charts';
 
 function Dashboard() {
   const [data, setData] = useState({});
+  const admin = useSelector((state) => state.admin);
+
   useEffect(() => {
-    axios.get('/admin/user-dashboard').then((response) => {
+    axios.get('/admin/user-dashboard', {
+      headers: {
+        Authorization: `Bearer ${admin.access_Token}`,
+      },
+    }).then((response) => {
       setData(response.data);
     }).catch((err) => {
       console.log(err);

@@ -42,7 +42,6 @@ export default function Post({ data, callback }) {
   const like = (values) => {
     axios.put(`/post/like/${user.id}/${values._id}`, {}, {
       headers: {
-        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${user.access_Token}`,
       },
     }).then((res) => {
@@ -69,7 +68,11 @@ export default function Post({ data, callback }) {
       postid: post._id,
       comment: commentText,
     };
-    axios.post('/post/add-comment', commentData).then(() => {
+    axios.post('/post/add-comment', commentData, {
+      headers: {
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then(() => {
       setCommentText('');
       toast.success('Comment Added');
       // setLoading(false);

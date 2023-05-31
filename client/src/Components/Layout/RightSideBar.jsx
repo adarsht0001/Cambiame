@@ -6,15 +6,22 @@ import {
 import { Box } from '@mui/system';
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from '../../Axios/axios';
 
 export default function RightSidebar() {
   const [query, setQuery] = useState('');
   const [users, setUser] = useState([]);
+  const user = useSelector((state) => state.user);
 
   useMemo(() => {
     if (query.length > 0) {
-      axios.get(`/search?name=${query}`).then((res) => {
+      axios.get(`/search?name=${query}`, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${user.access_Token}`,
+        },
+      }).then((res) => {
         setUser(res.data);
       }).catch((err) => {
         console.log(err);

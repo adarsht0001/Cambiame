@@ -19,7 +19,12 @@ function Conversation() {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    axios.get(`/conversation/${user.id}`).then((res) => {
+    axios.get(`/conversation/${user.id}`, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((res) => {
       const result = res?.data;
       result.sort((a, b) => {
         const createdAtA = a.message ? new Date(a.message.createdAt).getTime() : 0;

@@ -9,12 +9,18 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { useSelector } from 'react-redux';
 import axios from '../../Axios/axios';
 
 function PostGraph() {
   const [userCount, setUserCount] = useState([]);
+  const admin = useSelector((state) => state.admin);
   useEffect(() => {
-    axios.get('/admin/postchart')
+    axios.get('/admin/postchart', {
+      headers: {
+        Authorization: `Bearer ${admin.access_Token}`,
+      },
+    })
       .then((res) => {
         const counts = {};
         res.data?.forEach((user) => {

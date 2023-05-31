@@ -9,6 +9,7 @@ import AssistantIcon from '@mui/icons-material/Assistant';
 import clsx from 'clsx';
 import NavigationIcon from '@mui/icons-material/Navigation';
 import Fab from '@mui/material/Fab';
+import { useSelector } from 'react-redux';
 import AddPost from '../../Components/post/AddPost';
 import Post from '../../Components/post/Post';
 import axios from '../../Axios/axios';
@@ -20,13 +21,18 @@ export default function Home() {
   const [limit, setLimit] = useState();
   const [end, setEnded] = useState(false);
   const scrollRef = useRef();
+  const user = useSelector((state) => state.user);
 
   // eslint-disable-next-line no-unused-vars
   const onGrabData = (currentPage) => new Promise((resolve, reject) => {
     if (limit >= currentPage) {
       setEnded(true);
     }
-    axios.get(`/post?page=${currentPage}`).then((response) => {
+    axios.get(`/post?page=${currentPage}`, {
+      headers: {
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((response) => {
       setLimit(response.data.totalPages);
       resolve(response.data.results);
     });

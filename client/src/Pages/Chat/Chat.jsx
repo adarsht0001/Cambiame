@@ -34,7 +34,12 @@ function Chat() {
   const [messages, setMessages] = useState([]);
   const socket = useRef();
   useEffect(() => {
-    axios.get(`/message/${id}`).then((res) => {
+    axios.get(`/message/${id}`, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((res) => {
       setMessages(res.data);
     });
   }, []);
@@ -71,7 +76,11 @@ function Chat() {
       user: user.name,
     });
 
-    axios.post('/message', message).then((res) => {
+    axios.post('/message', message, {
+      headers: {
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((res) => {
       setMessages([...messages, res.data]);
       setNewMessage('');
     });
