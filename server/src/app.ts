@@ -18,8 +18,8 @@ connectDB();
 const io = new Server(server, {
   path: "/api/socket.io/",
   cors: {
-    origin: "http://localhost:3000",
-    // origin: "https://cambiame.site",
+    // origin: "http://localhost:3000",
+    origin: "https://cambiame.site",
     methods: ["GET", "POST"],
   },
 });

@@ -25,8 +25,7 @@ export default function UserTables() {
   const socket = useRef();
 
   useEffect(() => {
-    // socket.current = io('http://localhost:5000');
-    socket.current = io('/api');
+    socket.current = io('https://cambiame.site', { path: '/api/socket.io/' });
   }, []);
   useEffect(() => {
     axios.get(`/admin/users?page=${page}`).then((res) => {

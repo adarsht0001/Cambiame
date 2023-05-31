@@ -17,7 +17,6 @@ export default function Layout() {
   const [openModal, setOpenModal] = React.useState(false);
 
   useEffect(() => {
-    // socket.current = io('http://localhost:5000');
     socket.current = io('https://cambiame.site', { path: '/api/socket.io/' });
     socket.current?.emit('adduser', user.id);
 

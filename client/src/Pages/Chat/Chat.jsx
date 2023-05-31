@@ -40,7 +40,8 @@ function Chat() {
   }, []);
 
   useEffect(() => {
-    socket.current = io('http://localhost:5000');
+    socket.current = io('https://cambiame.site', { path: '/api/socket.io/' });
+
     socket.current?.emit('adduser', user.id);
 
     socket.current.on('getMessage', (data) => {
@@ -83,7 +84,7 @@ function Chat() {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   return (
-    <Box position="fixed" width="33%">
+    <Box>
       <Box borderBottom="1px solid #ccc" padding="8px 20px" mt="5px">
         <Grid container alignItems="center">
           <Grid item sx={{ mr: '10px' }}>
