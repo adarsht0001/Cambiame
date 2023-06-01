@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getComments = exports.addComents = exports.reportaPost = exports.likeaPost = exports.removePost = exports.getPosts = exports.addPost = void 0;
+exports.EditPosts = exports.getComments = exports.addComents = exports.reportaPost = exports.likeaPost = exports.removePost = exports.getPosts = exports.addPost = void 0;
 const addPost = (name, caption, userId, file, postRepository, s3Services) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         const post = {
@@ -123,12 +123,39 @@ const addComents = (comment, postId, postRepository) => {
     }));
 };
 exports.addComents = addComents;
-const getComments = (postId, postRepository) => {
+const getComments = (postId, postRepository, userRepository, s3Services) => {
     return new Promise((resolve, reject) => {
-        postRepository.getById(postId).then((post) => {
+        postRepository.getById(postId).then((post) => __awaiter(void 0, void 0, void 0, function* () {
             const comments = post === null || post === void 0 ? void 0 : post.comments.sort((a, b) => b.Date - a.Date);
+            if (comments) {
+                for (let comment of comments) {
+                    const user = yield userRepository.getById(comment.id);
+                    if (user === null || user === void 0 ? void 0 : user.profilePhoto) {
+                        let url = yield s3Services.getObjectSignedUrl(user.profilePhoto);
+                        comment.userProfile = url;
+                    }
+                }
+                return resolve(comments);
+            }
             resolve(comments);
-        });
+        }));
     });
 };
 exports.getComments = getComments;
+const EditPosts = (postId, caption, file, postRepository, s3Services) => {
+    return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+        const post = yield postRepository.getById(postId);
+        if (file) {
+            const path = yield s3Services.uploadtoS3(file.buffer, post === null || post === void 0 ? void 0 : post.user, file.mimetype);
+            yield postRepository.updateById(postId, {
+                $set: { caption: caption, image: path },
+            });
+            resolve({ msg: "updated" });
+        }
+        else {
+            yield postRepository.updateById(postId, { $set: { caption: caption } });
+            resolve({ msg: "updated" });
+        }
+    }));
+};
+exports.EditPosts = EditPosts;

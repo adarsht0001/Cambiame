@@ -17,11 +17,14 @@ const app = (0, express_1.default)();
 const server = http_1.default.createServer(app);
 (0, connection_1.default)();
 const io = new socket_io_1.Server(server, {
+    path: "/api/socket.io/",
     cors: {
-        origin: "http://localhost:3000",
+        // origin: "http://localhost:3000",
+        origin: "https://cambiame.site",
         methods: ["GET", "POST"],
     },
 });
+// require("../src/framework/websocket/SocketManager")(io);
 let users = [];
 const addUser = (userId, socketId) => {
     !users.some((user) => (user === null || user === void 0 ? void 0 : user.userId) === userId) &&

@@ -30,6 +30,12 @@ const postController = (postRepositortyImpl, postRepository, useRepositoryImpl, 
             return res.status(401).json(Object.assign({ status: false }, err));
         });
     });
+    const editPost = (req, res) => {
+        const { id } = req.params;
+        (0, postCrud_1.EditPosts)(id, req.body.caption, req.file, postRepo, s3Services).then((response) => {
+            res.status(200).json(response);
+        });
+    };
     const getPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { page } = req.query;
         (0, paginatePost_1.paginatePost)(postModel_1.default, page).then((data) => {
@@ -76,7 +82,7 @@ const postController = (postRepositortyImpl, postRepository, useRepositoryImpl, 
     };
     const getAllcomments = (req, res) => {
         const { postId } = req.params;
-        (0, postCrud_1.getComments)(postId, postRepo).then((data) => {
+        (0, postCrud_1.getComments)(postId, postRepo, dbRepositortUser, s3Services).then((data) => {
             res.json(data);
         });
     };
@@ -99,6 +105,7 @@ const postController = (postRepositortyImpl, postRepository, useRepositoryImpl, 
         addComent,
         getAllcomments,
         getSinglepost,
+        editPost,
     };
 };
 exports.default = postController;

@@ -97,7 +97,7 @@ const searchUsers = (name, user, userRepository) => {
 exports.searchUsers = searchUsers;
 const followUser = (name, user, userRepository) => {
     return new Promise((resolve, reject) => {
-        userRepository.getByName(name).then((data) => {
+        userRepository.getByName(name).then((data) => __awaiter(void 0, void 0, void 0, function* () {
             var _a;
             if ((data === null || data === void 0 ? void 0 : data.username) === user.name) {
                 reject({ msg: "cannot follow yourself" });
@@ -109,16 +109,16 @@ const followUser = (name, user, userRepository) => {
                 profile: (data === null || data === void 0 ? void 0 : data.profile) || null,
             };
             if (((_a = data === null || data === void 0 ? void 0 : data.followers) === null || _a === void 0 ? void 0 : _a.findIndex((followers) => (followers === null || followers === void 0 ? void 0 : followers.id) == (user === null || user === void 0 ? void 0 : user.id))) < 0) {
-                userRepository.updateOne({ username: name }, { $push: { followers: user } });
-                userRepository.updateOne({ username: user.name }, { $push: { following: toFollow } });
+                yield userRepository.updateOne({ username: name }, { $push: { followers: user } });
+                yield userRepository.updateOne({ username: user.name }, { $push: { following: toFollow } });
                 resolve({ msg: `following` });
             }
             else {
-                userRepository.updateOne({ username: name }, { $pull: { followers: { id: user.id } } });
-                userRepository.updateOne({ username: user.name }, { $pull: { following: { id: toFollow.id } } });
+                yield userRepository.updateOne({ username: name }, { $pull: { followers: { id: user.id } } });
+                yield userRepository.updateOne({ username: user.name }, { $pull: { following: { id: toFollow.id } } });
                 resolve({ msg: `un-following` });
             }
-        });
+        }));
     });
 };
 exports.followUser = followUser;
@@ -165,12 +165,15 @@ const editUser = (id, data, file, s3Services, userRepository) => {
                     (user === null || user === void 0 ? void 0 : user.coverPhoto),
             },
         });
-        let url = yield s3Services.getObjectSignedUrl(userprofilphoto);
+        let profilelink = "";
+        if (userprofilphoto) {
+            profilelink = yield s3Services.getObjectSignedUrl(userprofilphoto);
+        }
         resolve({
             msg: "profile updated",
             username: data.name,
             email: data.email,
-            profile: url,
+            profile: profilelink,
         });
     }));
 };

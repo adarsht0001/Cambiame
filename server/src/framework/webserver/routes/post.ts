@@ -30,6 +30,12 @@ const PostRoute = () => {
     upload.single("file"),
     controller.createPost
   );
+  router.put(
+    "/edit-post/:id",
+    authenticateToken,
+    upload.single("file"),
+    controller.editPost
+  );
   router.delete("/delete-post/:id", authenticateToken, controller.deletePost);
   router.put("/like/:id/:postId", authenticateToken, controller.likePost);
   router.put("/report/:id/:postId", authenticateToken, controller.reportPost);

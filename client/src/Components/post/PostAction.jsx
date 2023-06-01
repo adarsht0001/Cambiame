@@ -4,16 +4,23 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useSelector } from 'react-redux';
-import { CircularProgress } from '@mui/material';
+import {
+  CircularProgress, Grid, TextField,
+} from '@mui/material';
 import { toast } from 'react-hot-toast';
 import axios from '../../Axios/axios';
+import EditPost from './EditPost';
 
-export default function PostActions({ postid, isUser, callback }) {
+export default function PostActions({
+  postid, isUser, callback, post,
+}) {
   const [anchorEl, setAnchorEl] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [edit, setEdit] = React.useState(false);
+  const [image, setImage] = React.useState(null);
+  const [caption, setCaption] = React.useState(post?.caption);
   const open = Boolean(anchorEl);
   const user = useSelector((state) => state.user);
-
   const handleClick = (event) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
@@ -35,6 +42,21 @@ export default function PostActions({ postid, isUser, callback }) {
     });
   };
 
+  const handleEdit = () => {
+    const formData = new FormData();
+    formData.append('caption', caption);
+    formData.append('file', image);
+    axios.put(`/post/edit-post/${postid}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${user.access_Token}`,
+      },
+    }).then((res) => {
+      toast.success(res.data.msg);
+      callback();
+      setAnchorEl(null);
+    });
+  };
   const handleClose = (e) => {
     e.preventDefault();
     setAnchorEl(null);
@@ -89,7 +111,11 @@ export default function PostActions({ postid, isUser, callback }) {
                   />
                 ) : 'Delete'}
               </MenuItem>
-              <MenuItem onClick={handleDelete}>
+              <MenuItem onClick={(e) => {
+                e.preventDefault();
+                setEdit(true);
+              }}
+              >
                 {loading ? (
                   <CircularProgress
                     color="secondary"
@@ -113,6 +139,49 @@ export default function PostActions({ postid, isUser, callback }) {
             </MenuItem>
           )}
       </Menu>
+      {edit && (
+      <EditPost
+        open={edit}
+        handleClose={(e) => {
+          e.preventDefault();
+          setEdit(false);
+        }}
+        handleSave={handleEdit}
+        saveText="Edit Post"
+      >
+        <Grid width="100%" textAlign="center" p={2}>
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            type="text"
+            label="Caption"
+            size="small"
+            fullWidth
+            onChange={(e) => setCaption(e.target.value)}
+            name="email"
+            defaultValue={caption}
+          />
+        </Grid>
+        <Grid width="100%" textAlign="center" p={2}>
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            type="file"
+            size="small"
+            focused
+            fullWidth
+            label="image"
+            inputProps={{
+              multiple: false,
+            }}
+            onChange={(e) => {
+              setImage(e.target.files[0]);
+            }}
+          />
+        </Grid>
+
+      </EditPost>
+      )}
     </>
   );
 }
