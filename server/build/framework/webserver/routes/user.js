@@ -12,17 +12,18 @@ const postRepositoryInterface_1 = require("../../../application/repositories/pos
 const multer_1 = __importDefault(require("multer"));
 const s3Service_1 = require("../../services/s3Service");
 const s3serviceInterface_1 = require("../../../application/services/s3serviceInterface");
+const jwtMiddleware_1 = __importDefault(require("../middleware/jwtMiddleware"));
 const storage = multer_1.default.memoryStorage();
 const upload = (0, multer_1.default)({ storage: storage });
 const userRoute = () => {
     const router = express_1.default.Router();
     const controller = (0, userController_1.default)(userRepository_1.userRepositoryMongoDB, userRepositoryInterface_1.userRepository, postRepository_1.postRepositoryMongoDB, postRepositoryInterface_1.postRepository, s3Service_1.s3Service, s3serviceInterface_1.s3ServiceInterface);
-    router.get("/profile/:name", controller.getProfile);
-    router.get("/search", controller.searchUsername);
-    router.get("/search-user/:name/:user", controller.searchResult);
-    router.put("/follow/:name", controller.follow);
-    router.get("/user/:id", controller.getUser);
-    router.post("/edit-profile", upload.any(), controller.editProfile);
+    router.get("/profile/:name", jwtMiddleware_1.default, controller.getProfile);
+    router.get("/search", jwtMiddleware_1.default, controller.searchUsername);
+    router.get("/search-user/:name/:user", jwtMiddleware_1.default, controller.searchResult);
+    router.put("/follow/:name", jwtMiddleware_1.default, controller.follow);
+    router.get("/user/:id", jwtMiddleware_1.default, controller.getUser);
+    router.post("/edit-profile", jwtMiddleware_1.default, upload.any(), controller.editProfile);
     return router;
 };
 exports.default = userRoute;

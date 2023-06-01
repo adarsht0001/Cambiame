@@ -6,6 +6,7 @@ import { UserRepositoryInterFace } from "../../application/repositories/userRepo
 import { Request, Response } from "express";
 import { UserRepositoryMongoDB } from "../../framework/database/mongoDb/repositories/userRepository";
 import {
+  EditPosts,
   addComents,
   addPost,
   getComments,
@@ -45,6 +46,15 @@ const postController = (
       });
   };
 
+  const editPost = (req: Request, res: Response) => {
+    const { id } = req.params;
+    EditPosts(id, req.body.caption, req.file, postRepo, s3Services).then(
+      (response) => {
+        res.status(200).json(res);
+      }
+    );
+  };
+
   const getPost = async (req: Request, res: Response) => {
     const { page } = req.query;
     paginatePost(Post, page as string).then((data) => {
@@ -66,7 +76,6 @@ const postController = (
 
   const likePost = (req: Request, res: Response) => {
     const { id, postId } = req.params;
-
     likeaPost(id, postId, postRepo, dbRepositortUser).then((response) => {
       res.json(response);
     });
@@ -124,6 +133,7 @@ const postController = (
     addComent,
     getAllcomments,
     getSinglepost,
+    editPost,
   };
 };
 export default postController;

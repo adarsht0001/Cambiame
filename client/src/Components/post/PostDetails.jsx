@@ -155,7 +155,12 @@ export default function PostDetails() {
                     </Typography>
                   </Grid>
                   <Grid item>
-                    <PostActions postid={post?._id} isUser={isUser} callback={callback} />
+                    <PostActions
+                      postid={post?._id}
+                      isUser={isUser}
+                      callback={callback}
+                      post={post}
+                    />
                   </Grid>
                 </Grid>
               </Grid>

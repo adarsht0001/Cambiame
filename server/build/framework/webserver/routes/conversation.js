@@ -9,11 +9,12 @@ const conversationRepository_1 = require("../../database/mongoDb/repositories/co
 const conversationRepositoryInterface_1 = require("../../../application/repositories/conversationRepositoryInterface");
 const messagRepository_1 = require("../../database/mongoDb/repositories/messagRepository");
 const messageRepositoryInterface_1 = require("../../../application/repositories/messageRepositoryInterface");
+const jwtMiddleware_1 = __importDefault(require("../middleware/jwtMiddleware"));
 const conversationRoute = () => {
     const router = express_1.default.Router();
     const controller = (0, conversationController_1.default)(conversationRepository_1.conversationRepositoryMongoDb, conversationRepositoryInterface_1.conversationRepository, messagRepository_1.messageRepositoryMongoDb, messageRepositoryInterface_1.messageRepository);
-    router.post("/", controller.createConversation);
-    router.get("/:userId", controller.getConversation);
+    router.post("/", jwtMiddleware_1.default, controller.createConversation);
+    router.get("/:userId", jwtMiddleware_1.default, controller.getConversation);
     return router;
 };
 exports.default = conversationRoute;
