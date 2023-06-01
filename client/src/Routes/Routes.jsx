@@ -19,6 +19,7 @@ import Dashboard from '../Pages/adminDashboard/Dashboard';
 import ReportPost from '../Pages/adminReport/ReportPost';
 import AdminPost from '../Pages/adminPost/AdminPost';
 import { AdminIsLogged, AdminLoggedOut } from '../Auth/adminAuth';
+import UserView from '../Pages/adminUsers/userlist';
 
 function Router() {
   return (
@@ -45,6 +46,7 @@ function Router() {
         <Route element={<AdminIsLogged />}>
           <Route element={<SidebarAdmin />}>
             <Route element={<UserTables />} path="/admin/user" />
+            <Route element={<UserView />} path="/admin/user/:username" />
             <Route element={<Dashboard />} path="/admin/dashboard" />
             <Route element={<ReportPost />} path="/admin/post" />
             <Route element={<AdminPost />} path="/admin/post/:id" />
