@@ -18,7 +18,7 @@ connectDB();
 const io = new Server(server, {
   path: "/api/socket.io/",
   cors: {
-    origin: ["https://cambiame.site", "http://localhost:3000"],
+    origin: "https://cambiame.site",
     methods: ["GET", "POST"],
   },
 });
