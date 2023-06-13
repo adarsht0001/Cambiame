@@ -124,6 +124,7 @@ export const forgottenPassword = (
         html: `<hi>Your Reset Password Link is:${link}</h1>`,
       };
       mailService.sendMail(mailOpt);
+      console.log(`mail sent to ${user.email}`);
       resolve();
     } else {
       reject({
