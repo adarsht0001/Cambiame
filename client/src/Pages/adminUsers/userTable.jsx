@@ -14,6 +14,7 @@ import { GoVerified, GoX } from 'react-icons/go';
 import { MdArrowForwardIos } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
+import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import axios from '../../Axios/axios';
 
@@ -49,7 +50,7 @@ export default function UserTables() {
       },
     }).then((res) => {
       if (res.data.msg === 'blocked user') {
-        alert('blocked');
+        toast.success('blocked');
         socket.current.emit('blockUser', {
           user: id,
         });

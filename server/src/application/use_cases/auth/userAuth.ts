@@ -84,7 +84,7 @@ export const userSignup = (
       const link = `https://cambiame.site/verifyemail/${inserted._id}/${token}`;
       const mailOpt: Mail = {
         from: "Cambiame <Cambiame@gmail.com>",
-        to: "adarsht00001@gmail.com",
+        to: inserted.email,
         subject: "Verificaton Link",
         text: `Your Verificaton Link is:${link}`,
         html: `<hi>Your Verificaton Link Link is:${link}</h1>`,
@@ -118,7 +118,7 @@ export const forgottenPassword = (
       const link = `https://cambiame.site/resetpassword/${user._id}/${token}`;
       const mailOpt: Mail = {
         from: "Cambiame <Cambiame@gmail.com>",
-        to: "adarsht00001@gmail.com",
+        to: user.email,
         subject: "RESET PASSWORD",
         text: `Your Reset Password Link is:${link}`,
         html: `<hi>Your Reset Password Link is:${link}</h1>`,
