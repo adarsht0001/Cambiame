@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
 import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
@@ -23,8 +23,6 @@ import Message from '../../Components/Chat/Message';
 import PictureAvatar from '../../Components/avatar/PictureAvatar';
 
 function Chat() {
-  const socket = useOutletContext();
-
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,6 +32,7 @@ function Chat() {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const socket = useRef();
   useEffect(() => {
     axios.get(`/message/${id}`, {
       headers: {
@@ -57,7 +56,7 @@ function Chat() {
         createdAt: Date.now(),
       });
     });
-  }, []);
+  }, [socket]);
 
   useEffect(() => {
     setMessages((prev) => [...prev, arrivalMessage]);
