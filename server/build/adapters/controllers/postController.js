@@ -33,7 +33,7 @@ const postController = (postRepositortyImpl, postRepository, useRepositoryImpl, 
     const editPost = (req, res) => {
         const { id } = req.params;
         (0, postCrud_1.EditPosts)(id, req.body.caption, req.file, postRepo, s3Services).then((response) => {
-            res.status(200).json(response);
+            res.status(200).json(res);
         });
     };
     const getPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
