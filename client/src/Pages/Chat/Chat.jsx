@@ -56,7 +56,7 @@ function Chat() {
         createdAt: Date.now(),
       });
     });
-  }, [socket]);
+  }, []);
 
   useEffect(() => {
     setMessages((prev) => [...prev, arrivalMessage]);
