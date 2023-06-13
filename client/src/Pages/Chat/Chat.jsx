@@ -46,7 +46,6 @@ function Chat() {
 
   useEffect(() => {
     socket.current = io('https://cambiame.site', { path: '/api/socket.io/' });
-
     socket.current?.emit('adduser', user.id);
 
     socket.current.on('getMessage', (data) => {
