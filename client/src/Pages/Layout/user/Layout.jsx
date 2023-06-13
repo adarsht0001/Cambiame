@@ -21,17 +21,14 @@ export default function Layout() {
     socket.current?.emit('adduser', user.id);
 
     socket.current?.on('sentNotification', (data) => {
-      toast(
-        `${data.text} from ${data.user}`,
-        {
-          icon: '📩',
-          style: {
-            borderRadius: '10px',
-            background: '#333',
-            color: '#fff',
-          },
+      toast(`${data.text} from ${data.user}`, {
+        icon: '📩',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
         },
-      );
+      });
     });
     socket.current?.on('blocked', () => {
       setOpenModal(true);
@@ -60,7 +57,7 @@ export default function Layout() {
                     borderRight: '1px solid #ccc',
                   }}
                 >
-                  <Outlet />
+                  <Outlet socket={socket} />
                 </Box>
               </Grid>
               <Hidden lgDown>
@@ -73,17 +70,15 @@ export default function Layout() {
         </Grid>
       </Box>
       {openModal && (
-      <Blocked
-        open={openModal}
-      >
-        <Box>
-          <Grid container alignItems="center">
-            <Grid width="100%" py={4} textAlign="center">
-              <Typography>Your Account Has been Blocked</Typography>
+        <Blocked open={openModal}>
+          <Box>
+            <Grid container alignItems="center">
+              <Grid width="100%" py={4} textAlign="center">
+                <Typography>Your Account Has been Blocked</Typography>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-      </Blocked>
+          </Box>
+        </Blocked>
       )}
     </>
   );
