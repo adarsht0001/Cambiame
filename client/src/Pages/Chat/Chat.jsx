@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
 import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
@@ -23,6 +23,8 @@ import Message from '../../Components/Chat/Message';
 import PictureAvatar from '../../Components/avatar/PictureAvatar';
 
 function Chat() {
+  const socket = useOutletContext();
+
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,7 +34,6 @@ function Chat() {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const socket = useRef();
   useEffect(() => {
     axios.get(`/message/${id}`, {
       headers: {
@@ -107,10 +108,10 @@ function Chat() {
             <Grid container flexWrap="nowrap">
               <Grid item sx={{ paddingRight: '1rem' }}>
                 {
-                chat.profile
-                  ? <PictureAvatar name={chat?.name || ''} image={chat.profile} />
-                  : <BackgroundLetterAvatars user={chat.name || ''} />
-              }
+                  chat.profile
+                    ? <PictureAvatar name={chat?.name || ''} image={chat.profile} />
+                    : <BackgroundLetterAvatars user={chat.name || ''} />
+                }
               </Grid>
               <Grid item flexGrow="1">
                 <Box>
@@ -188,7 +189,7 @@ function Chat() {
 
                 <SendIcon
                   onClick={handleSubmit}
-                      // eslint-disable-next-line no-return-assign
+                  // eslint-disable-next-line no-return-assign
                   onMouseOver={(e) => e.target.style.cursor = 'pointer'}
                 />
               </InputAdornment>

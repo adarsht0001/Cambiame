@@ -33,6 +33,9 @@ export default function Layout() {
     socket.current?.on('blocked', () => {
       setOpenModal(true);
     });
+    return () => {
+      socket.current?.disconnect(); // Disconnect the socket when the component unmounts
+    };
   }, []);
   return (
     <>
@@ -57,7 +60,7 @@ export default function Layout() {
                     borderRight: '1px solid #ccc',
                   }}
                 >
-                  <Outlet socket={socket} />
+                  <Outlet context={socket} />
                 </Box>
               </Grid>
               <Hidden lgDown>
