@@ -33,10 +33,6 @@ export default function Layout() {
     socket.current?.on('blocked', () => {
       setOpenModal(true);
     });
-
-    return () => {
-      socket.current?.disconnect(); // Disconnect the socket when the component unmounts
-    };
   }, []);
   return (
     <>
