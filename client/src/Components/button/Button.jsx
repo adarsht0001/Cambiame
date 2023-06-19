@@ -14,8 +14,6 @@ function Buttons(props) {
       sx={{
         bgcolor: color,
         borderRadius: '28px',
-        // background: '#00000',
-        // boxShadow: ' -1px -1px 100px #4e4e4e,1px 1px 100px #121212',
       }}
     >
       {Text}
