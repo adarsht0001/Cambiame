@@ -18,6 +18,7 @@ export default function Layout() {
 
   useEffect(() => {
     socket.current = io('https://cambiame.site', { path: '/api/socket.io/' });
+    // socket.current = io('http://localhost:5000', { path: '/api/socket.io/' });
     socket.current?.emit('adduser', user.id);
 
     socket.current?.on('sentNotification', (data) => {
@@ -57,7 +58,7 @@ export default function Layout() {
                     borderRight: '1px solid #ccc',
                   }}
                 >
-                  <Outlet />
+                  <Outlet context={socket} />
                 </Box>
               </Grid>
               <Hidden lgDown>

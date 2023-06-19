@@ -12,10 +12,10 @@ import {
   Typography,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
 import { useDispatch, useSelector } from 'react-redux';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import axios from '../../Axios/axios';
 import { ENDCHAT } from '../../Redux';
@@ -32,7 +32,7 @@ function Chat() {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const socket = useRef();
+  // const socket = useRef();
   useEffect(() => {
     axios.get(`/message/${id}`, {
       headers: {
@@ -44,18 +44,18 @@ function Chat() {
     });
   }, []);
 
+  const socket = useOutletContext();
   useEffect(() => {
-    socket.current = io('https://cambiame.site', { path: '/api/socket.io/' });
-    socket.current?.emit('adduser', user.id);
-
-    socket.current.on('getMessage', (data) => {
+    // socket.current = io('https://cambiame.site', { path: '/api/socket.io/' });
+    // socket.current?.emit('adduser', user.id);
+    socket.current?.on('getMessage', (data) => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
         createdAt: Date.now(),
       });
     });
-  }, []);
+  }, [socket.current]);
 
   useEffect(() => {
     setMessages((prev) => [...prev, arrivalMessage]);
