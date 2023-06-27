@@ -32,7 +32,6 @@ function Chat() {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  // const socket = useRef();
   useEffect(() => {
     axios.get(`/message/${id}`, {
       headers: {
@@ -46,16 +45,15 @@ function Chat() {
 
   const socket = useOutletContext();
   useEffect(() => {
-    // socket.current = io('https://cambiame.site', { path: '/api/socket.io/' });
     // socket.current?.emit('adduser', user.id);
-    socket.current?.on('getMessage', (data) => {
+    socket?.on('getMessage', (data) => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
         createdAt: Date.now(),
       });
     });
-  }, [socket.current]);
+  }, [socket]);
 
   useEffect(() => {
     setMessages((prev) => [...prev, arrivalMessage]);

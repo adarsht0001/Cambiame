@@ -37,7 +37,25 @@ function Conversation() {
   }, []);
 
   return (
-    <Box>
+    <Box sx={{
+      height: '100vh',
+      overflow: 'scroll',
+      overflowX: 'hidden',
+      overflowY: 'auto',
+      scrollbarWidth: 'thin',
+      scrollBehavior: 'smooth',
+      '&::-webkit-scrollbar': {
+        width: '10px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: 'gray',
+        borderRadius: '10px',
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+        background: 'darkgray',
+      },
+    }}
+    >
       <Box borderBottom="1px solid #ccc" padding="8px 20px">
         <Grid container alignItems="center">
           <Grid item sx={{ mr: '10px' }}>
@@ -73,7 +91,7 @@ function Conversation() {
           },
         }}
       >
-        { loading ? (
+        {loading ? (
           <Box marginTop="1rem" textAlign="center">
             <CircularProgress size={20} color="primary" />
           </Box>
