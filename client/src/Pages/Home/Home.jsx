@@ -1,4 +1,5 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-underscore-dangle */
 import {
   Grid, IconButton, Typography,
@@ -18,22 +19,19 @@ import LoadingPost from '../../Components/post/Skeleton';
 
 export default function Home() {
   const triggerRef = useRef(null);
-  const [limit, setLimit] = useState();
   const [end, setEnded] = useState(false);
   const scrollRef = useRef();
   const user = useSelector((state) => state.user);
 
-  // eslint-disable-next-line no-unused-vars
-  const onGrabData = (currentPage) => new Promise((resolve, reject) => {
-    if (limit >= currentPage) {
-      setEnded(true);
-    }
+  const onGrabData = (currentPage) => new Promise((resolve) => {
     axios.get(`/post?page=${currentPage}`, {
       headers: {
         Authorization: `Bearer ${user.access_Token}`,
       },
     }).then((response) => {
-      setLimit(response.data.totalPages);
+      if (!response.data.next) {
+        setEnded(true);
+      }
       resolve(response.data.results);
     });
   });
@@ -85,8 +83,6 @@ export default function Home() {
           />
         ))}
         {end ? (
-          // eslint-disable-next-line max-len
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
           <div
             style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
             onClick={() => {

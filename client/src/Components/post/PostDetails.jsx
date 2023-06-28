@@ -2,12 +2,9 @@
 import {
   Button,
   CircularProgress,
-  //   CircularProgress,
   Grid,
   IconButton,
   Input,
-  //   Menu,
-  //   MenuItem,
   Typography,
   useTheme,
 } from '@mui/material';
@@ -131,146 +128,146 @@ export default function PostDetails() {
       <Box height="92vh" sx={{ overflowY: 'scroll' }}>
         <Box textAlign="center" marginTop="1rem">
           {Loading && (
-          <CircularProgress size={20} color="primary" />
+            <CircularProgress size={20} color="primary" />
           )}
         </Box>
         {!Loading && (
-        <Box padding="0 20px">
-          <Box>
-            <Grid container alignItems="center">
-              <Grid item>
-                <Link to={`/profile/${post.user}`}>
-                  {
-                  post.userProfile
-                    ? <PictureAvatar name={post.username || ''} image={post.userProfile} />
-                    : <BackgroundLetterAvatars user={post?.user} />
-                }
-                </Link>
-              </Grid>
-              <Grid item flexGrow="1" mx={2}>
-                <Grid container justifyContent="space-between">
-                  <Grid item>
-                    <Typography sx={{ fontSize: '16px', fontWeight: '500' }}>
-                      {post.user}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <PostActions
-                      postid={post?._id}
-                      isUser={isUser}
-                      callback={callback}
-                      post={post}
-                    />
+          <Box padding="0 20px">
+            <Box>
+              <Grid container alignItems="center">
+                <Grid item>
+                  <Link to={`/profile/${post.user}`}>
+                    {
+                      post.userProfile
+                        ? <PictureAvatar name={post.username || ''} image={post.userProfile} />
+                        : <BackgroundLetterAvatars user={post?.user} />
+                    }
+                  </Link>
+                </Grid>
+                <Grid item flexGrow="1" mx={2}>
+                  <Grid container justifyContent="space-between">
+                    <Grid item>
+                      <Typography sx={{ fontSize: '16px', fontWeight: '500' }}>
+                        {post.user}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <PostActions
+                        postid={post?._id}
+                        isUser={isUser}
+                        callback={callback}
+                        post={post}
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </Box>
-          <Box>
-            <Typography sx={{ fontSize: '20px', mt: '5px' }}>
-              {post.caption}
-            </Typography>
-          </Box>
-          {post?.link && (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <img
-              src={post.link}
-              width="100%"
-              height="550rem"
-              alt=""
-              srcSet=""
-            />
-          </Box>
-          )}
-          <Box display="flex" padding="1rem 0" borderBottom="1px solid #ccc">
-            <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
-              <TimeAgo date={post?.date} />
-            </Typography>
-          </Box>
-          <Box display="flex" padding="1rem 0" borderBottom="1px solid #ccc">
-            <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
-              <strong>{post.likes}</strong>
-              {' '}
-              Likes
-            </Typography>
-          </Box>
-          <Box
-            display="flex"
-            justifyContent="space-around"
-            padding=".5rem 0"
-            borderBottom="1px solid #ccc"
-          >
-            <IconButton
-              size="small"
-              onClick={(e) => {
-                e.preventDefault();
-                like(post);
-              }}
+            </Box>
+            <Box>
+              <Typography sx={{ fontSize: '20px', mt: '5px' }}>
+                {post.caption}
+              </Typography>
+            </Box>
+            {post?.link && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <img
+                  src={post.link}
+                  width="100%"
+                  height="550rem"
+                  alt=""
+                  srcSet=""
+                />
+              </Box>
+            )}
+            <Box display="flex" padding="1rem 0" borderBottom="1px solid #ccc">
+              <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
+                <TimeAgo date={post?.date} />
+              </Typography>
+            </Box>
+            <Box display="flex" padding="1rem 0" borderBottom="1px solid #ccc">
+              <Typography sx={{ fontSize: '14px', mr: '6px', color: '#555' }}>
+                <strong>{post.likes}</strong>
+                {' '}
+                Likes
+              </Typography>
+            </Box>
+            <Box
+              display="flex"
+              justifyContent="space-around"
+              padding=".5rem 0"
+              borderBottom="1px solid #ccc"
             >
-              {liked ? (
-                <FavoriteIcon fontSize="small" />
-              ) : (
-                <FavoriteBorderIcon fontSize="small" />
-              )}
-            </IconButton>
-            <IconButton size="small">
-              <IosShareIcon
-                fontSize="small"
+              <IconButton
+                size="small"
                 onClick={(e) => {
                   e.preventDefault();
-                  copyClipboard();
+                  like(post);
                 }}
-              />
-            </IconButton>
-          </Box>
-          <Box>
-            <Grid container mt={2}>
-              <Grid item>
-                {
-                user.profile
-                  ? <PictureAvatar name={user?.name || ''} image={user.profile} />
-                  : <BackgroundLetterAvatars user={user?.name || ''} />
-              }
+              >
+                {liked ? (
+                  <FavoriteIcon fontSize="small" />
+                ) : (
+                  <FavoriteBorderIcon fontSize="small" />
+                )}
+              </IconButton>
+              <IconButton size="small">
+                <IosShareIcon
+                  fontSize="small"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    copyClipboard();
+                  }}
+                />
+              </IconButton>
+            </Box>
+            <Box>
+              <Grid container mt={2}>
+                <Grid item>
+                  {
+                    user.profile
+                      ? <PictureAvatar name={user?.name || ''} image={user.profile} />
+                      : <BackgroundLetterAvatars user={user?.name || ''} />
+                  }
+                </Grid>
+                <Grid item flexGrow="1" mx={2}>
+                  <Box padding=".5rem 0">
+                    <Input
+                      onChange={(e) => setCommentText(e.target.value)}
+                      value={commentText}
+                      multiline
+                      rows="2"
+                      disableUnderline
+                      type="text"
+                      placeholder="Post your comment"
+                      sx={{ width: '100%' }}
+                    />
+                  </Box>
+                  <Box textAlign="right" paddingBottom=".5rem">
+                    <Button
+                      disabled={commentText.length === 0}
+                      onClick={handleAddComment}
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      sx={{
+                        borderRadius: theme.shape.borderRadius,
+                        fontSize: '12px',
+                      }}
+                    >
+                      Comment
+                    </Button>
+                  </Box>
+                </Grid>
               </Grid>
-              <Grid item flexGrow="1" mx={2}>
-                <Box padding=".5rem 0">
-                  <Input
-                    onChange={(e) => setCommentText(e.target.value)}
-                    value={commentText}
-                    multiline
-                    rows="2"
-                    disableUnderline
-                    type="text"
-                    placeholder="Post your comment"
-                    sx={{ width: '100%' }}
-                  />
-                </Box>
-                <Box textAlign="right" paddingBottom=".5rem">
-                  <Button
-                    disabled={commentText.length === 0}
-                    onClick={handleAddComment}
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    sx={{
-                      borderRadius: theme.shape.borderRadius,
-                      fontSize: '12px',
-                    }}
-                  >
-                    Comment
-                  </Button>
-                </Box>
-              </Grid>
-            </Grid>
-            <Comment postid={post._id} refresh={refresh} />
+              <Comment postid={post._id} refresh={refresh} />
+            </Box>
           </Box>
-        </Box>
         )}
       </Box>
     </Box>

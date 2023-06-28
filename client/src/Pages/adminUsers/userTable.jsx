@@ -36,6 +36,7 @@ export default function UserTables() {
         Authorization: `Bearer ${admin.access_Token}`,
       },
     }).then((res) => {
+      console.log(res);
       setUsers(res.data.results);
       setPageInfo({ count: res.data.totalPages });
     }).catch((err) => {
