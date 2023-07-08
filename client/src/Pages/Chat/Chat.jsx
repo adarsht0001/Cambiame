@@ -66,7 +66,7 @@ function Chat() {
       text: newMessage,
       conversationId: id,
     };
-    socket.current.emit('sendMessage', {
+    socket.emit('sendMessage', {
       senderid: user.id,
       receiverid: chat.id,
       text: newMessage,
