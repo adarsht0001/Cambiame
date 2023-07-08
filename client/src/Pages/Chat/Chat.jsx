@@ -26,7 +26,6 @@ function Chat() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const socket = useOutletContext();
-
   const user = useSelector((state) => state.user);
   const chat = useSelector((state) => state.chat);
   const scrollRef = useRef();
@@ -45,7 +44,7 @@ function Chat() {
   }, []);
 
   useEffect(() => {
-    socket?.current?.on('getMessage', (data) => {
+    socket.current?.on('getMessage', (data) => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
@@ -65,7 +64,7 @@ function Chat() {
       text: newMessage,
       conversationId: id,
     };
-    socket.current.emit('sendMessage', {
+    socket?.current?.emit('sendMessage', {
       senderid: user.id,
       receiverid: chat.id,
       text: newMessage,

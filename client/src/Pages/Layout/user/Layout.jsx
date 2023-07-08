@@ -33,7 +33,6 @@ export default function Layout() {
     socket.current?.on('blocked', () => {
       setOpenModal(true);
     });
-    console.log(socket);
   }, []);
   return (
     <>
