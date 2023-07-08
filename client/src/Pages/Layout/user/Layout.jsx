@@ -33,6 +33,7 @@ export default function Layout() {
     socket.current?.on('blocked', () => {
       setOpenModal(true);
     });
+    console.log(socket);
   }, []);
   return (
     <>
@@ -57,7 +58,7 @@ export default function Layout() {
                     borderRight: '1px solid #ccc',
                   }}
                 >
-                  <Outlet context={socket.current} />
+                  <Outlet context={socket} />
                 </Box>
               </Grid>
               <Hidden lgDown>

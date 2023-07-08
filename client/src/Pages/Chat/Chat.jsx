@@ -15,7 +15,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
 import { useDispatch, useSelector } from 'react-redux';
-// import io from 'socket.io-client';
 import BackgroundLetterAvatars from '../../Components/avatar/StringAvatar';
 import axios from '../../Axios/axios';
 import { ENDCHAT } from '../../Redux';
@@ -26,6 +25,8 @@ function Chat() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const socket = useOutletContext();
+
   const user = useSelector((state) => state.user);
   const chat = useSelector((state) => state.chat);
   const scrollRef = useRef();
@@ -43,17 +44,15 @@ function Chat() {
     });
   }, []);
 
-  const socket = useOutletContext();
   useEffect(() => {
-    // socket.current?.emit('adduser', user.id);
-    socket?.on('getMessage', (data) => {
+    socket?.current?.on('getMessage', (data) => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
         createdAt: Date.now(),
       });
     });
-  }, [socket]);
+  }, [socket.current]);
 
   useEffect(() => {
     setMessages((prev) => [...prev, arrivalMessage]);
@@ -66,7 +65,7 @@ function Chat() {
       text: newMessage,
       conversationId: id,
     };
-    socket.emit('sendMessage', {
+    socket.current.emit('sendMessage', {
       senderid: user.id,
       receiverid: chat.id,
       text: newMessage,
