@@ -4,7 +4,7 @@ import {
   Input, Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from '../../Axios/axios';
@@ -13,19 +13,33 @@ export default function RightSidebar() {
   const [query, setQuery] = useState('');
   const [users, setUser] = useState([]);
   const user = useSelector((state) => state.user);
+  const [debounceTimer, setDebounceTimer] = useState(null);
 
-  useMemo(() => {
+  const debouncingDelay = 500;
+
+  useEffect(() => {
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+
     if (query.length > 0) {
-      axios.get(`/search?name=${query}`, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${user.access_Token}`,
-        },
-      }).then((res) => {
-        setUser(res.data);
-      }).catch((err) => {
-        console.log(err);
-      });
+      setDebounceTimer(
+        setTimeout(() => {
+          axios
+            .get(`/search?name=${query}`, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${user.access_Token}`,
+              },
+            })
+            .then((res) => {
+              setUser(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }, debouncingDelay),
+      );
     }
   }, [query]);
 

@@ -2,31 +2,31 @@
 import {
   Box, Grid, Stack, Typography,
 } from '@mui/material';
-import { signInWithPopup } from 'firebase/auth';
+// import { signInWithPopup } from 'firebase/auth';
 import React from 'react';
-import { FcGoogle } from 'react-icons/fc';
+// import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import cambie from '../../../Assets/svg/CAMBIAME.svg';
 import './Login.css';
 import Form from './Form';
-import Buttons from '../../../Components/button/Button';
-import { auth, provider } from '../../../firebase/config';
-import axios from '../../../Axios/axios';
+// import Buttons from '../../../Components/button/Button';
+// import { auth, provider } from '../../../firebase/config';
+// import axios from '../../../Axios/axios';
 import Modals from '../../../Components/Modal/Modal';
 
 function Login() {
   const navigate = useNavigate();
-  const googleSignIn = () => {
-    signInWithPopup(auth, provider).then((data) => {
-      const value = {
-        username: data.user.displayName,
-        email: data.user.email,
-      };
-      localStorage.setItem('user', data.user.email);
-      navigate('/');
-      axios.post('/test', value).then(() => console.log());
-    });
-  };
+  // const googleSignIn = () => {
+  //   signInWithPopup(auth, provider).then((data) => {
+  //     const value = {
+  //       username: data.user.displayName,
+  //       email: data.user.email,
+  //     };
+  //     localStorage.setItem('user', data.user.email);
+  //     navigate('/');
+  //     axios.post('/test', value).then(() => console.log());
+  //   });
+  // };
 
   return (
     <Grid
@@ -66,7 +66,7 @@ function Login() {
             >
               Create an account here
             </Typography>
-            <Box onClick={googleSignIn}>
+            {/* <Box onClick={googleSignIn}>
               <Buttons
                 size="sm"
                 variant="contained"
@@ -78,7 +78,7 @@ function Login() {
                   </>
                 )}
               />
-            </Box>
+            </Box> */}
             <Box pt={3}>
               <Modals />
             </Box>
